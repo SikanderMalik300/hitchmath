@@ -1,4 +1,12 @@
 {
   "tow-hero": true,
-  "tongue-scale": true
+  "tongue-scale": true,
+  "payload-bed": true,
+  "scale-ticket": true,
+  "tacoma": true,
+  "f150": true,
+  "tundra": true,
+  "ram1500": true,
+  "silverado": true,
+  "4runner": true
 }

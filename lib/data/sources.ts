@@ -44,8 +44,8 @@ export const SOURCES: Record<SourceId, Source> = {
   'ford-guide-2026': {
     id: 'ford-guide-2026',
     name: 'Ford, 2026 RV & Trailer Towing Guide',
-    url: 'https://www.vdm.ford.com/content/dam/brand_ford/en_us/brand/towing/pdf/2026-Ford-RV-and-Trailer-Towing-Guide.pdf',
-    accessed: ACCESSED,
+    url: 'https://www.ford.com/content/dam/brand_ford/en_us/brand/towing/pdf/2026-Ford-RV-and-Trailer-Towing-Guide-v2.pdf',
+    accessed: '2026-10-20',
   },
   'ford-guide-2025': {
     id: 'ford-guide-2025',
@@ -206,8 +206,8 @@ export const SOURCES: Record<SourceId, Source> = {
   'chevy-silverado1500-page-2026': {
     id: 'chevy-silverado1500-page-2026',
     name: 'Chevrolet, 2026 Silverado 1500 product page',
-    url: 'https://www.chevrolet.com/trucks/silverado/1500',
-    accessed: ACCESSED,
+    url: 'https://www.chevrolet.com/trucks/previous-year/silverado/1500',
+    accessed: '2026-10-20',
   },
 };
 

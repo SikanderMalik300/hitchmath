@@ -129,6 +129,54 @@ const PHOTO_URLS = {
     focalX: 42,
     focalY: 45,
   },
+  'payload-bed': {
+    file: 'pickup-bed-loaded-logs',
+    url: 'https://images.pexels.com/photos/14279588/pexels-photo-14279588.jpeg?auto=compress&cs=tinysrgb&w=2600',
+    focalX: 50,
+    focalY: 60,
+  },
+  'scale-ticket': {
+    file: 'pickup-towing-cabin-trailer',
+    url: 'https://images.pexels.com/photos/25396350/pexels-photo-25396350.jpeg?auto=compress&cs=tinysrgb&w=2600',
+    focalX: 45,
+    focalY: 60,
+  },
+  tacoma: {
+    file: 'gray-tacoma-mountain-valley',
+    url: 'https://images.unsplash.com/photo-1632107516728-e7b496805e8d?q=85&w=2600&auto=format&fit=crop',
+    focalX: 48,
+    focalY: 62,
+  },
+  f150: {
+    file: 'red-f150-travel-trailer-desert',
+    url: 'https://images.unsplash.com/photo-1635452310050-6f0c0b969a8f?q=85&w=2600&auto=format&fit=crop',
+    focalX: 50,
+    focalY: 68,
+  },
+  tundra: {
+    file: 'pickup-towing-boat-coastal-road',
+    url: 'https://images.unsplash.com/photo-1778706792916-c176dd094540?q=85&w=2600&auto=format&fit=crop',
+    focalX: 30,
+    focalY: 62,
+  },
+  ram1500: {
+    file: 'gray-pickup-hitched-travel-trailer',
+    url: 'https://images.unsplash.com/photo-1739573685215-b05807df907a?q=85&w=2600&auto=format&fit=crop',
+    focalX: 40,
+    focalY: 55,
+  },
+  silverado: {
+    file: 'silver-pickup-livestock-trailer',
+    url: 'https://images.unsplash.com/photo-1680392407804-af4efe9b7611?q=85&w=2600&auto=format&fit=crop',
+    focalX: 45,
+    focalY: 60,
+  },
+  '4runner': {
+    file: 'white-suv-boat-launch-ramp',
+    url: 'https://images.pexels.com/photos/27706384/pexels-photo-27706384.jpeg?auto=compress&cs=tinysrgb&w=2600',
+    focalX: 62,
+    focalY: 55,
+  },
 };
 
 function gravity(focalX, focalY) {

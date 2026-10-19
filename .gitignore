@@ -23,3 +23,4 @@ Thumbs.db
 
 # verify scratch (source PDFs + extracted text)
 /verify-src/
+/hitchmath-day1_1-fixes.md

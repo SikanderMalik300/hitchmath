@@ -236,7 +236,7 @@ export const PAGES: PageEntry[] = [
   {
     slug: 'chevy-silverado-1500-towing-capacity',
     path: '/chevy-silverado-1500-towing-capacity/',
-    title: 'Silverado 1500 Towing Capacity 2026: Every Engine | HitchMath',
+    title: 'Silverado 1500 Towing Capacity 2026: All Engines | HitchMath',
     meta: "The 2026 Silverado 1500 tows 8,700 to 13,300 lb. Every engine, cab and box with GCWR from Chevrolet's 2026 Trailering Guide.",
     h1: 'Chevy Silverado 1500 towing capacity (2026): every engine, cab and box',
     category: 'vehicle',
