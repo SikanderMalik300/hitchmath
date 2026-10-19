@@ -1,0 +1,25 @@
+# dependencies
+/node_modules
+
+# next.js
+/.next/
+/out/
+
+# build artifacts and caches
+*.tsbuildinfo
+next-env.d.ts
+
+# os / editor
+.DS_Store
+Thumbs.db
+
+# spec source material (not part of the shipped site)
+/hitchmath/
+/hitchmath-spec-files.zip
+/hitchmath-day1-fixes.md
+
+# env
+.env*.local
+
+# verify scratch (source PDFs + extracted text)
+/verify-src/

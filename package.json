@@ -1,0 +1,36 @@
+{
+  "name": "hitchmath",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Towing math for US truck and SUV owners.",
+  "scripts": {
+    "dev": "next dev",
+    "prebuild": "node scripts/gen-assets.mjs",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "contrast": "node scripts/contrast-report.mjs",
+    "imgweight": "node scripts/image-weight.mjs"
+  },
+  "dependencies": {
+    "next": "15.1.6",
+    "react": "19.0.0",
+    "react-dom": "19.0.0",
+    "lucide-react": "0.474.0"
+  },
+  "devDependencies": {
+    "@resvg/resvg-js": "2.6.2",
+    "@types/node": "22.10.7",
+    "@types/react": "19.0.7",
+    "@types/react-dom": "19.0.3",
+    "autoprefixer": "10.4.20",
+    "postcss": "8.5.1",
+    "satori": "0.12.1",
+    "sharp": "0.33.5",
+    "tailwindcss": "3.4.17",
+    "typescript": "5.7.3",
+    "vitest": "2.1.8"
+  }
+}

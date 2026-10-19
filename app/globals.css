@@ -1,0 +1,117 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* Color tokens (design spec section 3) */
+  --bg: #ffffff;
+  --surface: #ffffff;
+  --ink: #18202a;
+  --muted: #525e6b;
+  --line: #e2e4e6;
+  --brand: #1e4e73;
+  --brand-ink: #ffffff;
+  --band-1: #f1ece2;
+  --band-2: #e9edf0;
+  --band-3: #ece8e1;
+  --band-4: #f5f3ef;
+  --warn: #8a4b08;
+  --ok: #1f6b3a;
+}
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    background-color: var(--bg);
+    color: var(--ink);
+    font-family: var(--font-manrope), system-ui, sans-serif;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 1.6;
+  }
+
+  h1,
+  h2,
+  h3 {
+    font-weight: 500;
+    letter-spacing: -0.01em;
+  }
+
+  /* Tabular figures for all numbers in results and tables */
+  table,
+  .tabular {
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* Visible focus rings on every interactive element */
+  a:focus-visible,
+  button:focus-visible,
+  input:focus-visible,
+  select:focus-visible,
+  summary:focus-visible,
+  [tabindex]:focus-visible {
+    outline: 2px solid var(--brand);
+    outline-offset: 2px;
+    border-radius: 2px;
+  }
+}
+
+@layer components {
+  .container-x {
+    width: 100%;
+    max-width: 1200px;
+    margin-inline: auto;
+    padding-inline: 16px;
+  }
+
+  @media (min-width: 640px) {
+    .container-x {
+      padding-inline: 24px;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .container-x {
+      padding-inline: 40px;
+    }
+  }
+
+  .section-y {
+    padding-block: 40px;
+  }
+
+  @media (min-width: 768px) {
+    .section-y {
+      padding-block: 64px;
+    }
+  }
+
+  .prose-body {
+    max-width: 75ch;
+  }
+
+  .prose-body p {
+    margin-block: 0.75rem;
+  }
+
+  .link {
+    color: var(--brand);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+
+  .link:hover {
+    text-decoration-thickness: 2px;
+  }
+}
+
+/* Motion: hover/focus only, respect reduced motion (design spec section 6) */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.001ms !important;
+    transition-duration: 0.001ms !important;
+  }
+}

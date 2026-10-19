@@ -1,0 +1,239 @@
+// Build-time asset generation (prebuild). Safe by design: any step that needs the
+// network is wrapped so a failure never breaks `next build`.
+//
+//  - copies /brand into public/brand and the icon PNGs into public/
+//  - generates apple-touch-icon.png and favicon.ico from icon-512
+//  - generates a 1200x630 OG PNG per page (brand band + H1 + site name)
+//  - writes public/llms.txt from the registry
+//  - downloads + processes the two verified photos into AVIF/WebP/JPEG, and
+//    records which succeeded in lib/generated/photo-manifest.json
+import { promises as fs } from 'node:fs';
+import path from 'node:path';
+import { fileURLToPath, pathToFileURL } from 'node:url';
+import sharp from 'sharp';
+import { Resvg } from '@resvg/resvg-js';
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const ROOT = path.resolve(__dirname, '..');
+const BRAND_SRC = path.join(ROOT, 'hitchmath', 'brand');
+const PUBLIC = path.join(ROOT, 'public');
+const IMAGES = path.join(PUBLIC, 'images');
+const OG = path.join(PUBLIC, 'og');
+const GEN = path.join(ROOT, 'lib', 'generated');
+
+const SITE = 'HitchMath';
+const BRAND = '#1e4e73';
+const BAND1 = '#f1ece2';
+const INK = '#18202a';
+
+async function ensure(dir) {
+  await fs.mkdir(dir, { recursive: true });
+}
+
+async function copyBrand() {
+  await ensure(path.join(PUBLIC, 'brand'));
+  const files = await fs.readdir(BRAND_SRC);
+  for (const f of files) {
+    await fs.copyFile(path.join(BRAND_SRC, f), path.join(PUBLIC, 'brand', f));
+    if (f.startsWith('icon-') && f.endsWith('.png')) {
+      await fs.copyFile(path.join(BRAND_SRC, f), path.join(PUBLIC, f));
+    }
+  }
+  // apple-touch-icon and favicon from the 512 icon
+  const icon512 = path.join(BRAND_SRC, 'icon-512.png');
+  await sharp(icon512).resize(180, 180).png().toFile(path.join(PUBLIC, 'apple-touch-icon.png'));
+  await sharp(icon512).resize(32, 32).png().toFile(path.join(PUBLIC, 'favicon.ico'));
+  console.log('assets: brand + favicons copied');
+}
+
+function escapeXml(s) {
+  return s.replace(/[<>&'"]/g, (c) =>
+    ({ '<': '&lt;', '>': '&gt;', '&': '&amp;', "'": '&apos;', '"': '&quot;' })[c],
+  );
+}
+
+function wrap(text, max) {
+  const words = text.split(' ');
+  const lines = [];
+  let line = '';
+  for (const w of words) {
+    if ((line + ' ' + w).trim().length > max) {
+      if (line) lines.push(line.trim());
+      line = w;
+    } else {
+      line = (line + ' ' + w).trim();
+    }
+  }
+  if (line) lines.push(line.trim());
+  return lines.slice(0, 5);
+}
+
+async function ogImage(slug, h1) {
+  const lines = wrap(h1, 26);
+  const startY = 300 - (lines.length - 1) * 34;
+  const tspans = lines
+    .map((l, i) => `<tspan x="80" y="${startY + i * 68}">${escapeXml(l)}</tspan>`)
+    .join('');
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+    <rect width="1200" height="630" fill="#ffffff"/>
+    <rect width="1200" height="120" fill="${BAND1}"/>
+    <text x="80" y="78" font-family="Arial, Helvetica, sans-serif" font-size="40" font-weight="600">
+      <tspan fill="${BRAND}">Hitch</tspan><tspan fill="${INK}">Math</tspan>
+    </text>
+    <text font-family="Arial, Helvetica, sans-serif" font-size="56" font-weight="600" fill="${INK}">${tspans}</text>
+    <text x="80" y="560" font-family="Arial, Helvetica, sans-serif" font-size="26" fill="#525e6b">hitchmath.com</text>
+  </svg>`;
+  const png = new Resvg(svg, { font: { loadSystemFonts: true } }).render().asPng();
+  const name = `${slug === '' ? 'home' : slug.replace(/\//g, '-')}.png`;
+  await fs.writeFile(path.join(OG, name), png);
+}
+
+async function genOg(pages) {
+  await ensure(OG);
+  for (const p of pages) {
+    try {
+      await ogImage(p.slug, p.h1);
+    } catch (e) {
+      console.warn(`assets: OG failed for ${p.slug || 'home'}: ${e.message}`);
+    }
+  }
+  console.log(`assets: ${pages.length} OG images attempted`);
+}
+
+async function writeLlms(pages) {
+  const content = pages.filter((p) => p.category === 'tool' || p.category === 'vehicle');
+  const lines = [
+    '# HitchMath',
+    '',
+    'Towing math for US truck and SUV owners. Calculators that show their work and vehicle towing tables copied from manufacturer documents.',
+    '',
+    '## Pages',
+    ...content.map((p) => `- [${p.h1}](https://hitchmath.com${p.path}): ${p.description}`),
+    '',
+  ];
+  await fs.writeFile(path.join(PUBLIC, 'llms.txt'), lines.join('\n'));
+  console.log('assets: llms.txt written');
+}
+
+// Direct image URLs for the two verified photos (from hitchmath-photos.md).
+const PHOTO_URLS = {
+  'tow-hero': {
+    file: 'suv-towing-travel-trailer-desert-road',
+    url: 'https://images.unsplash.com/photo-1520101244246-293f77ffc39e?q=80&w=2400&auto=format&fit=crop',
+    focalX: 55,
+    focalY: 62,
+  },
+  'tongue-scale': {
+    file: 'tow-ball-hitch-close-up',
+    url: 'https://images.pexels.com/photos/12833615/pexels-photo-12833615.jpeg?auto=compress&cs=tinysrgb&w=2400',
+    focalX: 42,
+    focalY: 45,
+  },
+};
+
+function gravity(focalX, focalY) {
+  const h = focalX < 34 ? 'left' : focalX > 66 ? 'right' : '';
+  const v = focalY < 34 ? 'top' : focalY > 66 ? 'bottom' : '';
+  if (v && h) return v + h.charAt(0).toUpperCase() + h.slice(1);
+  return v || h || 'centre';
+}
+
+async function processPhoto(id) {
+  const info = PHOTO_URLS[id];
+  const res = await fetch(info.url, {
+    headers: { 'User-Agent': 'Mozilla/5.0 HitchMath-build' },
+    redirect: 'follow',
+  });
+  if (!res.ok) throw new Error(`HTTP ${res.status}`);
+  const buf = Buffer.from(await res.arrayBuffer());
+  await sharp(buf).metadata(); // validate it is an image
+  const pos = gravity(info.focalX, info.focalY);
+
+  // AVIF quality tuned to the design budgets: tile <= 35 KB at 600, hero <= 120 KB at 1280.
+  const targets = [
+    { w: 300, h: 300, avif: 50 },
+    { w: 600, h: 600, avif: 42 },
+    { w: 640, h: 480, avif: 50 },
+    { w: 1280, h: 960, avif: 42 },
+  ];
+  for (const t of targets) {
+    const base = sharp(buf).rotate().resize(t.w, t.h, { fit: 'cover', position: pos });
+    const out = path.join(IMAGES, `${info.file}-${t.w}`);
+    await base.clone().avif({ quality: t.avif, effort: 6 }).toFile(`${out}.avif`);
+    await base.clone().webp({ quality: 72 }).toFile(`${out}.webp`);
+    await base.clone().jpeg({ quality: 70, mozjpeg: true }).toFile(`${out}.jpg`);
+  }
+}
+
+async function genPhotos() {
+  await ensure(IMAGES);
+  await ensure(GEN);
+  const manifest = {};
+  for (const id of Object.keys(PHOTO_URLS)) {
+    const info = PHOTO_URLS[id];
+    // Reuse committed images when present so a CI build needs no network.
+    const existing = path.join(IMAGES, `${info.file}-1280.avif`);
+    try {
+      await fs.access(existing);
+      manifest[id] = true;
+      console.log(`assets: photo ${id} already present, reusing`);
+      continue;
+    } catch {
+      /* not cached, download below */
+    }
+    try {
+      await processPhoto(id);
+      manifest[id] = true;
+      console.log(`assets: photo ${id} processed`);
+    } catch (e) {
+      manifest[id] = false;
+      console.warn(`assets: photo ${id} skipped (${e.message}); color block will render`);
+    }
+  }
+  await fs.writeFile(path.join(GEN, 'photo-manifest.json'), JSON.stringify(manifest, null, 2));
+}
+
+async function loadPages() {
+  // Prefer importing the registry directly (Node strips TS types). Registry.ts has
+  // only type-only imports, so nothing else loads. Fall back to the JSON snapshot.
+  try {
+    const url = pathToFileURL(path.join(ROOT, 'lib', 'registry.ts')).href;
+    const mod = await import(url);
+    const pages = mod.PAGES.map((p) => ({
+      slug: p.slug,
+      path: p.path,
+      h1: p.h1,
+      description: p.description,
+      category: p.category,
+    }));
+    await ensure(GEN);
+    await fs.writeFile(path.join(GEN, 'pages.json'), JSON.stringify(pages, null, 2));
+    return pages;
+  } catch (e) {
+    console.warn(`assets: registry import failed (${e.message}); trying snapshot`);
+    try {
+      const raw = await fs.readFile(path.join(GEN, 'pages.json'), 'utf8');
+      return JSON.parse(raw);
+    } catch {
+      return null;
+    }
+  }
+}
+
+async function main() {
+  await ensure(PUBLIC);
+  await copyBrand().catch((e) => console.warn(`assets: brand copy failed: ${e.message}`));
+
+  const pages = await loadPages();
+  if (pages) {
+    await genOg(pages).catch((e) => console.warn(`assets: OG step failed: ${e.message}`));
+    await writeLlms(pages).catch((e) => console.warn(`assets: llms step failed: ${e.message}`));
+  } else {
+    console.warn('assets: pages.json snapshot missing; skipping OG + llms');
+  }
+
+  await genPhotos().catch((e) => console.warn(`assets: photo step failed: ${e.message}`));
+  console.log('assets: done');
+}
+
+main();

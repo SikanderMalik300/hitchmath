@@ -1,0 +1,163 @@
+[
+  {
+    "slug": "",
+    "path": "/",
+    "h1": "Towing math you can check",
+    "description": "Towing calculators and vehicle towing tables from manufacturer documents.",
+    "category": "home"
+  },
+  {
+    "slug": "towing-capacity-calculator",
+    "path": "/towing-capacity-calculator/",
+    "h1": "Towing capacity calculator: can my truck tow it?",
+    "description": "Run all five towing checks together and see the first limit you would hit.",
+    "category": "tool"
+  },
+  {
+    "slug": "payload-calculator",
+    "path": "/payload-calculator/",
+    "h1": "Payload calculator: how much can my truck carry?",
+    "description": "Add people, cargo, accessories and tongue weight against your payload.",
+    "category": "tool"
+  },
+  {
+    "slug": "tongue-weight-calculator",
+    "path": "/tongue-weight-calculator/",
+    "h1": "Tongue weight calculator",
+    "description": "Tongue weight range, a measured-weight check, and the bathroom-scale method.",
+    "category": "tool"
+  },
+  {
+    "slug": "gcwr-calculator",
+    "path": "/gcwr-calculator/",
+    "h1": "GCWR calculator: combined truck and trailer weight",
+    "description": "Compare loaded truck plus trailer with GCWR, both directions.",
+    "category": "tool"
+  },
+  {
+    "slug": "toyota-tacoma-towing-capacity",
+    "path": "/toyota-tacoma-towing-capacity/",
+    "h1": "Toyota Tacoma towing capacity (2026): every trim and configuration",
+    "description": "All 27 configurations of the 2026 Tacoma with payload, GVWR and tongue limit.",
+    "category": "vehicle"
+  },
+  {
+    "slug": "ford-f150-towing-capacity",
+    "path": "/ford-f150-towing-capacity/",
+    "h1": "Ford F-150 towing capacity (2026): by engine, axle and package",
+    "description": "Every 2026 F-150 engine with max tow, payload and the GCWR rows behind them.",
+    "category": "vehicle"
+  },
+  {
+    "slug": "toyota-tundra-towing-capacity",
+    "path": "/toyota-tundra-towing-capacity/",
+    "h1": "Toyota Tundra towing capacity (2026): every trim and configuration",
+    "description": "All 32 configurations of the 2026 Tundra with payload and GVWR.",
+    "category": "vehicle"
+  },
+  {
+    "slug": "ram-1500-towing-capacity",
+    "path": "/ram-1500-towing-capacity/",
+    "h1": "Ram 1500 towing capacity (2026): every engine",
+    "description": "Every 2026 Ram 1500 engine with max tow and payload from Ram’s chart.",
+    "category": "vehicle"
+  },
+  {
+    "slug": "chevy-silverado-1500-towing-capacity",
+    "path": "/chevy-silverado-1500-towing-capacity/",
+    "h1": "Chevy Silverado 1500 towing capacity (2026): every engine, cab and box",
+    "description": "Every 2026 Silverado 1500 engine, cab and box with GCWR.",
+    "category": "vehicle"
+  },
+  {
+    "slug": "toyota-4runner-towing-capacity",
+    "path": "/toyota-4runner-towing-capacity/",
+    "h1": "Toyota 4Runner towing capacity (2026): every trim",
+    "description": "All 16 versions of the 2026 4Runner with payload computed from Toyota specs.",
+    "category": "vehicle"
+  },
+  {
+    "slug": "towing-calculators",
+    "path": "/towing-calculators/",
+    "h1": "Towing calculators",
+    "description": "The four towing calculators and which one to start with.",
+    "category": "hub"
+  },
+  {
+    "slug": "towing-capacity",
+    "path": "/towing-capacity/",
+    "h1": "Towing capacity by vehicle",
+    "description": "2026 towing ratings by vehicle, from manufacturer guides and spec pages.",
+    "category": "hub"
+  },
+  {
+    "slug": "about",
+    "path": "/about/",
+    "h1": "About HitchMath",
+    "description": "What HitchMath is and who runs it.",
+    "category": "trust"
+  },
+  {
+    "slug": "authors/sikander-mushtaq",
+    "path": "/authors/sikander-mushtaq/",
+    "h1": "Sikander Mushtaq",
+    "description": "The person behind HitchMath.",
+    "category": "trust"
+  },
+  {
+    "slug": "how-we-calculate",
+    "path": "/how-we-calculate/",
+    "h1": "How we calculate",
+    "description": "Sources, assumptions, formulas and constants behind the numbers.",
+    "category": "trust"
+  },
+  {
+    "slug": "editorial-policy",
+    "path": "/editorial-policy/",
+    "h1": "Editorial policy",
+    "description": "Sources rule, conflicts rule, AI use, updates and corrections.",
+    "category": "trust"
+  },
+  {
+    "slug": "contact",
+    "path": "/contact/",
+    "h1": "Contact",
+    "description": "Reach HitchMath by form or email.",
+    "category": "trust"
+  },
+  {
+    "slug": "privacy",
+    "path": "/privacy/",
+    "h1": "Privacy policy",
+    "description": "What data HitchMath collects and which processors it uses.",
+    "category": "legal"
+  },
+  {
+    "slug": "terms",
+    "path": "/terms/",
+    "h1": "Terms of use",
+    "description": "Terms for using the site and its calculators.",
+    "category": "legal"
+  },
+  {
+    "slug": "disclaimer",
+    "path": "/disclaimer/",
+    "h1": "Disclaimer",
+    "description": "The figures are for planning only.",
+    "category": "legal"
+  },
+  {
+    "slug": "affiliate-disclosure",
+    "path": "/affiliate-disclosure/",
+    "h1": "Affiliate disclosure",
+    "description": "No affiliate links at launch; how they will be marked later.",
+    "category": "legal"
+  },
+  {
+    "slug": "sitemap",
+    "path": "/sitemap/",
+    "h1": "Sitemap",
+    "description": "Every page on HitchMath.",
+    "category": "legal"
+  }
+]

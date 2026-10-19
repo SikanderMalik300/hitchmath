@@ -1,0 +1,15 @@
+# HitchMath
+
+Towing math for US truck and SUV owners. Calculators that show their work and vehicle towing tables copied from manufacturer documents.
+
+## Pages
+- [Towing capacity calculator: can my truck tow it?](https://hitchmath.com/towing-capacity-calculator/): Run all five towing checks together and see the first limit you would hit.
+- [Payload calculator: how much can my truck carry?](https://hitchmath.com/payload-calculator/): Add people, cargo, accessories and tongue weight against your payload.
+- [Tongue weight calculator](https://hitchmath.com/tongue-weight-calculator/): Tongue weight range, a measured-weight check, and the bathroom-scale method.
+- [GCWR calculator: combined truck and trailer weight](https://hitchmath.com/gcwr-calculator/): Compare loaded truck plus trailer with GCWR, both directions.
+- [Toyota Tacoma towing capacity (2026): every trim and configuration](https://hitchmath.com/toyota-tacoma-towing-capacity/): All 27 configurations of the 2026 Tacoma with payload, GVWR and tongue limit.
+- [Ford F-150 towing capacity (2026): by engine, axle and package](https://hitchmath.com/ford-f150-towing-capacity/): Every 2026 F-150 engine with max tow, payload and the GCWR rows behind them.
+- [Toyota Tundra towing capacity (2026): every trim and configuration](https://hitchmath.com/toyota-tundra-towing-capacity/): All 32 configurations of the 2026 Tundra with payload and GVWR.
+- [Ram 1500 towing capacity (2026): every engine](https://hitchmath.com/ram-1500-towing-capacity/): Every 2026 Ram 1500 engine with max tow and payload from Ram’s chart.
+- [Chevy Silverado 1500 towing capacity (2026): every engine, cab and box](https://hitchmath.com/chevy-silverado-1500-towing-capacity/): Every 2026 Silverado 1500 engine, cab and box with GCWR.
+- [Toyota 4Runner towing capacity (2026): every trim](https://hitchmath.com/toyota-4runner-towing-capacity/): All 16 versions of the 2026 4Runner with payload computed from Toyota specs.
