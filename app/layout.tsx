@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { Manrope } from 'next/font/google';
+import localFont from 'next/font/local';
 import './globals.css';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
@@ -8,9 +8,14 @@ import QueryNoindex from '@/components/QueryNoindex';
 import { OrganizationAndWebsite } from '@/components/JsonLd';
 import { SITE } from '@/lib/registry';
 
-const manrope = Manrope({
-  subsets: ['latin'],
-  weight: ['400', '500', '600'],
+// Self-hosted Manrope (from @fontsource/manrope) so the build makes no network
+// request for fonts. Same weights, display and CSS variable as before.
+const manrope = localFont({
+  src: [
+    { path: './fonts/manrope-latin-400-normal.woff2', weight: '400', style: 'normal' },
+    { path: './fonts/manrope-latin-500-normal.woff2', weight: '500', style: 'normal' },
+    { path: './fonts/manrope-latin-600-normal.woff2', weight: '600', style: 'normal' },
+  ],
   display: 'swap',
   variable: '--font-manrope',
 });

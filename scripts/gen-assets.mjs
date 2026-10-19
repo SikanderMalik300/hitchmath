@@ -134,6 +134,7 @@ const PHOTO_URLS = {
     url: 'https://images.pexels.com/photos/14279588/pexels-photo-14279588.jpeg?auto=compress&cs=tinysrgb&w=2600',
     focalX: 50,
     focalY: 60,
+    jpeg: 56, // this photo's JPEG fallback was over budget at the default quality
   },
   'scale-ticket': {
     file: 'pickup-towing-cabin-trailer',
@@ -156,7 +157,7 @@ const PHOTO_URLS = {
   tundra: {
     file: 'pickup-towing-boat-coastal-road',
     url: 'https://images.unsplash.com/photo-1778706792916-c176dd094540?q=85&w=2600&auto=format&fit=crop',
-    focalX: 30,
+    focalX: 15,
     focalY: 62,
   },
   ram1500: {
@@ -168,7 +169,7 @@ const PHOTO_URLS = {
   silverado: {
     file: 'silver-pickup-livestock-trailer',
     url: 'https://images.unsplash.com/photo-1680392407804-af4efe9b7611?q=85&w=2600&auto=format&fit=crop',
-    focalX: 45,
+    focalX: 20,
     focalY: 60,
   },
   '4runner': {
@@ -179,13 +180,6 @@ const PHOTO_URLS = {
   },
 };
 
-function gravity(focalX, focalY) {
-  const h = focalX < 34 ? 'left' : focalX > 66 ? 'right' : '';
-  const v = focalY < 34 ? 'top' : focalY > 66 ? 'bottom' : '';
-  if (v && h) return v + h.charAt(0).toUpperCase() + h.slice(1);
-  return v || h || 'centre';
-}
-
 async function processPhoto(id) {
   const info = PHOTO_URLS[id];
   const res = await fetch(info.url, {
@@ -193,11 +187,15 @@ async function processPhoto(id) {
     redirect: 'follow',
   });
   if (!res.ok) throw new Error(`HTTP ${res.status}`);
-  const buf = Buffer.from(await res.arrayBuffer());
-  await sharp(buf).metadata(); // validate it is an image
-  const pos = gravity(info.focalX, info.focalY);
+  const raw = Buffer.from(await res.arrayBuffer());
+  // Normalise EXIF orientation first so focal maths matches the pixels.
+  const oriented = await sharp(raw).rotate().toBuffer();
+  const meta = await sharp(oriented).metadata();
+  const sw = meta.width;
+  const sh = meta.height;
+  const jpegQ = info.jpeg ?? 70;
 
-  // AVIF quality tuned to the design budgets: tile <= 35 KB at 600, hero <= 120 KB at 1280.
+  // AVIF quality tuned to the budgets: tile <= 35 KB at 600, hero <= 120 KB at 1280.
   const targets = [
     { w: 300, h: 300, avif: 50 },
     { w: 600, h: 600, avif: 42 },
@@ -205,11 +203,22 @@ async function processPhoto(id) {
     { w: 1280, h: 960, avif: 42 },
   ];
   for (const t of targets) {
-    const base = sharp(buf).rotate().resize(t.w, t.h, { fit: 'cover', position: pos });
+    // Exact focal-point cover crop: scale to cover, then extract a window centred
+    // on (focalX, focalY) and clamped inside the image.
+    const scale = Math.max(t.w / sw, t.h / sh);
+    const rw = Math.max(t.w, Math.round(sw * scale));
+    const rh = Math.max(t.h, Math.round(sh * scale));
+    let left = Math.round((info.focalX / 100) * rw - t.w / 2);
+    let top = Math.round((info.focalY / 100) * rh - t.h / 2);
+    left = Math.max(0, Math.min(left, rw - t.w));
+    top = Math.max(0, Math.min(top, rh - t.h));
+    const base = sharp(oriented)
+      .resize(rw, rh)
+      .extract({ left, top, width: t.w, height: t.h });
     const out = path.join(IMAGES, `${info.file}-${t.w}`);
     await base.clone().avif({ quality: t.avif, effort: 6 }).toFile(`${out}.avif`);
     await base.clone().webp({ quality: 72 }).toFile(`${out}.webp`);
-    await base.clone().jpeg({ quality: 70, mozjpeg: true }).toFile(`${out}.jpg`);
+    await base.clone().jpeg({ quality: jpegQ, mozjpeg: true }).toFile(`${out}.jpg`);
   }
 }
 

@@ -28,7 +28,7 @@ export default function Faq({ items }: { items: FaqItem[] }) {
                 −
               </span>
             </summary>
-            <p className="prose-body pb-4 text-body text-ink">{it.a}</p>
+            <p className="prose-body pb-4 text-body text-ink">{it.aNode ?? it.a}</p>
           </details>
         ))}
       </div>

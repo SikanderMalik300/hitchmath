@@ -9,7 +9,6 @@ import { RefTable } from '@/components/Tables';
 import { SectionH2 } from '@/components/content';
 import { VEHICLES_BY_SLUG } from '@/lib/data/vehicles';
 import { maxTrailer, maxPayload } from '@/lib/data/vehicles/types';
-import { SILVERADO_MAX_PAYLOAD } from '@/lib/data/vehicles/chevy-silverado-1500-2026';
 import { fmt } from '@/lib/format';
 
 const page = getPage('towing-capacity');
@@ -28,7 +27,6 @@ function payloadCell(slug: string): string {
   const data = VEHICLES_BY_SLUG[slug];
   const hasPayload = data.rows.some((r) => r.payload != null);
   if (hasPayload) return `${fmt(maxPayload(data.rows))} lb`;
-  if (slug === 'chevy-silverado-1500-towing-capacity') return `${fmt(SILVERADO_MAX_PAYLOAD)} lb (page)`;
   return 'Not listed per row';
 }
 

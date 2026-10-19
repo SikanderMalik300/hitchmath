@@ -57,7 +57,8 @@ export function BreadcrumbList({ crumbs }: { crumbs: Crumb[] }) {
 
 export interface FaqItem {
   q: string;
-  a: string; // plain text (stripped of tags)
+  a: string; // plain text, used for the JSON-LD answer
+  aNode?: React.ReactNode; // optional richer display (e.g. with a link); schema still uses `a`
 }
 
 export function FaqPage({ items }: { items: FaqItem[] }) {

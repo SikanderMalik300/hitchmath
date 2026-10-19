@@ -88,9 +88,8 @@ function buildRows(): VehicleRow[] {
   return out;
 }
 
-// Max payload VERIFY item (Chevrolet product page). Shown only if the VERIFY passes.
-export const SILVERADO_MAX_PAYLOAD = 2260;
-export const SILVERADO_MAX_PAYLOAD_VERIFIED = true;
+// GM publishes no per-configuration payload for the Silverado 1500 in its 2026
+// documents, so we do not state a single max-payload figure on the page.
 
 export const chevySilverado15002026: VehicleData = {
   slug: 'chevy-silverado-1500-towing-capacity',

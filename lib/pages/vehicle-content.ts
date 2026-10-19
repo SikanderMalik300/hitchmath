@@ -223,7 +223,7 @@ export const SILVERADO: VehicleContent = {
     },
     {
       q: 'What is the max payload of the 2026 Silverado 1500?',
-      a: 'Chevrolet lists a maximum of 2,260 lb. Your truck’s payload depends on cab, box, drive and options, and is printed on the door-jamb sticker.',
+      a: 'Payload depends on the exact configuration. Use the number on your door-jamb sticker.',
     },
   ],
 };
