@@ -135,6 +135,7 @@ const PHOTO_URLS = {
     focalX: 50,
     focalY: 60,
     jpeg: 56, // this photo's JPEG fallback was over budget at the default quality
+    avif: 20, // heavy log photo: cap AVIF quality so 600w <= 35 KB, 480w <= 25 KB
   },
   'scale-ticket': {
     file: 'pickup-towing-cabin-trailer',
@@ -153,6 +154,7 @@ const PHOTO_URLS = {
     url: 'https://images.unsplash.com/photo-1635452310050-6f0c0b969a8f?q=85&w=2600&auto=format&fit=crop',
     focalX: 50,
     focalY: 68,
+    avif: 32, // detailed desert scene: cap AVIF so the 480w tile stays <= 25 KB
   },
   tundra: {
     file: 'pickup-towing-boat-coastal-road',
@@ -195,12 +197,15 @@ async function processPhoto(id) {
   const sh = meta.height;
   const jpegQ = info.jpeg ?? 70;
 
-  // AVIF quality tuned to the budgets: tile <= 35 KB at 600, hero <= 120 KB at 1280.
+  // Widths: tiles 320/480/600 (square), heroes/figures 640/960/1280 (4:3).
+  // Targets: 480w tile <= 25 KB AVIF, 960w hero <= 60 KB AVIF.
   const targets = [
-    { w: 300, h: 300, avif: 50 },
-    { w: 600, h: 600, avif: 42 },
-    { w: 640, h: 480, avif: 50 },
-    { w: 1280, h: 960, avif: 42 },
+    { w: 320, h: 320, avif: 46 },
+    { w: 480, h: 480, avif: 42 },
+    { w: 600, h: 600, avif: 40 },
+    { w: 640, h: 480, avif: 46 },
+    { w: 960, h: 720, avif: 42 },
+    { w: 1280, h: 960, avif: 40 },
   ];
   for (const t of targets) {
     // Exact focal-point cover crop: scale to cover, then extract a window centred
@@ -216,7 +221,9 @@ async function processPhoto(id) {
       .resize(rw, rh)
       .extract({ left, top, width: t.w, height: t.h });
     const out = path.join(IMAGES, `${info.file}-${t.w}`);
-    await base.clone().avif({ quality: t.avif, effort: 6 }).toFile(`${out}.avif`);
+    // info.avif caps the AVIF quality for a heavy photo (e.g. pickup-bed logs).
+    const avifQ = info.avif != null ? Math.min(info.avif, t.avif) : t.avif;
+    await base.clone().avif({ quality: avifQ, effort: 6 }).toFile(`${out}.avif`);
     await base.clone().webp({ quality: 72 }).toFile(`${out}.webp`);
     await base.clone().jpeg({ quality: jpegQ, mozjpeg: true }).toFile(`${out}.jpg`);
   }

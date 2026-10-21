@@ -18,6 +18,10 @@ const manrope = localFont({
   ],
   display: 'swap',
   variable: '--font-manrope',
+  // Don't preload the font files: they would compete with the hero image, which is
+  // the LCP element. display:swap paints the H1 immediately with the size-adjusted
+  // fallback, so text is never blocked.
+  preload: false,
 });
 
 export const metadata: Metadata = {

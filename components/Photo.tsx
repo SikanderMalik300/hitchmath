@@ -32,7 +32,7 @@ function Picture({ id, widths, sizes, width, height, priority, className }: Pict
         className={className}
         style={{ objectPosition: `${photo.focalX}% ${photo.focalY}%` }}
         loading={priority ? 'eager' : 'lazy'}
-        decoding={priority ? 'auto' : 'async'}
+        decoding={priority ? 'sync' : 'async'}
         {...(priority ? { fetchPriority: 'high' as const } : {})}
       />
     </picture>
@@ -59,7 +59,7 @@ export function HeroPhoto({ id, label }: { id: PhotoId; label: string }) {
   return (
     <Picture
       id={id}
-      widths={[1280, 640]}
+      widths={[1280, 960, 640]}
       sizes="(min-width: 768px) 45vw, 100vw"
       width={1280}
       height={960}
@@ -77,7 +77,7 @@ export function TilePhoto({ id, label }: { id: PhotoId; label: string }) {
   return (
     <Picture
       id={id}
-      widths={[600, 300]}
+      widths={[600, 480, 320]}
       sizes="(min-width: 1024px) 280px, (min-width: 640px) 45vw, 90vw"
       width={600}
       height={600}
@@ -98,7 +98,7 @@ export function FigurePhoto({ id, label }: { id: PhotoId; label: string }) {
     <figure>
       <Picture
         id={id}
-        widths={[1280, 640]}
+        widths={[1280, 960, 640]}
         sizes="(min-width: 768px) 720px, 100vw"
         width={1280}
         height={720}

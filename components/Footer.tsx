@@ -83,10 +83,7 @@ export default function Footer() {
 
         <p className="mt-6 text-small text-muted">
           {SITE.name} is run by {SITE.author} ·{' '}
-          <a
-            href={`mailto:${SITE.email}`}
-            className="text-brand hover:underline underline-offset-2"
-          >
+          <a href={`mailto:${SITE.email}`} className="link">
             {SITE.email}
           </a>
         </p>

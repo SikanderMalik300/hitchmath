@@ -43,13 +43,15 @@ export default function Home() {
 
   return (
     <>
-      {/* Preload the hero image (the mobile LCP competitor) so it paints early. */}
+      {/* Preload the hero image (the LCP element) so it is discovered immediately.
+          imageSrcSet/imageSizes match the hero <source> so the right width is used. */}
       {photoAvailable('tow-hero') && (
         <link
           rel="preload"
           as="image"
-          href="/images/suv-towing-travel-trailer-desert-road-1280.avif"
           type="image/avif"
+          imageSrcSet="/images/suv-towing-travel-trailer-desert-road-1280.avif 1280w, /images/suv-towing-travel-trailer-desert-road-960.avif 960w, /images/suv-towing-travel-trailer-desert-road-640.avif 640w"
+          imageSizes="(min-width: 768px) 45vw, 100vw"
           fetchPriority="high"
         />
       )}
