@@ -4,7 +4,6 @@ import { getPage } from '@/lib/registry';
 import { buildMetadata } from '@/lib/seo';
 import Breadcrumbs from '@/components/Breadcrumbs';
 import { CollectionPage, BreadcrumbList, type Crumb } from '@/components/JsonLd';
-import PhotoTile from '@/components/PhotoTile';
 import { RefTable } from '@/components/Tables';
 import { SectionH2 } from '@/components/content';
 import { VEHICLES_BY_SLUG } from '@/lib/data/vehicles';
@@ -14,13 +13,38 @@ import { fmt } from '@/lib/format';
 const page = getPage('towing-capacity');
 export const metadata: Metadata = buildMetadata(page);
 
-const VEHICLES = [
-  'toyota-tacoma-towing-capacity',
-  'ford-f150-towing-capacity',
-  'toyota-tundra-towing-capacity',
-  'ram-1500-towing-capacity',
-  'chevy-silverado-1500-towing-capacity',
-  'toyota-4runner-towing-capacity',
+const GROUPS: { heading: string; slugs: string[] }[] = [
+  {
+    heading: 'Full-size trucks',
+    slugs: [
+      'ford-f150-towing-capacity',
+      'toyota-tundra-towing-capacity',
+      'ram-1500-towing-capacity',
+      'chevy-silverado-1500-towing-capacity',
+    ],
+  },
+  {
+    heading: 'Midsize and compact trucks',
+    slugs: [
+      'toyota-tacoma-towing-capacity',
+      'ford-ranger-towing-capacity',
+      'chevy-colorado-towing-capacity',
+      'honda-ridgeline-towing-capacity',
+      'ford-maverick-towing-capacity',
+    ],
+  },
+  {
+    heading: 'SUVs and crossovers',
+    slugs: [
+      'toyota-4runner-towing-capacity',
+      'ford-bronco-towing-capacity',
+      'ford-explorer-towing-capacity',
+      'toyota-highlander-towing-capacity',
+      'honda-pilot-towing-capacity',
+      'toyota-rav4-towing-capacity',
+      'subaru-outback-towing-capacity',
+    ],
+  },
 ];
 
 function payloadCell(slug: string): string {
@@ -48,34 +72,26 @@ export default function Page() {
         payload and the source.
       </p>
 
-      <section className="mt-8 space-y-3">
-        <RefTable
-          columns={['Vehicle', 'Max towing', 'Max payload', 'Page']}
-          rows={VEHICLES.map((slug) => {
-            const p = getPage(slug);
-            const data = VEHICLES_BY_SLUG[slug];
-            return [
-              `${data.year} ${data.make} ${data.model}`,
-              `${fmt(maxTrailer(data.rows))} lb`,
-              payloadCell(slug),
-              <Link key={slug} href={p.path} prefetch={false} className="link">
-                Open
-              </Link>,
-            ];
-          })}
-        />
-      </section>
-
-      <section className="mt-10">
-        <div className="grid grid-cols-2 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {VEHICLES.map((slug) => {
-            const p = getPage(slug);
-            return (
-              <PhotoTile key={slug} href={p.path} name={p.tileName ?? p.h1} line={p.tileLine} photoId={p.photoId} />
-            );
-          })}
-        </div>
-      </section>
+      {GROUPS.map((group) => (
+        <section key={group.heading} className="mt-10 space-y-3">
+          <SectionH2>{group.heading}</SectionH2>
+          <RefTable
+            columns={['Vehicle', 'Max towing', 'Max payload', 'Page']}
+            rows={group.slugs.map((slug) => {
+              const p = getPage(slug);
+              const data = VEHICLES_BY_SLUG[slug];
+              return [
+                `${data.year} ${data.make} ${data.model}`,
+                `${fmt(maxTrailer(data.rows))} lb`,
+                payloadCell(slug),
+                <Link key={slug} href={p.path} prefetch={false} className="link">
+                  Open
+                </Link>,
+              ];
+            })}
+          />
+        </section>
+      ))}
     </article>
   );
 }

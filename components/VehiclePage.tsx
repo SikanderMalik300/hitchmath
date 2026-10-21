@@ -64,6 +64,13 @@ export default function VehiclePage({
       <section className="mt-10 space-y-3">
         <SectionH2>Every configuration</SectionH2>
         <VehicleTable data={data} />
+        {data.tableNotes && data.tableNotes.length > 0 && (
+          <ul className="list-disc space-y-1 pl-5 text-small text-muted">
+            {data.tableNotes.map((n) => (
+              <li key={n}>{n}</li>
+            ))}
+          </ul>
+        )}
       </section>
 
       {page.photoId && (
@@ -85,6 +92,9 @@ export default function VehiclePage({
         <section className="mt-10 space-y-3">
           <SectionH2>Year history</SectionH2>
           <HistoryTableView table={data.yearHistory} />
+          {data.yearHistoryNote && (
+            <p className="text-small text-muted">{data.yearHistoryNote}</p>
+          )}
         </section>
       )}
 

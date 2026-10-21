@@ -13,3 +13,13 @@ Towing math for US truck and SUV owners. Calculators that show their work and ve
 - [Ram 1500 towing capacity (2026): every engine](https://hitchmath.com/ram-1500-towing-capacity/): Every 2026 Ram 1500 engine with max tow and payload from Ram’s chart.
 - [Chevy Silverado 1500 towing capacity (2026): every engine, cab and box](https://hitchmath.com/chevy-silverado-1500-towing-capacity/): Every 2026 Silverado 1500 engine, cab and box with GCWR.
 - [Toyota 4Runner towing capacity (2026): every trim](https://hitchmath.com/toyota-4runner-towing-capacity/): All 16 versions of the 2026 4Runner with payload computed from Toyota specs.
+- [Ford Maverick towing capacity (2026): hybrid and EcoBoost](https://hitchmath.com/ford-maverick-towing-capacity/): Every 2026 Maverick engine and package with GCWR from Ford’s 2026 guide.
+- [Toyota Highlander towing capacity (2026): gas vs hybrid](https://hitchmath.com/toyota-highlander-towing-capacity/): Every 2026 Highlander grade with payload computed from Toyota’s specs.
+- [Toyota RAV4 towing capacity (2026): FWD vs AWD](https://hitchmath.com/toyota-rav4-towing-capacity/): Every 2026 RAV4 grade and drive with payload from Toyota’s specs.
+- [Ford Ranger towing capacity (2026): every engine](https://hitchmath.com/ford-ranger-towing-capacity/): Every 2026 Ranger engine with GCWR from Ford’s 2026 guide.
+- [Honda Ridgeline towing capacity (2026): every trim](https://hitchmath.com/honda-ridgeline-towing-capacity/): All four 2026 Ridgeline trims with payload, GVWR and GCWR from Honda.
+- [Chevy Colorado towing capacity (2026): every package](https://hitchmath.com/chevy-colorado-towing-capacity/): Every 2026 Colorado package with GCWR from Chevrolet’s 2026 guide.
+- [Ford Bronco towing capacity (2026): every trim](https://hitchmath.com/ford-bronco-towing-capacity/): Every 2026 Bronco engine, axle and door count with GCWR from Ford’s guide.
+- [Ford Explorer towing capacity (2026): every engine](https://hitchmath.com/ford-explorer-towing-capacity/): Every 2026 retail Explorer engine and drive with GCWR from Ford’s guide.
+- [Honda Pilot towing capacity (2026): 2WD vs AWD](https://hitchmath.com/honda-pilot-towing-capacity/): Every 2026 Pilot trim and drive with curb weight from Honda’s specs.
+- [Subaru Outback towing capacity (2026): every trim](https://hitchmath.com/subaru-outback-towing-capacity/): Every 2026 Outback trim with curb weight from Subaru’s comparison sheet.

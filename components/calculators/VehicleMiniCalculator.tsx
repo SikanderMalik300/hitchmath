@@ -4,7 +4,7 @@ import { useMemo, useState, useCallback } from 'react';
 import { checkTow } from '@/lib/calc/tow';
 import { fmt } from '@/lib/format';
 import type { VehicleData } from '@/lib/data/vehicles/types';
-import { configLabel } from '@/lib/data/vehicles/types';
+import { miniConfigs } from '@/lib/data/vehicles/types';
 import { track } from '@/lib/analytics';
 import {
   Field,
@@ -42,9 +42,10 @@ export default function VehicleMiniCalculator({
   const [moreOpen, setMoreOpen] = useState(false);
   const markUsed = useToolUsed();
 
-  const row = useMemo(
-    () => data.rows.find((r) => r.id === configId) ?? data.rows[0],
-    [data.rows, configId],
+  const configs = useMemo(() => miniConfigs(data), [data]);
+  const cfg = useMemo(
+    () => configs.find((c) => c.id === configId) ?? configs[0],
+    [configs, configId],
   );
 
   const num = (raw: string): number | null => {
@@ -53,25 +54,25 @@ export default function VehicleMiniCalculator({
     return Number.isFinite(n) ? n : null;
   };
 
-  const payloadCapacity = row.payload ?? num(payloadOverride);
+  const payloadCapacity = cfg.payload ?? num(payloadOverride);
 
   const result = useMemo(
     () =>
       checkTow({
         trailerWeight: num(trailer),
         trailerType: 'conventional',
-        maxTrailerRating: row.maxTrailer,
+        maxTrailerRating: cfg.maxTrailer,
         payloadCapacity,
-        gvwr: row.gvwr ?? null,
-        curbWeight: row.curbWeight ?? null,
-        gcwr: row.gcwr ?? null,
+        gvwr: cfg.gvwr ?? null,
+        curbWeight: cfg.curbWeight ?? null,
+        gcwr: cfg.gcwr ?? null,
         people: num(people),
         cargo: num(cargo),
         hitchHardware: num(hitch),
-        receiverTongueRating: row.maxTongue ?? null,
+        receiverTongueRating: cfg.maxTongue ?? null,
       }),
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [row, trailer, people, cargo, hitch, payloadCapacity],
+    [cfg, trailer, people, cargo, hitch, payloadCapacity],
   );
 
   const statusOf = (id: string): Status =>
@@ -84,10 +85,10 @@ export default function VehicleMiniCalculator({
       : 'Over: ' + result.failures.map((f) => `${f.label} by ${fmt(f.overBy)} lb`).join(', ');
 
   const notCheckedNotes: string[] = [];
-  if (row.gvwr == null && row.gcwr == null) {
+  if (cfg.gvwr == null && cfg.gcwr == null) {
     notCheckedNotes.push('GVWR and GCWR not checked: enter them in the full calculator.');
   }
-  if (row.payload == null && payloadCapacity == null) {
+  if (cfg.payload == null && payloadCapacity == null) {
     notCheckedNotes.push('Payload not checked until you enter it.');
   }
 
@@ -109,7 +110,7 @@ export default function VehicleMiniCalculator({
                 track('config_selected', { config: v });
                 setConfigId(v);
               }}
-              options={data.rows.map((r) => ({ value: r.id, label: configLabel(r) }))}
+              options={configs.map((c) => ({ value: c.id, label: c.label }))}
             />
           </div>
           <Field
@@ -139,7 +140,7 @@ export default function VehicleMiniCalculator({
               setCargo(v);
             }}
           />
-          {row.payload == null && (
+          {cfg.payload == null && (
             <Field
               id="v-payload"
               label="Payload from your door-jamb sticker (lb)"
@@ -187,7 +188,7 @@ export default function VehicleMiniCalculator({
             </CheckRow>
             {statusOf('receiverTongue') !== 'notChecked' && (
               <CheckRow status={statusOf('receiverTongue')}>
-                Tongue vs {fmt(row.maxTongue)} lb max tongue
+                Tongue vs {fmt(cfg.maxTongue)} lb max tongue
               </CheckRow>
             )}
             {result.combined !== null && (

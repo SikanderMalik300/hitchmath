@@ -51,7 +51,7 @@ export default function VehicleTable({ data }: { data: VehicleData }) {
       <table className="w-full border-collapse text-small">
         <caption className="caption-bottom px-4 py-3 text-left text-small text-muted">
           {data.year} {data.make} {data.model} towing capacity by configuration. Source: {src.name},
-          read {src.accessed}.
+          read {data.readDate ?? src.accessed}.
           {data.tableNote && <span className="mt-1 block">{data.tableNote}</span>}
         </caption>
         <thead>

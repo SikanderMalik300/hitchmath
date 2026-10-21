@@ -32,20 +32,17 @@ for (let i = 1; i <= MAX; i++) {
   console.log(`[poll ${i}] checks=[${runs.join(' | ')}] statuses=[${statuses.join(' | ')}] deploys=[${depLine.join(' | ')}]`);
 
   const allChecks = checks.check_runs || [];
+  // Cloudflare Pages reports its deploy as a GitHub check run (not the Deployments API).
+  const cf = allChecks.find((c) => /cloudflare/i.test(c.name));
   const terminalChecks = allChecks.length > 0 && allChecks.every((c) => c.status === 'completed');
-  const combined = status.state; // success | failure | pending | error
-  const anyDeploySuccess = depLine.some((l) => l.includes(': success'));
-  const anyDeployFail = depLine.some((l) => /: (failure|error|inactive)/.test(l));
 
-  if ((terminalChecks || combined === 'success' || combined === 'failure') && (allChecks.length || statuses.length || depLine.length)) {
-    const greenChecks = allChecks.length === 0 || allChecks.every((c) => c.conclusion === 'success' || c.conclusion === 'neutral' || c.conclusion === 'skipped');
-    const green = (combined === 'success' || combined === 'pending' && allChecks.length > 0) && greenChecks;
+  if (terminalChecks && allChecks.length) {
+    const greenChecks = allChecks.every((c) => ['success', 'neutral', 'skipped'].includes(c.conclusion));
     console.log('\nRESULT:');
-    console.log('  combined commit status:', combined);
-    console.log('  check runs green:', greenChecks);
-    console.log('  cloudflare deploy success:', anyDeploySuccess, anyDeployFail ? '(a failure/inactive seen)' : '');
-    if ((greenChecks && anyDeploySuccess) || (combined === 'success' && anyDeploySuccess)) { console.log('  => GREEN + DEPLOY SUCCESS'); process.exit(0); }
-    if (combined === 'failure' || anyDeployFail) { console.log('  => NOT GREEN'); process.exit(2); }
+    console.log('  check runs:', allChecks.map((c) => `${c.name}=${c.conclusion}`).join(', '));
+    console.log('  cloudflare deploy:', cf ? `${cf.conclusion} (${cf.output?.title ?? ''})` : 'no cloudflare check');
+    if (greenChecks && cf && cf.conclusion === 'success') { console.log('  => GREEN + DEPLOY SUCCESS'); process.exit(0); }
+    console.log('  => NOT GREEN'); process.exit(2);
   }
   if (checks._error || status._error) console.log('  (api note: rate-remaining', checks._rl ?? status._rl, ')');
   await wait(20000);

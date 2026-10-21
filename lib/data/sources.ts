@@ -29,7 +29,13 @@ export type SourceId =
   | 'nrvta-80'
   | 'j2807-overview'
   | 'forestriver-defs'
-  | 'chevy-silverado1500-page-2026';
+  | 'chevy-silverado1500-page-2026'
+  | 'toyota-highlander-specs-2026'
+  | 'toyota-rav4-specs-2026'
+  | 'toyota-press-rav4-2026'
+  | 'honda-ridgeline-specs-2026'
+  | 'honda-pilot-specs-2026'
+  | 'subaru-outback-specs-2026';
 
 export interface Source {
   id: SourceId;
@@ -208,6 +214,42 @@ export const SOURCES: Record<SourceId, Source> = {
     name: 'Chevrolet, 2026 Silverado 1500 product page',
     url: 'https://www.chevrolet.com/trucks/previous-year/silverado/1500',
     accessed: '2026-10-20',
+  },
+  'toyota-highlander-specs-2026': {
+    id: 'toyota-highlander-specs-2026',
+    name: 'Toyota, 2026 Highlander specifications (Weights/Capacities)',
+    url: 'https://www.toyota.com/highlander/features/weights_capacities',
+    accessed: '2026-10-21',
+  },
+  'toyota-rav4-specs-2026': {
+    id: 'toyota-rav4-specs-2026',
+    name: 'Toyota, 2026 RAV4 specifications (Weights/Capacities)',
+    url: 'https://www.toyota.com/rav4/features/weights_capacities',
+    accessed: '2026-10-21',
+  },
+  'toyota-press-rav4-2026': {
+    id: 'toyota-press-rav4-2026',
+    name: 'Toyota Newsroom, The Next Adventure Begins: 2026 RAV4 Arrives this Winter',
+    url: 'https://pressroom.toyota.com/the-next-adventure-begins-2026-rav4-arrives-this-winter/',
+    accessed: '2026-10-21',
+  },
+  'honda-ridgeline-specs-2026': {
+    id: 'honda-ridgeline-specs-2026',
+    name: 'Honda News, 2026 Honda Ridgeline Specifications & Features',
+    url: 'https://hondanews.com/en-US/honda-automobiles/releases/release-cc341be273b56f82f9ccdc8fe2000550-2026-honda-ridgeline-specifications-features',
+    accessed: '2026-10-21',
+  },
+  'honda-pilot-specs-2026': {
+    id: 'honda-pilot-specs-2026',
+    name: 'Honda News, 2026 Honda Pilot Specifications & Features',
+    url: 'https://hondanews.com/en-US/honda-automobiles/releases/release-14c469388b7fed5af247fc02e2009aa7-2026-honda-pilot-specifications-features',
+    accessed: '2026-10-21',
+  },
+  'subaru-outback-specs-2026': {
+    id: 'subaru-outback-specs-2026',
+    name: 'Subaru, 2026 Outback trim comparison (Compare Specs)',
+    url: 'https://www.subaru.com/services/vehicles/pdf/trimComparison/2026/OBK',
+    accessed: '2026-10-21',
   },
 };
 

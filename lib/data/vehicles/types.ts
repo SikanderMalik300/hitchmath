@@ -1,5 +1,10 @@
 import type { SourceId } from '../sources';
 
+export interface TrimEntry {
+  name: string;
+  maxTrailer: number;
+}
+
 export interface VehicleRow {
   id: string;
   grade?: string;
@@ -11,6 +16,7 @@ export interface VehicleRow {
   transmission?: string;
   axle?: string;
   package?: string;
+  doors?: string;
   gcwr?: number;
   maxTrailer: number;
   maxTongue?: number;
@@ -19,6 +25,8 @@ export interface VehicleRow {
   curbWeight?: number;
   gvwr?: number;
   note?: string;
+  label?: string; // explicit mini-calculator dropdown label when the generic one is ambiguous
+  trims?: TrimEntry[]; // one row covers several rated trims (Bronco); each trim is a mini-calc option
   source: SourceId;
 }
 
@@ -31,6 +39,8 @@ export type ColumnKey =
   | 'transmission'
   | 'axle'
   | 'package'
+  | 'doors'
+  | 'trimsRated'
   | 'gcwr'
   | 'maxTrailer'
   | 'maxTongue'
@@ -68,9 +78,58 @@ export interface VehicleData {
   rows: VehicleRow[];
   columns: VehicleColumn[];
   tableNote?: string; // disclaimer line under the main table
+  tableNotes?: string[]; // extra notes under the table (e.g. Ford guide notes)
   yearHistory?: HistoryTable; // not every page has a year-history table
+  yearHistoryNote?: string; // line under the year history ("Older model years are added...")
+  readDate?: string; // caption "read {date}" override (defaults to the source's accessed date)
   gcwrTable?: SimpleTable; // optional separate reference table (F-150 GCWR, Ram per-cab)
   detailTableTitle?: string; // heading for gcwrTable (default "GCWR rows")
+}
+
+/** A selectable configuration in the "Check your setup" mini calculator. */
+export interface MiniConfig {
+  id: string;
+  label: string;
+  maxTrailer: number;
+  maxTongue?: number;
+  gcwr?: number;
+  payload?: number;
+  gvwr?: number;
+  curbWeight?: number;
+}
+
+/** Flatten a vehicle's rows into mini-calculator options (expanding trim arrays). */
+export function miniConfigs(data: VehicleData): MiniConfig[] {
+  const out: MiniConfig[] = [];
+  for (const row of data.rows) {
+    if (row.trims && row.trims.length) {
+      const prefix = [row.engine, row.axle, row.doors].filter(Boolean).join(' · ');
+      row.trims.forEach((t, i) => {
+        out.push({
+          id: `${row.id}#${i}`,
+          label: `${prefix} · ${t.name} (${t.maxTrailer.toLocaleString('en-US')} lb)`,
+          maxTrailer: t.maxTrailer,
+          maxTongue: row.maxTongue,
+          gcwr: row.gcwr,
+          payload: row.payload,
+          gvwr: row.gvwr,
+          curbWeight: row.curbWeight,
+        });
+      });
+    } else {
+      out.push({
+        id: row.id,
+        label: row.label ?? configLabel(row),
+        maxTrailer: row.maxTrailer,
+        maxTongue: row.maxTongue,
+        gcwr: row.gcwr,
+        payload: row.payload,
+        gvwr: row.gvwr,
+        curbWeight: row.curbWeight,
+      });
+    }
+  }
+  return out;
 }
 
 export function maxTrailer(rows: VehicleRow[]): number {
@@ -124,6 +183,12 @@ export function cellValue(row: VehicleRow, key: ColumnKey): string {
       return row.axle ?? '';
     case 'package':
       return row.package ?? '';
+    case 'doors':
+      return row.doors ?? '';
+    case 'trimsRated':
+      return (row.trims ?? [])
+        .map((t) => `${t.name} ${t.maxTrailer.toLocaleString('en-US')}`)
+        .join('; ');
     case 'note':
       return row.note ?? '';
     case 'gcwr':

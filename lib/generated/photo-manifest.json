@@ -8,5 +8,15 @@
   "tundra": true,
   "ram1500": true,
   "silverado": true,
-  "4runner": true
+  "4runner": true,
+  "maverick": true,
+  "highlander": true,
+  "rav4": true,
+  "ranger": true,
+  "ridgeline": true,
+  "colorado": true,
+  "bronco": true,
+  "explorer": true,
+  "pilot": true,
+  "outback": true
 }

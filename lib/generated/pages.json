@@ -77,6 +77,76 @@
     "category": "vehicle"
   },
   {
+    "slug": "ford-maverick-towing-capacity",
+    "path": "/ford-maverick-towing-capacity/",
+    "h1": "Ford Maverick towing capacity (2026): hybrid and EcoBoost",
+    "description": "Every 2026 Maverick engine and package with GCWR from Ford’s 2026 guide.",
+    "category": "vehicle"
+  },
+  {
+    "slug": "toyota-highlander-towing-capacity",
+    "path": "/toyota-highlander-towing-capacity/",
+    "h1": "Toyota Highlander towing capacity (2026): gas vs hybrid",
+    "description": "Every 2026 Highlander grade with payload computed from Toyota’s specs.",
+    "category": "vehicle"
+  },
+  {
+    "slug": "toyota-rav4-towing-capacity",
+    "path": "/toyota-rav4-towing-capacity/",
+    "h1": "Toyota RAV4 towing capacity (2026): FWD vs AWD",
+    "description": "Every 2026 RAV4 grade and drive with payload from Toyota’s specs.",
+    "category": "vehicle"
+  },
+  {
+    "slug": "ford-ranger-towing-capacity",
+    "path": "/ford-ranger-towing-capacity/",
+    "h1": "Ford Ranger towing capacity (2026): every engine",
+    "description": "Every 2026 Ranger engine with GCWR from Ford’s 2026 guide.",
+    "category": "vehicle"
+  },
+  {
+    "slug": "honda-ridgeline-towing-capacity",
+    "path": "/honda-ridgeline-towing-capacity/",
+    "h1": "Honda Ridgeline towing capacity (2026): every trim",
+    "description": "All four 2026 Ridgeline trims with payload, GVWR and GCWR from Honda.",
+    "category": "vehicle"
+  },
+  {
+    "slug": "chevy-colorado-towing-capacity",
+    "path": "/chevy-colorado-towing-capacity/",
+    "h1": "Chevy Colorado towing capacity (2026): every package",
+    "description": "Every 2026 Colorado package with GCWR from Chevrolet’s 2026 guide.",
+    "category": "vehicle"
+  },
+  {
+    "slug": "ford-bronco-towing-capacity",
+    "path": "/ford-bronco-towing-capacity/",
+    "h1": "Ford Bronco towing capacity (2026): every trim",
+    "description": "Every 2026 Bronco engine, axle and door count with GCWR from Ford’s guide.",
+    "category": "vehicle"
+  },
+  {
+    "slug": "ford-explorer-towing-capacity",
+    "path": "/ford-explorer-towing-capacity/",
+    "h1": "Ford Explorer towing capacity (2026): every engine",
+    "description": "Every 2026 retail Explorer engine and drive with GCWR from Ford’s guide.",
+    "category": "vehicle"
+  },
+  {
+    "slug": "honda-pilot-towing-capacity",
+    "path": "/honda-pilot-towing-capacity/",
+    "h1": "Honda Pilot towing capacity (2026): 2WD vs AWD",
+    "description": "Every 2026 Pilot trim and drive with curb weight from Honda’s specs.",
+    "category": "vehicle"
+  },
+  {
+    "slug": "subaru-outback-towing-capacity",
+    "path": "/subaru-outback-towing-capacity/",
+    "h1": "Subaru Outback towing capacity (2026): every trim",
+    "description": "Every 2026 Outback trim with curb weight from Subaru’s comparison sheet.",
+    "category": "vehicle"
+  },
+  {
     "slug": "towing-calculators",
     "path": "/towing-calculators/",
     "h1": "Towing calculators",

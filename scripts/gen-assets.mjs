@@ -180,6 +180,67 @@ const PHOTO_URLS = {
     focalX: 62,
     focalY: 55,
   },
+  maverick: {
+    file: 'orange-pickup-hilltop-camp',
+    url: 'https://images.pexels.com/photos/26743193/pexels-photo-26743193.jpeg?auto=compress&cs=tinysrgb&w=2600',
+    focalX: 25,
+    focalY: 60,
+  },
+  highlander: {
+    file: 'highlander-towing-trailer-mountain-lake',
+    url: 'https://images.unsplash.com/photo-1758238249729-252075afac93?q=85&w=2600&auto=format&fit=crop',
+    focalX: 45,
+    focalY: 70,
+  },
+  rav4: {
+    file: 'small-vintage-trailer-green-field',
+    url: 'https://images.unsplash.com/photo-1592351763700-b9b35a6465ea?q=85&w=2600&auto=format&fit=crop',
+    focalX: 70,
+    focalY: 70,
+  },
+  ranger: {
+    file: 'orange-midsize-pickup-mountain-ridge',
+    url: 'https://images.pexels.com/photos/18864554/pexels-photo-18864554.jpeg?auto=compress&cs=tinysrgb&w=2600',
+    focalX: 45,
+    focalY: 65,
+  },
+  ridgeline: {
+    file: 'silver-pickup-dirt-road-valley',
+    url: 'https://images.pexels.com/photos/5652670/pexels-photo-5652670.jpeg?auto=compress&cs=tinysrgb&w=2600',
+    focalX: 50,
+    focalY: 70,
+  },
+  colorado: {
+    file: 'pickup-rooftop-tent-grassland',
+    url: 'https://images.pexels.com/photos/17767192/pexels-photo-17767192.jpeg?auto=compress&cs=tinysrgb&w=2600',
+    focalX: 55,
+    focalY: 65,
+  },
+  bronco: {
+    file: 'offroad-suvs-mountain-campsite',
+    url: 'https://images.pexels.com/photos/9899941/pexels-photo-9899941.jpeg?auto=compress&cs=tinysrgb&w=2600',
+    focalX: 55,
+    focalY: 65,
+  },
+  explorer: {
+    file: 'white-suv-roof-box-desert',
+    url: 'https://images.unsplash.com/photo-1598502756988-2f2182e30001?q=85&w=2600&auto=format&fit=crop',
+    focalX: 60,
+    focalY: 70,
+  },
+  pilot: {
+    file: 'white-suv-rooftop-tent-lake',
+    url: 'https://images.pexels.com/photos/6271666/pexels-photo-6271666.jpeg?auto=compress&cs=tinysrgb&w=2600',
+    focalX: 55,
+    focalY: 55,
+    avif: 28, // bright, detailed lake scene: cap AVIF so 480w <= 25 KB, 960w <= 60 KB
+  },
+  outback: {
+    file: 'small-car-teardrop-trailer-field',
+    url: 'https://images.pexels.com/photos/5458436/pexels-photo-5458436.jpeg?auto=compress&cs=tinysrgb&w=2600',
+    focalX: 50,
+    focalY: 80,
+  },
 };
 
 async function processPhoto(id) {

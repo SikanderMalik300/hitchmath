@@ -106,6 +106,11 @@ export default function Home() {
               );
             })}
           </div>
+          <div className="mt-6">
+            <Link href="/towing-capacity/" prefetch={false} className="link">
+              See all 16 vehicles
+            </Link>
+          </div>
         </div>
       </section>
 
