@@ -68,7 +68,8 @@ describe.skipIf(!hasOut)('built output: schema, captions, framing, embeds', () =
     }
   });
 
-  it('WebPage dateModified matches a visible date on the page (fix-04 §1)', () => {
+  it('WebPage dateModified is ISO 8601 and starts with the visible date (fix-05)', () => {
+    const ISO = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}[+-]\d{2}:\d{2}$/;
     for (const f of files) {
       const html = readFileSync(f, 'utf8');
       const webpage = jsonLd(html).find((n) => (n as Record<string, unknown>)['@type'] === 'WebPage') as
@@ -76,7 +77,8 @@ describe.skipIf(!hasOut)('built output: schema, captions, framing, embeds', () =
         | undefined;
       if (!webpage) continue;
       const dm = webpage.dateModified as string;
-      expect(visibleText(html).includes(dm), `${f}: dateModified ${dm} not visible`).toBe(true);
+      expect(dm, `${f}: dateModified not ISO 8601`).toMatch(ISO);
+      expect(visibleText(html).includes(dm.slice(0, 10)), `${f}: date ${dm.slice(0, 10)} not visible`).toBe(true);
     }
   });
 

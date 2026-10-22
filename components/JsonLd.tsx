@@ -1,5 +1,6 @@
 // JSON-LD helpers (A4, fix-04). Every schema must match visible text.
 import { SITE, absUrl, type PageEntry } from '@/lib/registry';
+import { isoCentral } from '@/lib/datetime';
 
 const ORG_ID = `${SITE.domain}/#organization`;
 const WEBSITE_ID = `${SITE.domain}/#website`;
@@ -92,8 +93,9 @@ export function ContentGraph({
 }) {
   const url = absUrl(page.path);
   const webpageId = `${url}#webpage`;
-  const datePublished = page.datePublished ?? page.lastUpdated;
-  const dateModified = page.lastUpdated;
+  // Full ISO 8601 with time + offset (fix-05); the visible date stays date-only.
+  const datePublished = isoCentral(page.datePublished ?? page.lastUpdated);
+  const dateModified = isoCentral(page.lastUpdated);
   const name = page.title.replace(/ \| HitchMath$/, '');
   const authorRef = { '@id': SITE.authorPersonId };
 
