@@ -1,5 +1,5 @@
 import Breadcrumbs from './Breadcrumbs';
-import { ArticleSchema, BreadcrumbList, FaqPage, type Crumb, type FaqItem } from './JsonLd';
+import { ContentGraph, type Crumb, type FaqItem } from './JsonLd';
 import { QuickAnswer, SectionH2, Related } from './content';
 import Faq from './Faq';
 import Sources from './Sources';
@@ -40,9 +40,13 @@ export default function VehiclePage({
 
   return (
     <article className="container-x section-y">
-      <ArticleSchema page={page} image={page.photoId ? ogImagePath(page.slug) : undefined} />
-      <BreadcrumbList crumbs={crumbs} />
-      <FaqPage items={content.faq} />
+      <ContentGraph
+        page={page}
+        kind="vehicle"
+        crumbs={crumbs}
+        faq={content.faq}
+        image={page.photoId ? ogImagePath(page.slug) : undefined}
+      />
 
       <Breadcrumbs crumbs={crumbs} />
       <h1 className="mt-4 text-h1-m md:text-h1 font-medium text-ink">{page.h1}</h1>
@@ -91,7 +95,10 @@ export default function VehiclePage({
       {data.yearHistory && (
         <section className="mt-10 space-y-3">
           <SectionH2>Year history</SectionH2>
-          <HistoryTableView table={data.yearHistory} />
+          <HistoryTableView
+            table={data.yearHistory}
+            caption={`${data.make} ${data.model} maximum towing by model year. Source per row.`}
+          />
           {data.yearHistoryNote && (
             <p className="text-small text-muted">{data.yearHistoryNote}</p>
           )}

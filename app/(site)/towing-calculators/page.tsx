@@ -3,10 +3,11 @@ import Link from 'next/link';
 import { getPage } from '@/lib/registry';
 import { buildMetadata } from '@/lib/seo';
 import Breadcrumbs from '@/components/Breadcrumbs';
-import { CollectionPage, BreadcrumbList, type Crumb } from '@/components/JsonLd';
+import { ContentGraph, type Crumb } from '@/components/JsonLd';
 import PhotoTile from '@/components/PhotoTile';
 import { RefTable } from '@/components/Tables';
 import { SectionH2 } from '@/components/content';
+import { UpdatedLine } from '@/components/content';
 
 const page = getPage('towing-calculators');
 export const metadata: Metadata = buildMetadata(page);
@@ -28,8 +29,7 @@ export default function Page() {
 
   return (
     <article className="container-x section-y">
-      <CollectionPage page={page} />
-      <BreadcrumbList crumbs={crumbs} />
+      <ContentGraph page={page} kind="hub" crumbs={crumbs} />
       <Breadcrumbs crumbs={crumbs} />
       <h1 className="mt-4 text-h1-m md:text-h1 font-medium text-ink">{page.h1}</h1>
       <p className="mt-4 max-w-prose text-body text-ink">
@@ -37,10 +37,14 @@ export default function Page() {
         check, payload, tongue weight and GCWR. Start with the towing capacity calculator if you’re
         not sure which limit matters.
       </p>
+      <div className="mt-3">
+        <UpdatedLine date={page.lastUpdated} />
+      </div>
 
       <section className="mt-8 space-y-3">
         <SectionH2>Which calculator?</SectionH2>
         <RefTable
+          caption="Which HitchMath calculator answers which question"
           columns={['Question', 'Tool']}
           rows={WHICH.map((w) => {
             const p = getPage(w.slug);

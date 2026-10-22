@@ -18,7 +18,8 @@ export interface PageEntry {
   tileName?: string; // short name for tiles
   tileLine?: string; // muted line under a tile
   related?: string[]; // slugs
-  lastUpdated: string; // ISO date; changes only when content changes
+  lastUpdated: string; // ISO date; changes only when content changes (= dateModified)
+  datePublished?: string; // original publish date (defaults to lastUpdated)
   sources?: SourceId[];
   photoId?: PhotoId;
   ownerNote?: string; // empty in v1
@@ -460,7 +461,9 @@ export const PAGES: PageEntry[] = [
     h1: 'Towing capacity by vehicle',
     category: 'hub',
     description: '2026 towing ratings by vehicle, from manufacturer guides and spec pages.',
-    lastUpdated: UPDATED,
+    // Updated when the newest listed vehicle changed (batch 2); first published 2026-10-19.
+    lastUpdated: UPDATED2,
+    datePublished: UPDATED,
     inSitemap: true,
   },
   // Trust pages
@@ -511,7 +514,7 @@ export const PAGES: PageEntry[] = [
   {
     slug: 'contact',
     path: '/contact/',
-    title: 'Contact HitchMath | HitchMath',
+    title: 'Contact HitchMath: Corrections and Questions',
     meta: 'Email HitchMath or use the contact form. Report a towing number that does not match your door-jamb sticker or owner’s manual.',
     h1: 'Contact',
     category: 'trust',
@@ -523,7 +526,7 @@ export const PAGES: PageEntry[] = [
   {
     slug: 'privacy',
     path: '/privacy/',
-    title: 'Privacy Policy | HitchMath',
+    title: 'Privacy Policy: What HitchMath Collects',
     meta: 'How HitchMath handles data: Cloudflare hosting and analytics, Web3Forms for the contact form, and Google Analytics 4 only when it is turned on.',
     h1: 'Privacy policy',
     category: 'legal',
@@ -534,8 +537,8 @@ export const PAGES: PageEntry[] = [
   {
     slug: 'terms',
     path: '/terms/',
-    title: 'Terms of Use | HitchMath',
-    meta: 'The terms for using HitchMath calculators and content, including the planning-only nature of the figures.',
+    title: 'Terms of Use for HitchMath Calculators',
+    meta: "The terms for using HitchMath's free towing calculators and vehicle tables, including accuracy limits, fair use and how to report an error.",
     h1: 'Terms of use',
     category: 'legal',
     description: 'Terms for using the site and its calculators.',
@@ -545,7 +548,7 @@ export const PAGES: PageEntry[] = [
   {
     slug: 'disclaimer',
     path: '/disclaimer/',
-    title: 'Disclaimer | HitchMath',
+    title: 'Disclaimer: Towing Math Is a Guide Only',
     meta: 'HitchMath figures come from manufacturer documents and are for planning only. Your door-jamb sticker and a scale ticket are the final word.',
     h1: 'Disclaimer',
     category: 'legal',
@@ -567,7 +570,7 @@ export const PAGES: PageEntry[] = [
   {
     slug: 'sitemap',
     path: '/sitemap/',
-    title: 'Sitemap | HitchMath',
+    title: 'HitchMath Sitemap: All Calculators and Vehicles',
     meta: 'Every HitchMath page with a one-line description: the calculators, the vehicle towing pages, the hubs and the trust and legal pages.',
     h1: 'Sitemap',
     category: 'legal',

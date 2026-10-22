@@ -25,6 +25,7 @@ export default function Page() {
     <>
       <SectionH2>Reference table: GCWR examples from 2026 guides</SectionH2>
       <RefTable
+        caption="GCWR examples from 2026 manufacturer guides"
         columns={['Truck (2026)', 'Configuration', 'GCWR (lb)', 'Max trailer (lb)', 'Source']}
         rows={[
           ['Chevrolet Silverado 1500', '5.3L V8, Crew Cab Short Box 4x4', '15,000', '9,300', link(gm.url, gm.name)],

@@ -1,5 +1,8 @@
-// JSON-LD helpers (A4). Every schema must match visible text.
+// JSON-LD helpers (A4, fix-04). Every schema must match visible text.
 import { SITE, absUrl, type PageEntry } from '@/lib/registry';
+
+const ORG_ID = `${SITE.domain}/#organization`;
+const WEBSITE_ID = `${SITE.domain}/#website`;
 
 function Script({ data }: { data: object }) {
   return (
@@ -11,29 +14,30 @@ function Script({ data }: { data: object }) {
   );
 }
 
+/** Site-wide Organization + WebSite (rendered once in the site layout). */
 export function OrganizationAndWebsite() {
-  const organization = {
+  const data = {
     '@context': 'https://schema.org',
-    '@type': 'Organization',
-    name: SITE.name,
-    url: SITE.domain,
-    logo: absUrl('/icon-512.png'),
-    email: SITE.email,
-    founder: { '@id': SITE.authorPersonId },
+    '@graph': [
+      {
+        '@type': 'Organization',
+        '@id': ORG_ID,
+        name: SITE.name,
+        url: SITE.domain,
+        logo: absUrl('/icon-512.png'),
+        email: SITE.email,
+        founder: { '@id': SITE.authorPersonId },
+      },
+      {
+        '@type': 'WebSite',
+        '@id': WEBSITE_ID,
+        name: SITE.name,
+        url: SITE.domain,
+        publisher: { '@id': ORG_ID },
+      },
+    ],
   };
-  const website = {
-    '@context': 'https://schema.org',
-    '@type': 'WebSite',
-    name: SITE.name,
-    url: SITE.domain,
-    publisher: { '@id': `${SITE.domain}/#organization` },
-  };
-  return (
-    <>
-      <Script data={organization} />
-      <Script data={website} />
-    </>
-  );
+  return <Script data={data} />;
 }
 
 export interface Crumb {
@@ -41,10 +45,16 @@ export interface Crumb {
   path: string;
 }
 
+/** Standalone BreadcrumbList (trust/legal pages that have no full WebPage graph). */
 export function BreadcrumbList({ crumbs }: { crumbs: Crumb[] }) {
-  const data = {
+  return <Script data={breadcrumbNode(crumbs, absUrl(crumbs[crumbs.length - 1].path))} />;
+}
+
+function breadcrumbNode(crumbs: Crumb[], pageUrl: string) {
+  return {
     '@context': 'https://schema.org',
     '@type': 'BreadcrumbList',
+    '@id': `${pageUrl}#breadcrumb`,
     itemListElement: crumbs.map((c, i) => ({
       '@type': 'ListItem',
       position: i + 1,
@@ -52,7 +62,6 @@ export function BreadcrumbList({ crumbs }: { crumbs: Crumb[] }) {
       item: absUrl(c.path),
     })),
   };
-  return <Script data={data} />;
 }
 
 export interface FaqItem {
@@ -61,61 +70,112 @@ export interface FaqItem {
   aNode?: React.ReactNode; // optional richer display (e.g. with a link); schema still uses `a`
 }
 
-export function FaqPage({ items }: { items: FaqItem[] }) {
-  const data = {
-    '@context': 'https://schema.org',
-    '@type': 'FAQPage',
-    mainEntity: items.map((it) => ({
-      '@type': 'Question',
-      name: it.q,
-      acceptedAnswer: { '@type': 'Answer', text: it.a },
-    })),
-  };
-  return <Script data={data} />;
-}
+export type PageKind = 'tool' | 'vehicle' | 'hub' | 'home';
 
-export function WebApplication({ page }: { page: PageEntry }) {
-  const data = {
-    '@context': 'https://schema.org',
-    '@type': 'WebApplication',
-    name: page.h1,
-    url: absUrl(page.path),
-    applicationCategory: 'UtilitiesApplication',
-    operatingSystem: 'Any',
-    offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
-    author: { '@id': SITE.authorPersonId },
-  };
-  return <Script data={data} />;
-}
-
-export function ArticleSchema({
+/**
+ * One @graph per content page: Person, WebPage (with author + dates + breadcrumb),
+ * BreadcrumbList, the primary node (WebApplication / Article / CollectionPage) and
+ * FAQPage. mainEntityOfPage on the primary node points to the WebPage @id.
+ */
+export function ContentGraph({
   page,
+  kind,
+  crumbs,
+  faq,
   image,
 }: {
   page: PageEntry;
+  kind: PageKind;
+  crumbs?: Crumb[];
+  faq?: FaqItem[];
   image?: string;
 }) {
-  const data = {
-    '@context': 'https://schema.org',
-    '@type': 'Article',
-    headline: page.h1,
-    author: { '@id': SITE.authorPersonId },
-    datePublished: page.lastUpdated,
-    dateModified: page.lastUpdated,
-    ...(image ? { image: absUrl(image) } : {}),
-    mainEntityOfPage: absUrl(page.path),
-  };
-  return <Script data={data} />;
-}
+  const url = absUrl(page.path);
+  const webpageId = `${url}#webpage`;
+  const datePublished = page.datePublished ?? page.lastUpdated;
+  const dateModified = page.lastUpdated;
+  const name = page.title.replace(/ \| HitchMath$/, '');
+  const authorRef = { '@id': SITE.authorPersonId };
 
-export function CollectionPage({ page }: { page: PageEntry }) {
-  const data = {
-    '@context': 'https://schema.org',
-    '@type': 'CollectionPage',
-    name: page.h1,
-    url: absUrl(page.path),
+  const person = {
+    '@type': 'Person',
+    '@id': SITE.authorPersonId,
+    name: SITE.author,
+    url: absUrl(SITE.authorPath),
   };
-  return <Script data={data} />;
+
+  const webpage: Record<string, unknown> = {
+    '@type': 'WebPage',
+    '@id': webpageId,
+    url,
+    name,
+    description: page.meta,
+    inLanguage: 'en-US',
+    isPartOf: { '@id': WEBSITE_ID },
+    author: authorRef,
+    datePublished,
+    dateModified,
+  };
+  if (crumbs && crumbs.length) webpage.breadcrumb = { '@id': `${url}#breadcrumb` };
+
+  const graph: object[] = [person, webpage];
+  if (crumbs && crumbs.length) {
+    const bc = breadcrumbNode(crumbs, url) as Record<string, unknown>;
+    delete bc['@context'];
+    graph.push(bc);
+  }
+
+  if (kind === 'tool') {
+    graph.push({
+      '@type': 'WebApplication',
+      '@id': `${url}#app`,
+      name: page.h1,
+      url,
+      applicationCategory: 'UtilitiesApplication',
+      operatingSystem: 'Any',
+      offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
+      author: authorRef,
+      datePublished,
+      dateModified,
+      mainEntityOfPage: { '@id': webpageId },
+    });
+  } else if (kind === 'vehicle') {
+    graph.push({
+      '@type': 'Article',
+      '@id': `${url}#article`,
+      headline: page.h1,
+      author: authorRef,
+      datePublished,
+      dateModified,
+      ...(image ? { image: absUrl(image) } : {}),
+      mainEntityOfPage: { '@id': webpageId },
+    });
+  } else if (kind === 'hub') {
+    graph.push({
+      '@type': 'CollectionPage',
+      '@id': `${url}#collection`,
+      name: page.h1,
+      url,
+      author: authorRef,
+      datePublished,
+      dateModified,
+      mainEntityOfPage: { '@id': webpageId },
+    });
+  }
+
+  if (faq && faq.length) {
+    graph.push({
+      '@type': 'FAQPage',
+      '@id': `${url}#faq`,
+      mainEntity: faq.map((it) => ({
+        '@type': 'Question',
+        name: it.q,
+        acceptedAnswer: { '@type': 'Answer', text: it.a },
+      })),
+    });
+  }
+
+  return <Script data={{ '@context': 'https://schema.org', '@graph': graph }} />;
 }
 
 export function ProfilePage() {
@@ -127,6 +187,7 @@ export function ProfilePage() {
       '@id': SITE.authorPersonId,
       name: SITE.author,
       url: absUrl(SITE.authorPath),
+      // sameAs is intentionally empty: the owner has no public profiles to link yet.
       sameAs: [],
     },
   };

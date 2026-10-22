@@ -26,11 +26,13 @@ export default function Page() {
     <>
       <SectionH2>Reference table: tongue weight by trailer weight (bumper-pull, 10% to 15%)</SectionH2>
       <RefTable
+        caption="Bumper-pull tongue weight by trailer weight, at 10% to 15%"
         columns={['Trailer weight (lb)', 'Low (10%)', 'Target (12%)', 'High (15%)']}
         rows={bumper}
       />
       <h3 className="mt-6 text-h3 font-medium text-ink">Fifth wheel (15% to 25%)</h3>
       <RefTable
+        caption="Fifth wheel pin weight by trailer weight, at 15% to 25%"
         columns={['Trailer weight (lb)', 'Low (15%)', 'Target (20%)', 'High (25%)']}
         rows={fifth}
       />
@@ -43,6 +45,11 @@ export default function Page() {
       content={TONGUE}
       calculator={<TongueCalculator />}
       referenceTables={referenceTables}
+      embed={{
+        toolName: 'Tongue weight calculator',
+        embedPath: '/embed/tongue-weight-calculator/',
+        height: 560,
+      }}
     />
   );
 }

@@ -42,7 +42,11 @@ export default function Page() {
 
       <H2 id="corrections">Corrections</H2>
       <p>Public log, newest first.</p>
-      <RefTable columns={['Date', 'Page', 'Change']} rows={[['None', 'None', 'No corrections yet.']]} />
+      <RefTable
+        caption="HitchMath corrections log, newest first"
+        columns={['Date', 'Page', 'Change']}
+        rows={[['None', 'None', 'No corrections yet.']]}
+      />
 
       <H2>Ads and affiliates</H2>
       <p>

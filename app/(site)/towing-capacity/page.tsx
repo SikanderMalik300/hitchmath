@@ -3,9 +3,9 @@ import Link from 'next/link';
 import { getPage } from '@/lib/registry';
 import { buildMetadata } from '@/lib/seo';
 import Breadcrumbs from '@/components/Breadcrumbs';
-import { CollectionPage, BreadcrumbList, type Crumb } from '@/components/JsonLd';
+import { ContentGraph, type Crumb } from '@/components/JsonLd';
 import { RefTable } from '@/components/Tables';
-import { SectionH2 } from '@/components/content';
+import { SectionH2, UpdatedLine } from '@/components/content';
 import { VEHICLES_BY_SLUG } from '@/lib/data/vehicles';
 import { maxTrailer, maxPayload } from '@/lib/data/vehicles/types';
 import { fmt } from '@/lib/format';
@@ -62,8 +62,7 @@ export default function Page() {
 
   return (
     <article className="container-x section-y">
-      <CollectionPage page={page} />
-      <BreadcrumbList crumbs={crumbs} />
+      <ContentGraph page={page} kind="hub" crumbs={crumbs} />
       <Breadcrumbs crumbs={crumbs} />
       <h1 className="mt-4 text-h1-m md:text-h1 font-medium text-ink">{page.h1}</h1>
       <p className="mt-4 max-w-prose text-body text-ink">
@@ -71,11 +70,15 @@ export default function Page() {
         own towing guides and spec pages. Each page lists every configuration we could verify, with
         payload and the source.
       </p>
+      <div className="mt-3">
+        <UpdatedLine date={page.lastUpdated} />
+      </div>
 
       {GROUPS.map((group) => (
         <section key={group.heading} className="mt-10 space-y-3">
           <SectionH2>{group.heading}</SectionH2>
           <RefTable
+            caption={`2026 ${group.heading} towing and payload maximums from each maker's documents`}
             columns={['Vehicle', 'Max towing', 'Max payload', 'Page']}
             rows={group.slugs.map((slug) => {
               const p = getPage(slug);
@@ -92,6 +95,11 @@ export default function Page() {
           />
         </section>
       ))}
+
+      <p className="mt-8 max-w-prose text-small text-muted">
+        Each figure comes from the maker’s own towing guide or spec page, linked on that vehicle’s
+        page.
+      </p>
     </article>
   );
 }

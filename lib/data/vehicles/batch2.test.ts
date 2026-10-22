@@ -28,11 +28,13 @@ import {
 } from '@/lib/pages/vehicle-content-2';
 import type { VehicleContent } from '@/components/VehiclePage';
 
-describe('registry SEO lengths (A3)', () => {
-  it('every page title is <= 60 and meta <= 155 characters', () => {
+describe('registry SEO lengths (A3, fix-04 §4)', () => {
+  it('every page title is 30-60 and meta 110-160 characters', () => {
     for (const p of PAGES) {
+      expect(p.title.length, `title: ${p.title}`).toBeGreaterThanOrEqual(30);
       expect(p.title.length, `title: ${p.title}`).toBeLessThanOrEqual(60);
-      expect(p.meta.length, `meta on ${p.slug}`).toBeLessThanOrEqual(155);
+      expect(p.meta.length, `meta short on ${p.slug}`).toBeGreaterThanOrEqual(110);
+      expect(p.meta.length, `meta long on ${p.slug}`).toBeLessThanOrEqual(160);
     }
   });
   it('every batch-2 source resolves', () => {

@@ -6,7 +6,8 @@ import SiteSearch from '@/components/SiteSearch';
 import { HeroPhoto } from '@/components/Photo';
 import PhotoTile from '@/components/PhotoTile';
 import AnswerCard from '@/components/AnswerCard';
-import { SectionH2 } from '@/components/content';
+import { SectionH2, UpdatedLine } from '@/components/content';
+import { ContentGraph } from '@/components/JsonLd';
 import { CREDITED_PHOTOS } from '@/lib/data/photos';
 import { photoAvailable } from '@/lib/photos-runtime';
 
@@ -43,6 +44,7 @@ export default function Home() {
 
   return (
     <>
+      <ContentGraph page={page} kind="home" />
       {/* Preload the hero image (the LCP element) so it is discovered immediately.
           imageSrcSet/imageSizes match the hero <source> so the right width is used. */}
       {photoAvailable('tow-hero') && (
@@ -157,6 +159,9 @@ export default function Home() {
               </li>
             ))}
           </ul>
+          <div className="mt-6">
+            <UpdatedLine date={page.lastUpdated} />
+          </div>
         </div>
       </section>
 

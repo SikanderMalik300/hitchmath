@@ -24,6 +24,7 @@ export default function Page() {
     <>
       <SectionH2>Reference table: weights people forget</SectionH2>
       <RefTable
+        caption="Weights people forget when they load a truck"
         columns={['Item', 'Typical weight', 'Source']}
         rows={[
           ['Fresh water', '8.34 lb per gallon', link(usgs.url, 'USGS')],
@@ -49,6 +50,11 @@ export default function Page() {
       content={PAYLOAD}
       calculator={<PayloadCalculator />}
       referenceTables={referenceTables}
+      embed={{
+        toolName: 'Payload calculator',
+        embedPath: '/embed/payload-calculator/',
+        height: 720,
+      }}
     />
   );
 }

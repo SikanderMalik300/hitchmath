@@ -66,7 +66,11 @@ export default function Page() {
       </p>
 
       <H2>Constants</H2>
-      <RefTable columns={['Name', 'Value', 'Source', 'Accessed']} rows={constantRows} />
+      <RefTable
+        caption="Constants used in the HitchMath calculators, with their source"
+        columns={['Name', 'Value', 'Source', 'Accessed']}
+        rows={constantRows}
+      />
 
       <H2>Corrections</H2>
       <p>

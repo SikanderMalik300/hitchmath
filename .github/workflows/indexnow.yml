@@ -1,0 +1,22 @@
+name: IndexNow
+
+# Runs after Cloudflare Pages reports a successful production (main) deploy, and
+# submits the content and hub URLs to IndexNow. Never runs during next build.
+on:
+  check_run:
+    types: [completed]
+
+jobs:
+  submit:
+    if: >-
+      github.event.check_run.name == 'Cloudflare Pages' &&
+      github.event.check_run.conclusion == 'success' &&
+      github.event.check_run.check_suite.head_branch == 'main'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Submit URLs to IndexNow
+        run: node scripts/indexnow.mjs

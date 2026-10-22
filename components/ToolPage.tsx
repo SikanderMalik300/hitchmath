@@ -1,11 +1,5 @@
 import Breadcrumbs from './Breadcrumbs';
-import {
-  WebApplication,
-  BreadcrumbList,
-  FaqPage,
-  type Crumb,
-  type FaqItem,
-} from './JsonLd';
+import { ContentGraph, type Crumb, type FaqItem } from './JsonLd';
 import { QuickAnswer, SectionH2, Steps, Bullets, WorkedExample, OwnerNote, Related } from './content';
 import Faq from './Faq';
 import Sources from './Sources';
@@ -13,7 +7,14 @@ import AuthorBox from './AuthorBox';
 import Disclaimer from './Disclaimer';
 import AdSlot from './AdSlot';
 import { FigurePhoto } from './Photo';
+import EmbedBox from './embed/EmbedBox';
 import type { PageEntry } from '@/lib/registry';
+
+export interface EmbedConfig {
+  toolName: string;
+  embedPath: string;
+  height: number;
+}
 
 export interface ToolContent {
   quickAnswer: string;
@@ -31,12 +32,14 @@ export default function ToolPage({
   calculator,
   referenceTables,
   extraTop,
+  embed,
 }: {
   page: PageEntry;
   content: ToolContent;
   calculator: React.ReactNode;
   referenceTables?: React.ReactNode;
   extraTop?: React.ReactNode; // optional block (e.g. calculator modes description)
+  embed?: EmbedConfig; // "Get this calculator for your site" box (3 of 4 tools)
 }) {
   const crumbs: Crumb[] = [
     { name: 'Home', path: '/' },
@@ -46,9 +49,7 @@ export default function ToolPage({
 
   return (
     <article className="container-x section-y">
-      <WebApplication page={page} />
-      <BreadcrumbList crumbs={crumbs} />
-      <FaqPage items={content.faq} />
+      <ContentGraph page={page} kind="tool" crumbs={crumbs} faq={content.faq} />
 
       <Breadcrumbs crumbs={crumbs} />
       <h1 className="mt-4 text-h1-m md:text-h1 font-medium text-ink">{page.h1}</h1>
@@ -100,6 +101,17 @@ export default function ToolPage({
         <SectionH2>Tips</SectionH2>
         <Bullets items={content.tips} />
       </section>
+
+      {embed && (
+        <div className="mt-10 max-w-prose">
+          <EmbedBox
+            toolName={embed.toolName}
+            toolPath={page.path}
+            embedPath={embed.embedPath}
+            height={embed.height}
+          />
+        </div>
+      )}
 
       <div className="mt-10 max-w-prose">
         <Faq items={content.faq} />

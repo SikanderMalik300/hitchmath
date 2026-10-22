@@ -15,6 +15,7 @@ export default function Page() {
     <>
       <SectionH2>Reference table: what each limit means</SectionH2>
       <RefTable
+        caption="The five towing limits and where to find each one"
         columns={['Limit', 'Where to find it', 'What counts against it']}
         rows={[
           ['Max trailer rating', 'Owner’s manual or the maker’s towing guide', 'Loaded trailer weight; reduced by people and cargo over 300 lb'],
@@ -33,6 +34,11 @@ export default function Page() {
       content={TOWING_CAPACITY}
       calculator={<TowCalculator />}
       referenceTables={referenceTables}
+      embed={{
+        toolName: 'Towing capacity calculator',
+        embedPath: '/embed/towing-capacity-calculator/',
+        height: 900,
+      }}
     />
   );
 }

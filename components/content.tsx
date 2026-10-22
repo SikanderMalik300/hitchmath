@@ -1,6 +1,18 @@
 import Link from 'next/link';
 import { getPage } from '@/lib/registry';
 
+/** "Updated {date}" line for pages without an author box (hubs, home). */
+export function UpdatedLine({ date }: { date: string }) {
+  return (
+    <p className="text-small text-muted">
+      Updated {date} ·{' '}
+      <Link href="/editorial-policy/" prefetch={false} className="link">
+        Editorial policy
+      </Link>
+    </p>
+  );
+}
+
 export function QuickAnswer({ children }: { children: React.ReactNode }) {
   return (
     <div className="rounded-card border border-line bg-band-4 p-5">
