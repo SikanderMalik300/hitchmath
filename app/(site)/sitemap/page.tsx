@@ -10,6 +10,7 @@ export const metadata: Metadata = buildMetadata(page);
 const GROUPS: { title: string; cats: Category[] }[] = [
   { title: 'Home', cats: ['home'] },
   { title: 'Calculators', cats: ['tool'] },
+  { title: 'Guides', cats: ['guide'] },
   { title: 'Towing capacity by vehicle', cats: ['vehicle'] },
   { title: 'Hubs', cats: ['hub'] },
   { title: 'Trust', cats: ['trust'] },

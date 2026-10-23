@@ -147,6 +147,69 @@
     "category": "vehicle"
   },
   {
+    "slug": "gvwr",
+    "path": "/gvwr/",
+    "h1": "GVWR: what it means and how to use it",
+    "description": "What GVWR means, where to find it, and how to turn it into payload.",
+    "category": "guide"
+  },
+  {
+    "slug": "ford-expedition-towing-capacity",
+    "path": "/ford-expedition-towing-capacity/",
+    "h1": "Ford Expedition towing capacity (2026): SWB and MAX",
+    "description": "Every 2026 Expedition configuration with GCWR and hitch limits from Ford’s 2026 guide.",
+    "category": "vehicle"
+  },
+  {
+    "slug": "chevy-tahoe-towing-capacity",
+    "path": "/chevy-tahoe-towing-capacity/",
+    "h1": "Chevy Tahoe towing capacity (2026): every engine",
+    "description": "Every 2026 Tahoe engine and drive with GCWR from Chevrolet’s 2026 guide.",
+    "category": "vehicle"
+  },
+  {
+    "slug": "chevy-suburban-towing-capacity",
+    "path": "/chevy-suburban-towing-capacity/",
+    "h1": "Chevy Suburban towing capacity (2026): every engine",
+    "description": "Every 2026 Suburban engine and drive with GCWR from Chevrolet’s 2026 guide.",
+    "category": "vehicle"
+  },
+  {
+    "slug": "chevy-traverse-towing-capacity",
+    "path": "/chevy-traverse-towing-capacity/",
+    "h1": "Chevy Traverse towing capacity (2026): with and without V92",
+    "description": "Every 2026 Traverse drive and package with GCWR from Chevrolet’s 2026 guide.",
+    "category": "vehicle"
+  },
+  {
+    "slug": "jeep-wrangler-towing-capacity",
+    "path": "/jeep-wrangler-towing-capacity/",
+    "h1": "Jeep Wrangler towing capacity (2026): 2-door, 4-door and Rubicon",
+    "description": "Every 2026 Wrangler trim with payload, base weight and GCWR from Jeep’s specs.",
+    "category": "vehicle"
+  },
+  {
+    "slug": "nissan-frontier-towing-capacity",
+    "path": "/nissan-frontier-towing-capacity/",
+    "h1": "Nissan Frontier towing capacity (2026): every cab and bed",
+    "description": "Every 2026 Frontier cab and bed with payload and tongue load from Nissan.",
+    "category": "vehicle"
+  },
+  {
+    "slug": "subaru-ascent-towing-capacity",
+    "path": "/subaru-ascent-towing-capacity/",
+    "h1": "Subaru Ascent towing capacity (2026): every trim",
+    "description": "Every 2026 Ascent trim with curb weight from Subaru’s comparison sheet.",
+    "category": "vehicle"
+  },
+  {
+    "slug": "kia-telluride-towing-capacity",
+    "path": "/kia-telluride-towing-capacity/",
+    "h1": "Kia Telluride towing capacity (2027): gas and hybrid",
+    "description": "Every 2027 Telluride trim with GVWR and payload from Kia’s specs, gas and hybrid.",
+    "category": "vehicle"
+  },
+  {
     "slug": "towing-calculators",
     "path": "/towing-calculators/",
     "h1": "Towing calculators",

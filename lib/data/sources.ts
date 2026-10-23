@@ -35,7 +35,19 @@ export type SourceId =
   | 'toyota-press-rav4-2026'
   | 'honda-ridgeline-specs-2026'
   | 'honda-pilot-specs-2026'
-  | 'subaru-outback-specs-2026';
+  | 'subaru-outback-specs-2026'
+  | 'jeep-wrangler-specs-2026'
+  | 'jeep-wrangler-specs-2026-pdf'
+  | 'nissan-frontier-brochure-2026'
+  | 'nissan-frontier-presskit-2026'
+  | 'subaru-ascent-specs-2026'
+  | 'subaru-ascent-specs-2024'
+  | 'kia-telluride-specs-2027'
+  | 'kia-telluride-hev-specs-2027'
+  | 'kia-telluride-specs-2025'
+  | 'cfr-571-3'
+  | 'cfr-567-4'
+  | 'cfr-383-91';
 
 export interface Source {
   id: SourceId;
@@ -45,6 +57,7 @@ export interface Source {
 }
 
 const ACCESSED = '2026-10-19';
+const ACCESSED3 = '2026-10-23'; // batch 3
 
 export const SOURCES: Record<SourceId, Source> = {
   'ford-guide-2026': {
@@ -250,6 +263,78 @@ export const SOURCES: Record<SourceId, Source> = {
     name: 'Subaru, 2026 Outback trim comparison (Compare Specs)',
     url: 'https://www.subaru.com/services/vehicles/pdf/trimComparison/2026/OBK',
     accessed: '2026-10-21',
+  },
+  'jeep-wrangler-specs-2026': {
+    id: 'jeep-wrangler-specs-2026',
+    name: 'Stellantis Media, 2026 Jeep Wrangler Specifications',
+    url: 'https://media.stellantisnorthamerica.com/view-spec.do?id=27221',
+    accessed: ACCESSED3,
+  },
+  'jeep-wrangler-specs-2026-pdf': {
+    id: 'jeep-wrangler-specs-2026-pdf',
+    name: '2026 Jeep Wrangler Specifications (PDF)',
+    url: 'https://s3.amazonaws.com/chryslermedia.iconicweb.com/mediasite/specs/2026_JP_Wrangler_SPl4u58u77eeicb0t51n2lc8s5fg.pdf',
+    accessed: ACCESSED3,
+  },
+  'nissan-frontier-brochure-2026': {
+    id: 'nissan-frontier-brochure-2026',
+    name: 'Nissan, 2026 Frontier brochure (Capacities/Towing/Payload, p. 12)',
+    url: 'https://www.nissanusa.com/content/dam/Nissan/us/vehicle-brochures/2026/2026-nissan-frontier-brochure-en.pdf',
+    accessed: ACCESSED3,
+  },
+  'nissan-frontier-presskit-2026': {
+    id: 'nissan-frontier-presskit-2026',
+    name: 'Nissan News, 2026 Nissan Frontier Press Kit',
+    url: 'https://usa.nissannews.com/en-US/releases/2026-nissan-frontier-press-kit',
+    accessed: ACCESSED3,
+  },
+  'subaru-ascent-specs-2026': {
+    id: 'subaru-ascent-specs-2026',
+    name: 'Subaru, 2026 Ascent trim comparison (Compare Specs)',
+    url: 'https://www.subaru.com/services/vehicles/pdf/trimComparison/2026/ASC',
+    accessed: ACCESSED3,
+  },
+  'subaru-ascent-specs-2024': {
+    id: 'subaru-ascent-specs-2024',
+    name: 'Subaru, 2024 Ascent trim comparison (Compare Specs)',
+    url: 'https://www.subaru.com/services/vehicles/pdf/trimComparison/2024/ASC',
+    accessed: ACCESSED3,
+  },
+  'kia-telluride-specs-2027': {
+    id: 'kia-telluride-specs-2027',
+    name: 'Kia America Media, 2027 Telluride specifications',
+    url: 'https://www.kiamedia.com/us/en/models/telluride/2027/specifications',
+    accessed: ACCESSED3,
+  },
+  'kia-telluride-hev-specs-2027': {
+    id: 'kia-telluride-hev-specs-2027',
+    name: 'Kia America Media, 2027 Telluride HEV specifications',
+    url: 'https://www.kiamedia.com/us/en/models/telluride-hev/2027/specifications',
+    accessed: ACCESSED3,
+  },
+  'kia-telluride-specs-2025': {
+    id: 'kia-telluride-specs-2025',
+    name: 'Kia America Media, 2025 Telluride specifications',
+    url: 'https://www.kiamedia.com/us/en/models/telluride/2025/specifications',
+    accessed: ACCESSED3,
+  },
+  'cfr-571-3': {
+    id: 'cfr-571-3',
+    name: '49 CFR 571.3, Definitions (eCFR via Cornell LII)',
+    url: 'https://www.law.cornell.edu/cfr/text/49/571.3',
+    accessed: ACCESSED3,
+  },
+  'cfr-567-4': {
+    id: 'cfr-567-4',
+    name: '49 CFR 567.4, Requirements for manufacturers of motor vehicles',
+    url: 'https://www.law.cornell.edu/cfr/text/49/567.4',
+    accessed: ACCESSED3,
+  },
+  'cfr-383-91': {
+    id: 'cfr-383-91',
+    name: '49 CFR 383.91, Commercial motor vehicle groups',
+    url: 'https://www.law.cornell.edu/cfr/text/49/383.91',
+    accessed: ACCESSED3,
   },
 };
 

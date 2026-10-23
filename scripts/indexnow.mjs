@@ -21,7 +21,14 @@ async function urlList() {
   const raw = await fs.readFile(path.resolve('lib/generated/pages.json'), 'utf8');
   const pages = JSON.parse(raw);
   return pages
-    .filter((p) => p.category === 'tool' || p.category === 'vehicle' || p.category === 'hub')
+    .filter(
+      (p) =>
+        p.category === 'home' ||
+        p.category === 'tool' ||
+        p.category === 'vehicle' ||
+        p.category === 'guide' ||
+        p.category === 'hub',
+    )
     .map((p) => `${ORIGIN}${p.path}`);
 }
 

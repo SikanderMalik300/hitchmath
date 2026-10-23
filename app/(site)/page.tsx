@@ -110,7 +110,7 @@ export default function Home() {
           </div>
           <div className="mt-6">
             <Link href="/towing-capacity/" prefetch={false} className="link">
-              See all 16 vehicles
+              See all 24 vehicles
             </Link>
           </div>
         </div>
@@ -149,6 +149,13 @@ export default function Home() {
       <section className="section-y">
         <div className="container-x">
           <SectionH2>Latest updates</SectionH2>
+          <p className="mt-4 max-w-prose text-body text-ink">
+            New:{' '}
+            <Link href="/gvwr/" prefetch={false} className="link">
+              GVWR explained
+            </Link>
+            , plus 8 more vehicles from the makers&apos; 2026 guides.
+          </p>
           <ul className="mt-6 divide-y divide-line border-y border-line">
             {updates.map((p) => (
               <li key={p.slug} className="flex items-center justify-between gap-4 py-3">

@@ -41,6 +41,14 @@ export default function Page() {
         “Typical” values are shown as ranges with no brand names. Only USGS and the federal 150 lb
         value carry a source link.
       </p>
+      <p className="text-small text-muted">
+        GVWR is the most your vehicle may weigh fully loaded, and payload is GVWR minus curb weight.
+        See{' '}
+        <a href="/gvwr/" className="link">
+          GVWR explained
+        </a>{' '}
+        for where to find it.
+      </p>
     </>
   );
 

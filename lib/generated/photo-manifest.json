@@ -18,5 +18,14 @@
   "bronco": true,
   "explorer": true,
   "pilot": true,
-  "outback": true
+  "outback": true,
+  "gvwr": true,
+  "expedition": true,
+  "tahoe": true,
+  "suburban": true,
+  "traverse": true,
+  "wrangler": true,
+  "frontier": true,
+  "ascent": true,
+  "telluride": true
 }

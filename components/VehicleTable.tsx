@@ -14,6 +14,8 @@ export default function VehicleTable({ data }: { data: VehicleData }) {
   const numericByKey: Partial<Record<ColumnKey, keyof VehicleRow>> = {
     gcwr: 'gcwr',
     maxTrailer: 'maxTrailer',
+    tow2wd: 'tow2wd',
+    tow4wd: 'tow4wd',
     maxTongue: 'maxTongue',
     payload: 'payload',
     curbWeight: 'curbWeight',

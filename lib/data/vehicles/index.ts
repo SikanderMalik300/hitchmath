@@ -15,6 +15,14 @@ import fordBronco2026 from './ford-bronco-2026';
 import fordExplorer2026 from './ford-explorer-2026';
 import hondaPilot2026 from './honda-pilot-2026';
 import subaruOutback2026 from './subaru-outback-2026';
+import fordExpedition2026 from './ford-expedition-2026';
+import chevyTahoe2026 from './chevy-tahoe-2026';
+import chevySuburban2026 from './chevy-suburban-2026';
+import chevyTraverse2026 from './chevy-traverse-2026';
+import jeepWrangler2026 from './jeep-wrangler-2026';
+import nissanFrontier2026 from './nissan-frontier-2026';
+import subaruAscent2026 from './subaru-ascent-2026';
+import kiaTelluride2027 from './kia-telluride-2027';
 
 export const VEHICLES: VehicleData[] = [
   toyotaTacoma2026,
@@ -33,6 +41,14 @@ export const VEHICLES: VehicleData[] = [
   fordExplorer2026,
   hondaPilot2026,
   subaruOutback2026,
+  fordExpedition2026,
+  chevyTahoe2026,
+  chevySuburban2026,
+  chevyTraverse2026,
+  jeepWrangler2026,
+  nissanFrontier2026,
+  subaruAscent2026,
+  kiaTelluride2027,
 ];
 
 export const VEHICLES_BY_SLUG: Record<string, VehicleData> = Object.fromEntries(
@@ -56,5 +72,13 @@ export {
   fordExplorer2026,
   hondaPilot2026,
   subaruOutback2026,
+  fordExpedition2026,
+  chevyTahoe2026,
+  chevySuburban2026,
+  chevyTraverse2026,
+  jeepWrangler2026,
+  nissanFrontier2026,
+  subaruAscent2026,
+  kiaTelluride2027,
 };
 export * from './types';

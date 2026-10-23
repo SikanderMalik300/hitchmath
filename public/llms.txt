@@ -23,3 +23,12 @@ Towing math for US truck and SUV owners. Calculators that show their work and ve
 - [Ford Explorer towing capacity (2026): every engine](https://hitchmath.com/ford-explorer-towing-capacity/): Every 2026 retail Explorer engine and drive with GCWR from Ford’s guide.
 - [Honda Pilot towing capacity (2026): 2WD vs AWD](https://hitchmath.com/honda-pilot-towing-capacity/): Every 2026 Pilot trim and drive with curb weight from Honda’s specs.
 - [Subaru Outback towing capacity (2026): every trim](https://hitchmath.com/subaru-outback-towing-capacity/): Every 2026 Outback trim with curb weight from Subaru’s comparison sheet.
+- [GVWR: what it means and how to use it](https://hitchmath.com/gvwr/): What GVWR means, where to find it, and how to turn it into payload.
+- [Ford Expedition towing capacity (2026): SWB and MAX](https://hitchmath.com/ford-expedition-towing-capacity/): Every 2026 Expedition configuration with GCWR and hitch limits from Ford’s 2026 guide.
+- [Chevy Tahoe towing capacity (2026): every engine](https://hitchmath.com/chevy-tahoe-towing-capacity/): Every 2026 Tahoe engine and drive with GCWR from Chevrolet’s 2026 guide.
+- [Chevy Suburban towing capacity (2026): every engine](https://hitchmath.com/chevy-suburban-towing-capacity/): Every 2026 Suburban engine and drive with GCWR from Chevrolet’s 2026 guide.
+- [Chevy Traverse towing capacity (2026): with and without V92](https://hitchmath.com/chevy-traverse-towing-capacity/): Every 2026 Traverse drive and package with GCWR from Chevrolet’s 2026 guide.
+- [Jeep Wrangler towing capacity (2026): 2-door, 4-door and Rubicon](https://hitchmath.com/jeep-wrangler-towing-capacity/): Every 2026 Wrangler trim with payload, base weight and GCWR from Jeep’s specs.
+- [Nissan Frontier towing capacity (2026): every cab and bed](https://hitchmath.com/nissan-frontier-towing-capacity/): Every 2026 Frontier cab and bed with payload and tongue load from Nissan.
+- [Subaru Ascent towing capacity (2026): every trim](https://hitchmath.com/subaru-ascent-towing-capacity/): Every 2026 Ascent trim with curb weight from Subaru’s comparison sheet.
+- [Kia Telluride towing capacity (2027): gas and hybrid](https://hitchmath.com/kia-telluride-towing-capacity/): Every 2027 Telluride trim with GVWR and payload from Kia’s specs, gas and hybrid.

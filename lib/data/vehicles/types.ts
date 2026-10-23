@@ -17,12 +17,17 @@ export interface VehicleRow {
   axle?: string;
   package?: string;
   doors?: string;
+  seats?: string;
   gcwr?: number;
   maxTrailer: number;
+  tow2wd?: number; // GM SUVs print one 2WD and one 4WD rating per engine/package
+  tow4wd?: number;
   maxTongue?: number;
   payload?: number;
+  payloadMax?: number; // when a trim has a payload range, this is the upper value
   payloadComputed?: boolean;
   curbWeight?: number;
+  curbWeightMax?: number; // when a trim has a curb-weight range, this is the upper value
   gvwr?: number;
   note?: string;
   label?: string; // explicit mini-calculator dropdown label when the generic one is ambiguous
@@ -35,14 +40,19 @@ export type ColumnKey =
   | 'engine'
   | 'output'
   | 'cabbed'
+  | 'cab'
+  | 'bed'
   | 'drive'
   | 'transmission'
   | 'axle'
   | 'package'
   | 'doors'
+  | 'seats'
   | 'trimsRated'
   | 'gcwr'
   | 'maxTrailer'
+  | 'tow2wd'
+  | 'tow4wd'
   | 'maxTongue'
   | 'payload'
   | 'curbWeight'
@@ -103,7 +113,7 @@ export function miniConfigs(data: VehicleData): MiniConfig[] {
   const out: MiniConfig[] = [];
   for (const row of data.rows) {
     if (row.trims && row.trims.length) {
-      const prefix = [row.engine, row.axle, row.doors].filter(Boolean).join(' · ');
+      const prefix = [row.engine, row.package, row.axle, row.doors].filter(Boolean).join(' · ');
       row.trims.forEach((t, i) => {
         out.push({
           id: `${row.id}#${i}`,
@@ -141,7 +151,9 @@ export function minTrailer(rows: VehicleRow[]): number {
 }
 
 export function maxPayload(rows: VehicleRow[]): number {
-  return Math.max(...rows.filter((r) => r.payload != null).map((r) => r.payload as number));
+  return Math.max(
+    ...rows.filter((r) => r.payload != null).map((r) => (r.payloadMax ?? r.payload) as number),
+  );
 }
 
 export function minPayload(rows: VehicleRow[]): number {
@@ -167,6 +179,10 @@ export function cellValue(row: VehicleRow, key: ColumnKey): string {
   switch (key) {
     case 'cabbed':
       return [row.cab, row.bed].filter(Boolean).join(' ');
+    case 'cab':
+      return row.cab ?? '';
+    case 'bed':
+      return row.bed ?? '';
     case 'grade':
       return row.grade ?? '';
     case 'engine':
@@ -185,6 +201,8 @@ export function cellValue(row: VehicleRow, key: ColumnKey): string {
       return row.package ?? '';
     case 'doors':
       return row.doors ?? '';
+    case 'seats':
+      return row.seats ?? '';
     case 'trimsRated':
       return (row.trims ?? [])
         .map((t) => `${t.name} ${t.maxTrailer.toLocaleString('en-US')}`)
@@ -195,12 +213,22 @@ export function cellValue(row: VehicleRow, key: ColumnKey): string {
       return row.gcwr != null ? row.gcwr.toLocaleString('en-US') : '';
     case 'maxTrailer':
       return row.maxTrailer.toLocaleString('en-US');
+    case 'tow2wd':
+      return row.tow2wd != null ? row.tow2wd.toLocaleString('en-US') : '';
+    case 'tow4wd':
+      return row.tow4wd != null ? row.tow4wd.toLocaleString('en-US') : '';
     case 'maxTongue':
       return row.maxTongue != null ? row.maxTongue.toLocaleString('en-US') : '';
     case 'payload':
-      return row.payload != null ? row.payload.toLocaleString('en-US') : '';
+      if (row.payload == null) return '';
+      return row.payloadMax != null && row.payloadMax !== row.payload
+        ? `${row.payload.toLocaleString('en-US')} to ${row.payloadMax.toLocaleString('en-US')}`
+        : row.payload.toLocaleString('en-US');
     case 'curbWeight':
-      return row.curbWeight != null ? row.curbWeight.toLocaleString('en-US') : '';
+      if (row.curbWeight == null) return '';
+      return row.curbWeightMax != null && row.curbWeightMax !== row.curbWeight
+        ? `${row.curbWeight.toLocaleString('en-US')} to ${row.curbWeightMax.toLocaleString('en-US')}`
+        : row.curbWeight.toLocaleString('en-US');
     case 'gvwr':
       return row.gvwr != null ? row.gvwr.toLocaleString('en-US') : '';
     default:

@@ -101,7 +101,9 @@ async function genOg(pages) {
 }
 
 async function writeLlms(pages) {
-  const content = pages.filter((p) => p.category === 'tool' || p.category === 'vehicle');
+  const content = pages.filter(
+    (p) => p.category === 'tool' || p.category === 'vehicle' || p.category === 'guide',
+  );
   const lines = [
     '# HitchMath',
     '',
@@ -240,6 +242,63 @@ const PHOTO_URLS = {
     url: 'https://images.pexels.com/photos/5458436/pexels-photo-5458436.jpeg?auto=compress&cs=tinysrgb&w=2600',
     focalX: 50,
     focalY: 80,
+  },
+  gvwr: {
+    file: 'pickup-travel-trailer-lake-campsite',
+    url: 'https://images.pexels.com/photos/37114015/pexels-photo-37114015.jpeg?auto=compress&cs=tinysrgb&w=2600',
+    focalX: 55,
+    focalY: 55,
+    avif: 34, // detailed lakeside scene: cap AVIF so 960w <= 60 KB
+  },
+  expedition: {
+    file: 'white-suv-boat-ramp-lake',
+    url: 'https://images.pexels.com/photos/27706384/pexels-photo-27706384.jpeg?auto=compress&cs=tinysrgb&w=2600',
+    focalX: 50,
+    focalY: 40,
+  },
+  tahoe: {
+    file: 'travel-trailers-mountain-campground',
+    url: 'https://images.pexels.com/photos/17816414/pexels-photo-17816414.jpeg?auto=compress&cs=tinysrgb&w=2600',
+    focalX: 50,
+    focalY: 60,
+  },
+  suburban: {
+    file: 'pickup-travel-trailer-desert-road',
+    url: 'https://images.pexels.com/photos/15241233/pexels-photo-15241233.jpeg?auto=compress&cs=tinysrgb&w=2600',
+    focalX: 50,
+    focalY: 65,
+  },
+  traverse: {
+    file: 'white-suv-awning-forest-camp',
+    url: 'https://images.pexels.com/photos/6271392/pexels-photo-6271392.jpeg?auto=compress&cs=tinysrgb&w=2600',
+    focalX: 60,
+    focalY: 55,
+  },
+  wrangler: {
+    file: 'offroad-suv-grassy-hillside',
+    url: 'https://images.pexels.com/photos/33767663/pexels-photo-33767663.jpeg?auto=compress&cs=tinysrgb&w=2600',
+    focalX: 60,
+    focalY: 65,
+  },
+  frontier: {
+    file: 'pickup-snowy-plain-mountains',
+    url: 'https://images.pexels.com/photos/11066380/pexels-photo-11066380.jpeg?auto=compress&cs=tinysrgb&w=2600',
+    focalX: 55,
+    focalY: 70,
+  },
+  ascent: {
+    file: 'crossovers-forest-dirt-road',
+    url: 'https://images.pexels.com/photos/11794392/pexels-photo-11794392.jpeg?auto=compress&cs=tinysrgb&w=2600',
+    focalX: 40,
+    focalY: 70,
+    avif: 20, // dense forest detail: cap AVIF so 480w <= 25 KB, 960w <= 60 KB
+  },
+  telluride: {
+    file: 'suv-roof-box-river-camp',
+    url: 'https://images.pexels.com/photos/32161861/pexels-photo-32161861.jpeg?auto=compress&cs=tinysrgb&w=2600',
+    focalX: 45,
+    focalY: 75,
+    avif: 16, // busy river-camp scene: cap AVIF so 480w <= 25 KB, 960w <= 60 KB
   },
 };
 
