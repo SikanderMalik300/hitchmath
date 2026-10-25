@@ -171,9 +171,9 @@ describe('no "2026 Telluride" claim anywhere (section 5)', () => {
 });
 
 describe('hub lists the verified vehicles', () => {
-  it('24 vehicle pages are verified and render on the hub (HD pages ship verified:false)', () => {
+  it('28 vehicle pages render on the hub (24 batch1-3 + 4 verified HD; 3 Ford HD pending)', () => {
     const verified = PAGES.filter((p) => p.category === 'vehicle' && p.verified !== false);
-    expect(verified.length).toBe(24);
+    expect(verified.length).toBe(28);
   });
 });
 

@@ -32,3 +32,7 @@ Towing math for US truck and SUV owners. Calculators that show their work and ve
 - [Nissan Frontier towing capacity (2026): every cab and bed](https://hitchmath.com/nissan-frontier-towing-capacity/): Every 2026 Frontier cab and bed with payload and tongue load from Nissan.
 - [Subaru Ascent towing capacity (2026): every trim](https://hitchmath.com/subaru-ascent-towing-capacity/): Every 2026 Ascent trim with curb weight from Subaru’s comparison sheet.
 - [Kia Telluride towing capacity (2027): gas and hybrid](https://hitchmath.com/kia-telluride-towing-capacity/): Every 2027 Telluride trim with GVWR and payload from Kia’s specs, gas and hybrid.
+- [Ram 2500 towing capacity (2026): HEMI and Cummins](https://hitchmath.com/ram-2500-towing-capacity/): Every 2026 Ram 2500 cab and axle with payload, for any hitch, from Ram’s chart.
+- [Ram 3500 towing capacity (2026): SRW and dually](https://hitchmath.com/ram-3500-towing-capacity/): Every 2026 Ram 3500 cab, bed and axle with payload, for any hitch, from Ram’s chart.
+- [Chevy Silverado 2500 HD towing capacity (2026)](https://hitchmath.com/chevy-silverado-2500hd-towing-capacity/): Every 2026 Silverado 2500 HD model with conventional and gooseneck ratings, from Chevrolet.
+- [Chevy Silverado 3500 HD towing capacity (2026)](https://hitchmath.com/chevy-silverado-3500hd-towing-capacity/): Every 2026 Silverado 3500 HD model with conventional and gooseneck ratings, from Chevrolet.

@@ -28,6 +28,7 @@ const data: HdVehicle = {
       "hitch": "any",
       "maxTrailer": 10530,
       "footnotes": [],
+      "note": "Power Wagon",
       "raw": "NA/10,530",
       "colLabel": "2500 Crew Cab 6'4\""
     },
@@ -46,6 +47,7 @@ const data: HdVehicle = {
       "hitch": "any",
       "maxTrailer": 15540,
       "footnotes": [],
+      "note": "",
       "raw": "15,540/15,220",
       "colLabel": "2500 Regular Cab 8'"
     },
@@ -64,6 +66,7 @@ const data: HdVehicle = {
       "hitch": "any",
       "maxTrailer": 15220,
       "footnotes": [],
+      "note": "",
       "raw": "15,540/15,220",
       "colLabel": "2500 Regular Cab 8'"
     },
@@ -82,6 +85,7 @@ const data: HdVehicle = {
       "hitch": "any",
       "maxTrailer": 15210,
       "footnotes": [],
+      "note": "",
       "raw": "15,210/14,920",
       "colLabel": "2500 Crew Cab 6'4\""
     },
@@ -100,6 +104,7 @@ const data: HdVehicle = {
       "hitch": "any",
       "maxTrailer": 14920,
       "footnotes": [],
+      "note": "",
       "raw": "15,210/14,920",
       "colLabel": "2500 Crew Cab 6'4\""
     },
@@ -118,6 +123,7 @@ const data: HdVehicle = {
       "hitch": "any",
       "maxTrailer": 15070,
       "footnotes": [],
+      "note": "",
       "raw": "15,070/14,730",
       "colLabel": "2500 Crew Cab 8'"
     },
@@ -136,6 +142,7 @@ const data: HdVehicle = {
       "hitch": "any",
       "maxTrailer": 14730,
       "footnotes": [],
+      "note": "",
       "raw": "15,070/14,730",
       "colLabel": "2500 Crew Cab 8'"
     },
@@ -154,6 +161,7 @@ const data: HdVehicle = {
       "hitch": "any",
       "maxTrailer": 15540,
       "footnotes": [],
+      "note": "",
       "raw": "15,540/15,240",
       "colLabel": "2500 Regular Cab 8'"
     },
@@ -172,6 +180,7 @@ const data: HdVehicle = {
       "hitch": "any",
       "maxTrailer": 15240,
       "footnotes": [],
+      "note": "",
       "raw": "15,540/15,240",
       "colLabel": "2500 Regular Cab 8'"
     },
@@ -190,6 +199,7 @@ const data: HdVehicle = {
       "hitch": "any",
       "maxTrailer": 15220,
       "footnotes": [],
+      "note": "",
       "raw": "15,220/14,930",
       "colLabel": "2500 Crew Cab 6'4\""
     },
@@ -208,6 +218,7 @@ const data: HdVehicle = {
       "hitch": "any",
       "maxTrailer": 14930,
       "footnotes": [],
+      "note": "",
       "raw": "15,220/14,930",
       "colLabel": "2500 Crew Cab 6'4\""
     },
@@ -226,6 +237,7 @@ const data: HdVehicle = {
       "hitch": "any",
       "maxTrailer": 15080,
       "footnotes": [],
+      "note": "",
       "raw": "15,080/14,720",
       "colLabel": "2500 Crew Cab 8'"
     },
@@ -244,6 +256,7 @@ const data: HdVehicle = {
       "hitch": "any",
       "maxTrailer": 14720,
       "footnotes": [],
+      "note": "",
       "raw": "15,080/14,720",
       "colLabel": "2500 Crew Cab 8'"
     },
@@ -262,6 +275,7 @@ const data: HdVehicle = {
       "hitch": "any",
       "maxTrailer": 15150,
       "footnotes": [],
+      "note": "",
       "raw": "NA/15,150",
       "colLabel": "2500 Regular Cab 8'"
     },
@@ -280,6 +294,7 @@ const data: HdVehicle = {
       "hitch": "any",
       "maxTrailer": 14580,
       "footnotes": [],
+      "note": "",
       "raw": "NA/14,580",
       "colLabel": "2500 Crew Cab 8'"
     },
@@ -298,6 +313,7 @@ const data: HdVehicle = {
       "hitch": "any",
       "maxTrailer": 17740,
       "footnotes": [],
+      "note": "",
       "raw": "17,740/17,420",
       "colLabel": "2500 Regular Cab 8'"
     },
@@ -316,6 +332,7 @@ const data: HdVehicle = {
       "hitch": "any",
       "maxTrailer": 17420,
       "footnotes": [],
+      "note": "",
       "raw": "17,740/17,420",
       "colLabel": "2500 Regular Cab 8'"
     },
@@ -334,6 +351,7 @@ const data: HdVehicle = {
       "hitch": "any",
       "maxTrailer": 17410,
       "footnotes": [],
+      "note": "",
       "raw": "17,410/17,120",
       "colLabel": "2500 Crew Cab 6'4\""
     },
@@ -352,6 +370,7 @@ const data: HdVehicle = {
       "hitch": "any",
       "maxTrailer": 17120,
       "footnotes": [],
+      "note": "",
       "raw": "17,410/17,120",
       "colLabel": "2500 Crew Cab 6'4\""
     },
@@ -370,6 +389,7 @@ const data: HdVehicle = {
       "hitch": "any",
       "maxTrailer": 17270,
       "footnotes": [],
+      "note": "",
       "raw": "17,270/16,930",
       "colLabel": "2500 Crew Cab 8'"
     },
@@ -388,6 +408,7 @@ const data: HdVehicle = {
       "hitch": "any",
       "maxTrailer": 16930,
       "footnotes": [],
+      "note": "",
       "raw": "17,270/16,930",
       "colLabel": "2500 Crew Cab 8'"
     },
@@ -406,6 +427,7 @@ const data: HdVehicle = {
       "hitch": "any",
       "maxTrailer": 17570,
       "footnotes": [],
+      "note": "",
       "raw": "17,570/17,440",
       "colLabel": "2500 Regular Cab 8'"
     },
@@ -424,6 +446,7 @@ const data: HdVehicle = {
       "hitch": "any",
       "maxTrailer": 17440,
       "footnotes": [],
+      "note": "",
       "raw": "17,570/17,440",
       "colLabel": "2500 Regular Cab 8'"
     },
@@ -442,6 +465,7 @@ const data: HdVehicle = {
       "hitch": "any",
       "maxTrailer": 17420,
       "footnotes": [],
+      "note": "",
       "raw": "17,420/17,130",
       "colLabel": "2500 Crew Cab 6'4\""
     },
@@ -460,6 +484,7 @@ const data: HdVehicle = {
       "hitch": "any",
       "maxTrailer": 17130,
       "footnotes": [],
+      "note": "",
       "raw": "17,420/17,130",
       "colLabel": "2500 Crew Cab 6'4\""
     },
@@ -478,6 +503,7 @@ const data: HdVehicle = {
       "hitch": "any",
       "maxTrailer": 17280,
       "footnotes": [],
+      "note": "",
       "raw": "17,280/16,920",
       "colLabel": "2500 Crew Cab 8'"
     },
@@ -496,6 +522,7 @@ const data: HdVehicle = {
       "hitch": "any",
       "maxTrailer": 16920,
       "footnotes": [],
+      "note": "",
       "raw": "17,280/16,920",
       "colLabel": "2500 Crew Cab 8'"
     },
@@ -514,6 +541,7 @@ const data: HdVehicle = {
       "hitch": "any",
       "maxTrailer": 17350,
       "footnotes": [],
+      "note": "",
       "raw": "NA/17,350",
       "colLabel": "2500 Regular Cab 8'"
     },
@@ -532,6 +560,7 @@ const data: HdVehicle = {
       "hitch": "any",
       "maxTrailer": 14630,
       "footnotes": [],
+      "note": "",
       "raw": "NA/14,630",
       "colLabel": "2500 Mega Cab 6'4\""
     },
@@ -550,6 +579,7 @@ const data: HdVehicle = {
       "hitch": "any",
       "maxTrailer": 15380,
       "footnotes": [],
+      "note": "",
       "raw": "NA/15,380",
       "colLabel": "2500 Mega Cab 6'4\""
     },
@@ -568,6 +598,7 @@ const data: HdVehicle = {
       "hitch": "any",
       "maxTrailer": 15710,
       "footnotes": [],
+      "note": "",
       "raw": "NA/15,710",
       "colLabel": "2500 Mega Cab 6'4\""
     },
@@ -586,6 +617,7 @@ const data: HdVehicle = {
       "hitch": "any",
       "maxTrailer": 17080,
       "footnotes": [],
+      "note": "",
       "raw": "NA/17,080",
       "colLabel": "2500 Crew Cab 8'"
     },
@@ -604,6 +636,7 @@ const data: HdVehicle = {
       "hitch": "any",
       "maxTrailer": 18230,
       "footnotes": [],
+      "note": "",
       "raw": "NA/18,230",
       "colLabel": "2500 Crew Cab 8'"
     },
@@ -622,6 +655,7 @@ const data: HdVehicle = {
       "hitch": "any",
       "maxTrailer": 18230,
       "footnotes": [],
+      "note": "",
       "raw": "NA/18,230",
       "colLabel": "2500 Crew Cab 8'"
     },
@@ -640,6 +674,7 @@ const data: HdVehicle = {
       "hitch": "any",
       "maxTrailer": 18820,
       "footnotes": [],
+      "note": "",
       "raw": "NA/18,820",
       "colLabel": "2500 Crew Cab 6'4\""
     },
@@ -658,6 +693,7 @@ const data: HdVehicle = {
       "hitch": "any",
       "maxTrailer": 19900,
       "footnotes": [],
+      "note": "",
       "raw": "NA/19,900",
       "colLabel": "2500 Regular Cab 8'"
     },
@@ -676,6 +712,7 @@ const data: HdVehicle = {
       "hitch": "any",
       "maxTrailer": 19930,
       "footnotes": [],
+      "note": "",
       "raw": "NA/19,930",
       "colLabel": "2500 Regular Cab 8'"
     },
@@ -694,6 +731,7 @@ const data: HdVehicle = {
       "hitch": "any",
       "maxTrailer": 19960,
       "footnotes": [],
+      "note": "",
       "raw": "19,960/NA",
       "colLabel": "2500 Crew Cab 6'4\""
     },
@@ -712,6 +750,7 @@ const data: HdVehicle = {
       "hitch": "any",
       "maxTrailer": 19770,
       "footnotes": [],
+      "note": "",
       "raw": "NA/19,770",
       "colLabel": "2500 Crew Cab 6'4\""
     },
@@ -730,6 +769,7 @@ const data: HdVehicle = {
       "hitch": "any",
       "maxTrailer": 19890,
       "footnotes": [],
+      "note": "",
       "raw": "NA/19,890",
       "colLabel": "2500 Crew Cab 6'4\""
     },
@@ -748,6 +788,7 @@ const data: HdVehicle = {
       "hitch": "any",
       "maxTrailer": 19980,
       "footnotes": [],
+      "note": "",
       "raw": "19,980/NA",
       "colLabel": "2500 Crew Cab 8'"
     },
@@ -766,6 +807,7 @@ const data: HdVehicle = {
       "hitch": "any",
       "maxTrailer": 20000,
       "footnotes": [],
+      "note": "",
       "raw": "20,000/NA",
       "colLabel": "2500 Crew Cab 8'"
     },
@@ -784,6 +826,7 @@ const data: HdVehicle = {
       "hitch": "any",
       "maxTrailer": 19890,
       "footnotes": [],
+      "note": "",
       "raw": "NA/19,890",
       "colLabel": "2500 Crew Cab 6'4\""
     }

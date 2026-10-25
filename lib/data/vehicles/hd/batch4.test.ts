@@ -25,10 +25,12 @@ const ALL: [string, HdVehicle, HdContent][] = [
 ];
 
 describe('batch-4 data integrity', () => {
-  it('every HD source id resolves and all 7 ship verified:false', () => {
+  it('every HD source resolves; Ram + Silverado verified, Ford still pending', () => {
     for (const [, v] of ALL) expect(SOURCES[v.source]).toBeDefined();
-    for (const slug of ['ford-f250-towing-capacity', 'ford-f350-towing-capacity', 'ford-f450-towing-capacity', 'ram-2500-towing-capacity', 'ram-3500-towing-capacity', 'chevy-silverado-2500hd-towing-capacity', 'chevy-silverado-3500hd-towing-capacity'])
-      expect(getPage(slug).verified).toBe(false);
+    for (const slug of ['ram-2500-towing-capacity', 'ram-3500-towing-capacity', 'chevy-silverado-2500hd-towing-capacity', 'chevy-silverado-3500hd-towing-capacity'])
+      expect(getPage(slug).verified, slug).not.toBe(false);
+    for (const slug of ['ford-f250-towing-capacity', 'ford-f350-towing-capacity', 'ford-f450-towing-capacity'])
+      expect(getPage(slug).verified, slug).toBe(false);
   });
   it('no Ram row comes from an NA value (every maxTrailer is a finite number)', () => {
     for (const v of [ram2500, ram3500])
@@ -119,6 +121,31 @@ describe('GM fixes: 16.000 parsed, no empty cells, full model labels', () => {
   });
 });
 
+describe('GM cab is restored from the header bar; Ram Power Wagon note', () => {
+  const CAB_SET = ['Regular Cab', 'Double Cab', 'Crew Cab'];
+  it('every GM row has a cab from the set (never empty / Other)', () => {
+    for (const v of [s2500, s3500]) for (const r of v.rows) expect(CAB_SET, `${v.model} ${r.pageNum}`).toContain(r.cab);
+  });
+  it('the cab matches the page header bar mapping', () => {
+    const expected: Record<number, string> = { 31: 'Regular Cab', 32: 'Double Cab', 33: 'Double Cab', 34: 'Crew Cab', 35: 'Crew Cab', 36: 'Crew Cab', 37: 'Regular Cab', 38: 'Double Cab', 39: 'Crew Cab', 40: 'Crew Cab' };
+    for (const v of [s2500, s3500]) for (const r of v.rows) expect(r.cab, `page ${r.pageNum}`).toBe(expected[r.pageNum as number]);
+  });
+  it('no Cab filter option is empty/Other on any GM page (per-page cab set)', () => {
+    for (const v of [s2500, s3500]) {
+      const cabs = Array.from(new Set(v.rows.map((r) => r.cab)));
+      for (const c of cabs) {
+        expect(c && c.length > 0).toBe(true);
+        expect(c).not.toBe('Other');
+        expect(CAB_SET).toContain(c);
+      }
+    }
+  });
+  it('Ram Power Wagon row is noted', () => {
+    const pw = ram2500.rows.find((r) => r.gvwr === 8565 && r.gcwr === 18000 && r.maxTrailer === 10530);
+    expect(pw?.note).toBe('Power Wagon');
+  });
+});
+
 describe('Max-by-engine equals the max over the data rows', () => {
   it('each max value is really present in the rows', () => {
     for (const [name, v] of ALL.map((a) => [a[0], a[1]] as [string, HdVehicle])) {
@@ -178,11 +205,11 @@ describe('every weight number in the copy comes from the data or an allowed resu
 });
 
 describe('hub + home reflect verified vehicles only', () => {
-  it('registry has 31 vehicle pages; 24 are verified, 7 HD are not', () => {
+  it('registry has 31 vehicle pages; 28 verified (24 + 4 HD), 3 Ford HD pending', () => {
     const vehicles = PAGES.filter((p) => p.category === 'vehicle');
     expect(vehicles.length).toBe(31);
-    expect(vehicles.filter((p) => p.verified !== false).length).toBe(24);
-    expect(vehicles.filter((p) => p.verified === false).length).toBe(7);
+    expect(vehicles.filter((p) => p.verified !== false).length).toBe(28);
+    expect(vehicles.filter((p) => p.verified === false).length).toBe(3);
   });
   it('the hub source references all 7 HD slugs (rendered only once verified)', () => {
     const src = readFileSync(path.resolve('app/(site)/towing-capacity/page.tsx'), 'utf8');

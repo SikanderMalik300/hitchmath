@@ -14,9 +14,9 @@ function sup(markers?: string[]) {
   return <sup className="text-muted">{markers.join(',')}</sup>;
 }
 
-function cabOf(r: HdRow, kind: string): string {
-  if (kind === 'gm') return (r.model || '').match(/Regular Cab|Double Cab|Crew Cab/)?.[0] ?? 'Other';
-  return r.cab ?? '';
+function cabOf(r: HdRow): string {
+  // Every kind stores an explicit cab (GM's comes from the table's header bar).
+  return (r.cab ?? '') as string;
 }
 function driveOf(r: HdRow, kind: string): string {
   if (kind === 'gm') return (r.model || '').match(/4x4|2WD/)?.[0] ?? '';
@@ -53,6 +53,7 @@ function columnsFor(kind: string): Col[] {
   }
   if (kind === 'gm') {
     return [
+      { h: 'Cab', cell: (r) => r.cab },
       { h: 'Model', cell: (r) => r.model },
       { h: 'Engine', cell: (r) => r.engine },
       { h: 'Wheel', cell: (r) => r.wheel },
@@ -90,6 +91,7 @@ function columnsFor(kind: string): Col[] {
         </>
       ),
     },
+    { h: 'Note', cell: (r) => (r.note as string) ?? '' },
   ];
 }
 
@@ -98,12 +100,12 @@ const ALL = 'All';
 export default function HdRatingsTable({ data }: { data: HdVehicle }) {
   const { kind, rows } = data;
   const cols = useMemo(() => columnsFor(kind), [kind]);
-  const cabs = useMemo(() => [ALL, ...Array.from(new Set(rows.map((r) => cabOf(r, kind)).filter(Boolean)))], [rows, kind]);
+  const cabs = useMemo(() => [ALL, ...Array.from(new Set(rows.map((r) => cabOf(r)).filter(Boolean)))], [rows]);
   const drives = useMemo(() => [ALL, ...Array.from(new Set(rows.map((r) => driveOf(r, kind)).filter(Boolean)))], [rows, kind]);
   const [cab, setCab] = useState(ALL);
   const [drive, setDrive] = useState(ALL);
 
-  const shown = rows.filter((r) => (cab === ALL || cabOf(r, kind) === cab) && (drive === ALL || driveOf(r, kind) === drive));
+  const shown = rows.filter((r) => (cab === ALL || cabOf(r) === cab) && (drive === ALL || driveOf(r, kind) === drive));
   const caption = `${data.year} ${data.make} ${data.model} towing ratings by configuration. Source: ${data.sourceName}, read ${data.readDate}.`;
 
   return (

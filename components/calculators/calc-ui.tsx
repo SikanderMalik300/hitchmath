@@ -79,6 +79,7 @@ export function SelectField({
       </label>
       <select
         id={id}
+        aria-label={label}
         value={value}
         onChange={(e) => onChange(e.target.value)}
         className="h-11 w-full rounded-[8px] border border-line bg-surface px-3 text-body text-ink focus-visible:border-brand"

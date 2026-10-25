@@ -681,7 +681,7 @@ export const PAGES: PageEntry[] = [
     photoId: 'ram2500',
     lastUpdated: UPDATED4,
     datePublished: UPDATED4,
-    verified: false,
+    verified: true,
     inSitemap: true,
   },
   {
@@ -699,7 +699,7 @@ export const PAGES: PageEntry[] = [
     photoId: 'ram3500',
     lastUpdated: UPDATED4,
     datePublished: UPDATED4,
-    verified: false,
+    verified: true,
     inSitemap: true,
   },
   {
@@ -717,7 +717,7 @@ export const PAGES: PageEntry[] = [
     photoId: 'silverado2500',
     lastUpdated: UPDATED4,
     datePublished: UPDATED4,
-    verified: false,
+    verified: true,
     inSitemap: true,
   },
   {
@@ -735,7 +735,7 @@ export const PAGES: PageEntry[] = [
     photoId: 'silverado3500',
     lastUpdated: UPDATED4,
     datePublished: UPDATED4,
-    verified: false,
+    verified: true,
     inSitemap: true,
   },
   // Hubs

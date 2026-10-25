@@ -239,7 +239,7 @@
     "h1": "Ram 2500 towing capacity (2026): HEMI and Cummins",
     "description": "Every 2026 Ram 2500 cab and axle with payload, for any hitch, from Ram’s chart.",
     "category": "vehicle",
-    "verified": false
+    "verified": true
   },
   {
     "slug": "ram-3500-towing-capacity",
@@ -247,7 +247,7 @@
     "h1": "Ram 3500 towing capacity (2026): SRW and dually",
     "description": "Every 2026 Ram 3500 cab, bed and axle with payload, for any hitch, from Ram’s chart.",
     "category": "vehicle",
-    "verified": false
+    "verified": true
   },
   {
     "slug": "chevy-silverado-2500hd-towing-capacity",
@@ -255,7 +255,7 @@
     "h1": "Chevy Silverado 2500 HD towing capacity (2026)",
     "description": "Every 2026 Silverado 2500 HD model with conventional and gooseneck ratings, from Chevrolet.",
     "category": "vehicle",
-    "verified": false
+    "verified": true
   },
   {
     "slug": "chevy-silverado-3500hd-towing-capacity",
@@ -263,7 +263,7 @@
     "h1": "Chevy Silverado 3500 HD towing capacity (2026)",
     "description": "Every 2026 Silverado 3500 HD model with conventional and gooseneck ratings, from Chevrolet.",
     "category": "vehicle",
-    "verified": false
+    "verified": true
   },
   {
     "slug": "towing-calculators",

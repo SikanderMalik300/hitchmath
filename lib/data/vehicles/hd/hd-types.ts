@@ -40,6 +40,7 @@ export interface HdRow {
   cabLabel?: string;
   bed?: string;
   wheels?: string;
+  note?: string;
   // shared
   footnotes?: string[];
   raw?: string;

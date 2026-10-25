@@ -546,6 +546,8 @@ export function ramTowing(pageItems, ctx) {
         hitch: 'any',
         maxTrailer: toNum(p),
         footnotes: foot,
+        // The 8,565 GVWR / 18,000 GCWR 4x4 row is the Power Wagon (so labelled in the PDF).
+        note: anchor.gvwr === 8565 && anchor.gcwr === 18000 ? 'Power Wagon' : '',
         raw: v.s.trim(),
         colLabel: col.key,
       });
