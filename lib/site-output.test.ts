@@ -1,6 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import { existsSync, readFileSync, readdirSync, statSync } from 'node:fs';
 import path from 'node:path';
+import { PHOTO_LIST } from './data/photos';
 
 const OUT = path.resolve('out');
 const hasOut = existsSync(OUT);
@@ -135,5 +136,61 @@ describe.skipIf(!hasOut)('built output: schema, captions, framing, embeds', () =
     const main = readFileSync(path.resolve('out/towing-capacity-calculator/index.html'), 'utf8');
     expect(embed.includes('Within every rating you entered')).toBe(true);
     expect(main.includes('Within every rating you entered')).toBe(true);
+  });
+});
+
+describe.skipIf(!hasOut)('home cleanup: Latest updates + photo credits', () => {
+  const home = () => readFileSync(path.resolve('out/index.html'), 'utf8');
+
+  it('Latest updates shows 6 or fewer items, newest first', () => {
+    const h = home();
+    const start = h.indexOf('Latest updates');
+    const end = h.indexOf('All photo credits', start) > -1 ? h.indexOf('Photo credits (', start) : h.length;
+    const section = h.slice(start, end);
+    const dates = [...section.matchAll(/tabular">(\d{4}-\d{2}-\d{2})</g)].map((m) => m[1]);
+    expect(dates.length).toBeGreaterThan(0);
+    expect(dates.length).toBeLessThanOrEqual(6);
+    const sorted = [...dates].sort().reverse();
+    expect(dates).toEqual(sorted);
+  });
+
+  it('no verified:false (Ford HD) page appears in Latest updates', () => {
+    const h = home();
+    const start = h.indexOf('Latest updates');
+    const end = h.indexOf('Photo credits (', start);
+    const section = h.slice(start, end);
+    for (const slug of ['ford-f250', 'ford-f350', 'ford-f450'])
+      expect(section.includes(`${slug}-towing-capacity`), slug).toBe(false);
+  });
+
+  it('home has no photo-credit list items outside the collapsed <details>', () => {
+    const h = home();
+    const beforeDetails = h.slice(0, h.indexOf('<details'));
+    expect(beforeDetails.includes('License)')).toBe(false);
+    expect(h.includes('<details')).toBe(true);
+    expect(h.includes('All photo credits')).toBe(true);
+  });
+
+  it('every page footer links /photo-credits/ (except chrome-free embeds and 404)', () => {
+    const files = htmlFiles(OUT).filter((f) => !f.includes(`${path.sep}embed${path.sep}`) && !f.includes(`${path.sep}404`));
+    for (const f of files) expect(readFileSync(f, 'utf8').includes('href="/photo-credits/"'), f).toBe(true);
+  });
+
+  it('/photo-credits/ lists every photo in photos.ts exactly once', () => {
+    // Count in visible text only (the RSC hydration payload repeats every string);
+    // decode the entities React escapes in text (&#x27; etc.) so alts with an apostrophe match.
+    const decode = (s: string) => s.replace(/&#x27;|&#39;/g, "'").replace(/&amp;/g, '&').replace(/&quot;/g, '"');
+    const pc = decode(visibleText(readFileSync(path.resolve('out/photo-credits/index.html'), 'utf8')));
+    for (const photo of PHOTO_LIST) {
+      const n = pc.split(photo.alt).length - 1;
+      expect(n, `${photo.id}: "${photo.alt}"`).toBe(1);
+    }
+    expect(PHOTO_LIST.length).toBeGreaterThanOrEqual(36); // all site photos are credited
+  });
+
+  it('/photo-credits/ is noindex and not in sitemap.xml', () => {
+    const pc = readFileSync(path.resolve('out/photo-credits/index.html'), 'utf8');
+    expect(/name="robots" content="noindex/.test(pc)).toBe(true);
+    expect(readFileSync(path.resolve('out/sitemap.xml'), 'utf8').includes('/photo-credits/')).toBe(false);
   });
 });

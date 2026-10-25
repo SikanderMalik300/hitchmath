@@ -348,5 +348,12 @@
     "h1": "Sitemap",
     "description": "Every page on HitchMath.",
     "category": "legal"
+  },
+  {
+    "slug": "photo-credits",
+    "path": "/photo-credits/",
+    "h1": "Photo credits",
+    "description": "Every photo used on HitchMath, with photographer, source and license.",
+    "category": "legal"
   }
 ]

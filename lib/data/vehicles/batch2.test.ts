@@ -31,6 +31,7 @@ import type { VehicleContent } from '@/components/VehiclePage';
 describe('registry SEO lengths (A3, fix-04 §4)', () => {
   it('every page title is 30-60 and meta 110-160 characters', () => {
     for (const p of PAGES) {
+      if (p.noindex) continue; // utility pages (photo credits) aren't SEO targets
       expect(p.title.length, `title: ${p.title}`).toBeGreaterThanOrEqual(30);
       expect(p.title.length, `title: ${p.title}`).toBeLessThanOrEqual(60);
       expect(p.meta.length, `meta short on ${p.slug}`).toBeGreaterThanOrEqual(110);

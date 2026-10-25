@@ -8,7 +8,7 @@ import PhotoTile from '@/components/PhotoTile';
 import AnswerCard from '@/components/AnswerCard';
 import { SectionH2, UpdatedLine } from '@/components/content';
 import { ContentGraph } from '@/components/JsonLd';
-import { CREDITED_PHOTOS } from '@/lib/data/photos';
+import { getPhoto, type PhotoId } from '@/lib/data/photos';
 import { photoAvailable } from '@/lib/photos-runtime';
 
 const page = getPage('');
@@ -39,9 +39,38 @@ const TRUST = [
   { h3: 'Mistakes fixed in public', body: 'If a number is wrong, we fix it and log the change on our editorial policy page.' },
 ];
 
+const CONTENT_CATS = ['tool', 'vehicle', 'guide', 'hub'];
+function listJoin(items: string[]): string {
+  if (items.length <= 1) return items.join('');
+  return `${items.slice(0, -1).join(', ')} and ${items[items.length - 1]}`;
+}
+
 export default function Home() {
-  const updates = PAGES.filter((p) => (p.category === 'tool' || p.category === 'vehicle') && p.verified !== false);
   const vehicleCount = PAGES.filter((p) => p.category === 'vehicle' && p.verified !== false).length;
+
+  // Latest updates: the 6 most recent content pages (verified only), newest first.
+  const content = PAGES.filter((p) => CONTENT_CATS.includes(p.category) && p.verified !== false);
+  const recent = [...content]
+    .sort(
+      (a, b) =>
+        b.lastUpdated.localeCompare(a.lastUpdated) ||
+        (b.datePublished ?? b.lastUpdated).localeCompare(a.datePublished ?? a.lastUpdated) ||
+        a.h1.localeCompare(b.h1),
+    )
+    .slice(0, 6);
+  const newestDate = recent[0]?.lastUpdated ?? page.lastUpdated;
+  // "New:" line generated from the newest batch (pages sharing the newest date).
+  const newestBatch = content.filter((p) => p.lastUpdated === newestDate);
+  const batchNames = newestBatch.map((p) => (p.tileName ?? p.h1).replace(/\s+towing$/, '')).sort();
+  const newLine = batchNames.length
+    ? `New: ${listJoin(batchNames)}${newestBatch.every((p) => p.category === 'vehicle') ? ' towing tables.' : '.'}`
+    : '';
+
+  // Photo credits shown on THIS page: the hero plus every calculator and vehicle tile.
+  const homePhotoIds = Array.from(
+    new Set<PhotoId>(['tow-hero', ...[...CALCULATORS, ...VEHICLES].map((s) => getPage(s).photoId).filter(Boolean) as PhotoId[]]),
+  );
+  const homePhotos = homePhotoIds.map((id) => getPhoto(id));
 
   return (
     <>
@@ -150,15 +179,9 @@ export default function Home() {
       <section className="section-y">
         <div className="container-x">
           <SectionH2>Latest updates</SectionH2>
-          <p className="mt-4 max-w-prose text-body text-ink">
-            New:{' '}
-            <Link href="/gvwr/" prefetch={false} className="link">
-              GVWR explained
-            </Link>
-            , plus 8 more vehicles from the makers&apos; 2026 guides.
-          </p>
+          {newLine && <p className="mt-4 max-w-prose text-body text-ink">{newLine}</p>}
           <ul className="mt-6 divide-y divide-line border-y border-line">
-            {updates.map((p) => (
+            {recent.map((p) => (
               <li key={p.slug} className="flex items-center justify-between gap-4 py-3">
                 <Link href={p.path} prefetch={false} className="text-body text-ink hover:text-brand hover:underline underline-offset-2">
                   {p.h1}
@@ -167,31 +190,43 @@ export default function Home() {
               </li>
             ))}
           </ul>
+          <div className="mt-4">
+            <Link href="/sitemap/" prefetch={false} className="link text-small">
+              See all pages →
+            </Link>
+          </div>
           <div className="mt-6">
-            <UpdatedLine date={page.lastUpdated} />
+            <UpdatedLine date={newestDate} />
           </div>
         </div>
       </section>
 
-      {/* Photo credits */}
+      {/* Photo credits (collapsed; full list lives on /photo-credits/) */}
       <section className="section-y">
         <div className="container-x">
-          <SectionH2>Photo credits</SectionH2>
-          <ul className="mt-4 space-y-2 text-small text-muted">
-            {CREDITED_PHOTOS.map((photo) => (
-              <li key={photo.id}>
-                {photo.alt} ·{' '}
-                <a href={photo.photographerUrl} target="_blank" rel="noopener" className="link">
-                  {photo.photographer}
-                </a>{' '}
-                /{' '}
-                <a href={photo.sourceUrl} target="_blank" rel="noopener" className="link">
-                  {photo.source}
-                </a>{' '}
-                ({photo.license})
-              </li>
-            ))}
-          </ul>
+          <details className="text-small text-muted">
+            <summary className="cursor-pointer">Photo credits ({homePhotos.length} photos on this page)</summary>
+            <ul className="mt-3 space-y-2">
+              {homePhotos.map((photo) => (
+                <li key={photo.id}>
+                  {photo.alt} ·{' '}
+                  <a href={photo.photographerUrl} target="_blank" rel="noopener" className="link">
+                    {photo.photographer}
+                  </a>{' '}
+                  /{' '}
+                  <a href={photo.sourceUrl} target="_blank" rel="noopener" className="link">
+                    {photo.source}
+                  </a>{' '}
+                  ({photo.license})
+                </li>
+              ))}
+            </ul>
+            <p className="mt-3">
+              <Link href="/photo-credits/" prefetch={false} className="link">
+                All photo credits
+              </Link>
+            </p>
+          </details>
         </div>
       </section>
     </>

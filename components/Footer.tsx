@@ -30,6 +30,7 @@ const COLS = [
       { label: 'How we calculate', href: '/how-we-calculate/' },
       { label: 'Editorial policy', href: '/editorial-policy/' },
       { label: 'Contact', href: '/contact/' },
+      { label: 'Photo credits', href: '/photo-credits/' },
     ],
   },
 ];

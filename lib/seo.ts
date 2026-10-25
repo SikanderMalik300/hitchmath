@@ -11,8 +11,9 @@ export function buildMetadata(page: PageEntry): Metadata {
     title: { absolute: page.title },
     description: page.meta,
     alternates: { canonical },
-    // Pages pending verification ship live but noindex (still followable).
-    ...(page.verified === false ? { robots: { index: false, follow: true } } : {}),
+    // Pages pending verification, and utility pages (photo credits), ship live but
+    // noindex (still followable).
+    ...(page.verified === false || page.noindex ? { robots: { index: false, follow: true } } : {}),
     openGraph: {
       type: page.category === 'vehicle' ? 'article' : 'website',
       url: absUrl(page.path),

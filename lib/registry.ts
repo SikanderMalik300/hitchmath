@@ -21,6 +21,7 @@ export interface PageEntry {
   lastUpdated: string; // ISO date; changes only when content changes (= dateModified)
   datePublished?: string; // original publish date (defaults to lastUpdated)
   verified?: boolean; // false = pending browser-agent verification: noindex, off sitemap/llms/IndexNow/hub/home
+  noindex?: boolean; // true = utility page (e.g. photo credits): noindex, follow; keep out of the sitemap
   sources?: SourceId[];
   photoId?: PhotoId;
   ownerNote?: string; // empty in v1
@@ -45,7 +46,9 @@ export const PAGES: PageEntry[] = [
     h1: 'Towing math you can check',
     category: 'home',
     description: 'Towing calculators and vehicle towing tables from manufacturer documents.',
-    lastUpdated: UPDATED,
+    // Bumped with each batch; the visible "Updated" line = the newest page shown.
+    lastUpdated: UPDATED4,
+    datePublished: UPDATED,
     inSitemap: true,
   },
   // Tool pages
@@ -874,6 +877,18 @@ export const PAGES: PageEntry[] = [
     description: 'Every page on HitchMath.',
     lastUpdated: UPDATED,
     inSitemap: true,
+  },
+  {
+    slug: 'photo-credits',
+    path: '/photo-credits/',
+    title: 'Photo Credits | HitchMath',
+    meta: 'Credits for every photo used on HitchMath: the alt text, the photographer and the source (Unsplash or Pexels) with its license, grouped by page.',
+    h1: 'Photo credits',
+    category: 'legal',
+    description: 'Every photo used on HitchMath, with photographer, source and license.',
+    lastUpdated: UPDATED4,
+    noindex: true,
+    inSitemap: false,
   },
 ];
 
