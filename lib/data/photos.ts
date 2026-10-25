@@ -31,7 +31,14 @@ export type PhotoId =
   | 'wrangler'
   | 'frontier'
   | 'ascent'
-  | 'telluride';
+  | 'telluride'
+  | 'f250'
+  | 'f350'
+  | 'f450'
+  | 'ram2500'
+  | 'ram3500'
+  | 'silverado2500'
+  | 'silverado3500';
 
 export interface Photo {
   id: PhotoId;
@@ -453,6 +460,104 @@ export const PHOTOS: Record<PhotoId, Photo> = {
     focalX: 45,
     focalY: 75,
     usedOn: ['kia-telluride-towing-capacity'],
+    status: 'verified',
+  },
+  f250: {
+    id: 'f250',
+    file: 'hd-pickups-lake-cloudy',
+    sourceUrl: 'https://www.pexels.com/photo/photography-of-vehicles-near-lake-1015555/',
+    photographer: 'Kendall Hoopes',
+    photographerUrl: 'https://www.pexels.com/@ken123films/',
+    source: 'Pexels',
+    license: 'Pexels License',
+    alt: 'Two heavy-duty pickups parked by a lake under a cloudy sky',
+    focalX: 35,
+    focalY: 60,
+    usedOn: ['ford-f250-towing-capacity'],
+    status: 'verified',
+  },
+  f350: {
+    id: 'f350',
+    file: 'fifth-wheels-autumn-campground',
+    sourceUrl: 'https://www.pexels.com/photo/autumn-rv-camping-in-scenic-forest-setting-29589856/',
+    photographer: 'Dubang chang',
+    photographerUrl: 'https://www.pexels.com/@dudubangbang/',
+    source: 'Pexels',
+    license: 'Pexels License',
+    alt: 'Large fifth-wheel trailers parked under autumn trees',
+    focalX: 40,
+    focalY: 65,
+    usedOn: ['ford-f350-towing-capacity'],
+    status: 'verified',
+  },
+  f450: {
+    id: 'f450',
+    file: 'black-dually-pickup-field',
+    sourceUrl: 'https://www.pexels.com/photo/white-ford-f-150-crew-cab-pickup-truck-on-grass-field-10874400/',
+    photographer: 'Matt Weissinger',
+    photographerUrl: 'https://www.pexels.com/@adaptphotos/',
+    source: 'Pexels',
+    license: 'Pexels License',
+    alt: 'Black dually pickup parked on a dry grass field',
+    focalX: 50,
+    focalY: 55,
+    usedOn: ['ford-f450-towing-capacity'],
+    status: 'verified',
+  },
+  ram2500: {
+    id: 'ram2500',
+    file: 'camper-winding-road-snowy-mountains',
+    sourceUrl: 'https://www.pexels.com/photo/white-vehicle-traveling-on-road-2416592/',
+    photographer: 'Lukas Kloeppel',
+    photographerUrl: 'https://www.pexels.com/@lkloeppel/',
+    source: 'Pexels',
+    license: 'Pexels License',
+    alt: 'Camper on a winding road below snowy mountains',
+    focalX: 55,
+    focalY: 55,
+    usedOn: ['ram-2500-towing-capacity'],
+    status: 'verified',
+  },
+  ram3500: {
+    id: 'ram3500',
+    file: 'aerial-campground-trailers',
+    sourceUrl: 'https://www.pexels.com/photo/top-view-of-a-camping-site-with-campervans-13259821/',
+    photographer: 'Tom Fisk',
+    photographerUrl: 'https://www.pexels.com/@tomfisk/',
+    source: 'Pexels',
+    license: 'Pexels License',
+    alt: 'Aerial view of a campground with rows of trailers',
+    focalX: 50,
+    focalY: 50,
+    usedOn: ['ram-3500-towing-capacity'],
+    status: 'verified',
+  },
+  silverado2500: {
+    id: 'silverado2500',
+    file: 'white-hd-pickup-desert-mesa',
+    sourceUrl: 'https://www.pexels.com/photo/white-chevrolet-vehicle-on-dessert-852819/',
+    photographer: 'Quintin Gellar',
+    photographerUrl: 'https://www.pexels.com/@quintingellar/',
+    source: 'Pexels',
+    license: 'Pexels License',
+    alt: 'White heavy-duty pickup on a desert track below a red mesa',
+    focalX: 50,
+    focalY: 70,
+    usedOn: ['chevy-silverado-2500hd-towing-capacity'],
+    status: 'verified',
+  },
+  silverado3500: {
+    id: 'silverado3500',
+    file: 'horse-trailer-meadow',
+    sourceUrl: 'https://www.pexels.com/photo/old-trailer-standing-on-a-meadow-12976866/',
+    photographer: 'Denzel V',
+    photographerUrl: 'https://www.pexels.com/@denzel-v-3779480/',
+    source: 'Pexels',
+    license: 'Pexels License',
+    alt: 'Horse trailer standing in a meadow at the edge of a forest',
+    focalX: 60,
+    focalY: 60,
+    usedOn: ['chevy-silverado-3500hd-towing-capacity'],
     status: 'verified',
   },
 };

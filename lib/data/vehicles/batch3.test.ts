@@ -170,11 +170,10 @@ describe('no "2026 Telluride" claim anywhere (section 5)', () => {
   });
 });
 
-describe('hub lists 24 vehicles', () => {
-  it('the hub page groups cover 24 vehicle slugs', () => {
-    const src = readFileSync(path.resolve('app/(site)/towing-capacity/page.tsx'), 'utf8');
-    const slugs = (src.match(/-towing-capacity'/g) ?? []).length;
-    expect(slugs).toBe(24);
+describe('hub lists the verified vehicles', () => {
+  it('24 vehicle pages are verified and render on the hub (HD pages ship verified:false)', () => {
+    const verified = PAGES.filter((p) => p.category === 'vehicle' && p.verified !== false);
+    expect(verified.length).toBe(24);
   });
 });
 

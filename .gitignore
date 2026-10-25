@@ -30,3 +30,9 @@ Thumbs.db
 /hitchmath-fix-04-aeo-geo.md
 /hitchmath-embed-spec.md
 /hitchmath-fix-05.md
+
+# batch-4 HD source PDFs (copyrighted; not committed)
+.hd-cache/
+scripts/hd-explore.mjs
+/hitchmath-batch3-spec.md
+/hitchmath-batch4-hd-spec.md

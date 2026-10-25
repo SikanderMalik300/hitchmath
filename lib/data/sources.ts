@@ -47,7 +47,8 @@ export type SourceId =
   | 'kia-telluride-specs-2025'
   | 'cfr-571-3'
   | 'cfr-567-4'
-  | 'cfr-383-91';
+  | 'cfr-383-91'
+  | 'ram-hd-chart-2026';
 
 export interface Source {
   id: SourceId;
@@ -335,6 +336,12 @@ export const SOURCES: Record<SourceId, Source> = {
     name: '49 CFR 383.91, Commercial motor vehicle groups',
     url: 'https://www.law.cornell.edu/cfr/text/49/383.91',
     accessed: ACCESSED3,
+  },
+  'ram-hd-chart-2026': {
+    id: 'ram-hd-chart-2026',
+    name: 'Ram, 2026 Ram Heavy Duty Payload & Towing Weight Capacities',
+    url: 'https://www.ramtrucks.com/content/dam/fca-brands/na/ramtrucks/en_us/towing/towing-capacity-guide/brochure/my26_Ram_HD_Customer_TowPayChart_1.9.pdf',
+    accessed: '2026-10-25',
   },
 };
 

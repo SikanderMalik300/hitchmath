@@ -102,7 +102,7 @@ async function genOg(pages) {
 
 async function writeLlms(pages) {
   const content = pages.filter(
-    (p) => p.category === 'tool' || p.category === 'vehicle' || p.category === 'guide',
+    (p) => (p.category === 'tool' || p.category === 'vehicle' || p.category === 'guide') && p.verified !== false,
   );
   const lines = [
     '# HitchMath',
@@ -300,6 +300,50 @@ const PHOTO_URLS = {
     focalY: 75,
     avif: 16, // busy river-camp scene: cap AVIF so 480w <= 25 KB, 960w <= 60 KB
   },
+  f250: {
+    file: 'hd-pickups-lake-cloudy',
+    url: 'https://images.pexels.com/photos/1015555/pexels-photo-1015555.jpeg?auto=compress&cs=tinysrgb&w=2600',
+    focalX: 35,
+    focalY: 60,
+  },
+  f350: {
+    file: 'fifth-wheels-autumn-campground',
+    url: 'https://images.pexels.com/photos/29589856/pexels-photo-29589856.jpeg?auto=compress&cs=tinysrgb&w=2600',
+    focalX: 40,
+    focalY: 65,
+    avif: 15, // dense autumn foliage: cap AVIF so 480w <= 25 KB, 960w <= 60 KB
+  },
+  f450: {
+    file: 'black-dually-pickup-field',
+    url: 'https://images.pexels.com/photos/10874400/pexels-photo-10874400.jpeg?auto=compress&cs=tinysrgb&w=2600',
+    focalX: 50,
+    focalY: 55,
+  },
+  ram2500: {
+    file: 'camper-winding-road-snowy-mountains',
+    url: 'https://images.pexels.com/photos/2416592/pexels-photo-2416592.jpeg?auto=compress&cs=tinysrgb&w=2600',
+    focalX: 55,
+    focalY: 55,
+  },
+  ram3500: {
+    file: 'aerial-campground-trailers',
+    url: 'https://images.pexels.com/photos/13259821/pexels-photo-13259821.jpeg?auto=compress&cs=tinysrgb&w=2600',
+    focalX: 50,
+    focalY: 50,
+    avif: 26, // busy aerial detail: cap AVIF so 480w <= 25 KB, 960w <= 60 KB
+  },
+  silverado2500: {
+    file: 'white-hd-pickup-desert-mesa',
+    url: 'https://images.pexels.com/photos/852819/pexels-photo-852819.jpeg?auto=compress&cs=tinysrgb&w=2600',
+    focalX: 50,
+    focalY: 70,
+  },
+  silverado3500: {
+    file: 'horse-trailer-meadow',
+    url: 'https://images.pexels.com/photos/12976866/pexels-photo-12976866.jpeg?auto=compress&cs=tinysrgb&w=2600',
+    focalX: 60,
+    focalY: 60,
+  },
 };
 
 async function processPhoto(id) {
@@ -389,6 +433,7 @@ async function loadPages() {
       h1: p.h1,
       description: p.description,
       category: p.category,
+      verified: p.verified,
     }));
     await ensure(GEN);
     await fs.writeFile(path.join(GEN, 'pages.json'), JSON.stringify(pages, null, 2));

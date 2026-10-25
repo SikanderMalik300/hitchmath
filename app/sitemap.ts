@@ -7,7 +7,7 @@ import { ogImagePath } from '@/lib/seo';
 export const dynamic = 'force-static';
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  return PAGES.filter((p) => p.inSitemap).map((p) => {
+  return PAGES.filter((p) => p.inSitemap && p.verified !== false).map((p) => {
     // Each page's main photo when it is a verified, processed image; else the OG image.
     let image: string;
     if (p.photoId && photoAvailable(p.photoId)) {

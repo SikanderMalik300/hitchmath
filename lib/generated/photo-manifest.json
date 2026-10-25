@@ -27,5 +27,12 @@
   "wrangler": true,
   "frontier": true,
   "ascent": true,
-  "telluride": true
+  "telluride": true,
+  "f250": true,
+  "f350": true,
+  "f450": true,
+  "ram2500": true,
+  "ram3500": true,
+  "silverado2500": true,
+  "silverado3500": true
 }

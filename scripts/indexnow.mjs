@@ -23,11 +23,12 @@ async function urlList() {
   return pages
     .filter(
       (p) =>
-        p.category === 'home' ||
-        p.category === 'tool' ||
-        p.category === 'vehicle' ||
-        p.category === 'guide' ||
-        p.category === 'hub',
+        (p.category === 'home' ||
+          p.category === 'tool' ||
+          p.category === 'vehicle' ||
+          p.category === 'guide' ||
+          p.category === 'hub') &&
+        p.verified !== false,
     )
     .map((p) => `${ORIGIN}${p.path}`);
 }

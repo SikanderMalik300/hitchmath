@@ -7,6 +7,7 @@ import { ContentGraph, type Crumb } from '@/components/JsonLd';
 import { RefTable } from '@/components/Tables';
 import { SectionH2, UpdatedLine } from '@/components/content';
 import { VEHICLES_BY_SLUG } from '@/lib/data/vehicles';
+import { HD_BY_SLUG } from '@/lib/data/vehicles/hd';
 import { maxTrailer, maxPayload } from '@/lib/data/vehicles/types';
 import { fmt } from '@/lib/format';
 
@@ -14,6 +15,18 @@ const page = getPage('towing-capacity');
 export const metadata: Metadata = buildMetadata(page);
 
 const GROUPS: { heading: string; slugs: string[] }[] = [
+  {
+    heading: 'Heavy-duty trucks',
+    slugs: [
+      'ford-f250-towing-capacity',
+      'ford-f350-towing-capacity',
+      'ford-f450-towing-capacity',
+      'ram-2500-towing-capacity',
+      'ram-3500-towing-capacity',
+      'chevy-silverado-2500hd-towing-capacity',
+      'chevy-silverado-3500hd-towing-capacity',
+    ],
+  },
   {
     heading: 'Full-size trucks',
     slugs: [
@@ -82,27 +95,43 @@ export default function Page() {
         <UpdatedLine date={page.lastUpdated} />
       </div>
 
-      {GROUPS.map((group) => (
-        <section key={group.heading} className="mt-10 space-y-3">
-          <SectionH2>{group.heading}</SectionH2>
-          <RefTable
-            caption={`2026 ${group.heading} towing and payload maximums from each maker's documents`}
-            columns={['Vehicle', 'Max towing', 'Max payload', 'Page']}
-            rows={group.slugs.map((slug) => {
-              const p = getPage(slug);
-              const data = VEHICLES_BY_SLUG[slug];
-              return [
-                `${data.year} ${data.make} ${data.model}`,
-                `${fmt(maxTrailer(data.rows))} lb`,
-                payloadCell(slug),
-                <Link key={slug} href={p.path} prefetch={false} className="link">
-                  Open
-                </Link>,
-              ];
-            })}
-          />
-        </section>
-      ))}
+      {GROUPS.map((group) => {
+        // Only list verified pages; HD pages stay hidden until flipped to verified.
+        const slugs = group.slugs.filter((s) => getPage(s).verified !== false);
+        if (slugs.length === 0) return null;
+        const isHd = group.heading === 'Heavy-duty trucks';
+        return (
+          <section key={group.heading} className="mt-10 space-y-3">
+            <SectionH2>{group.heading}</SectionH2>
+            <RefTable
+              caption={`2026 ${group.heading} towing maximums from each maker's documents`}
+              columns={
+                isHd
+                  ? ['Vehicle', 'Max conventional', 'Max 5th-wheel / gooseneck', 'Page']
+                  : ['Vehicle', 'Max towing', 'Max payload', 'Page']
+              }
+              rows={slugs.map((slug) => {
+                const p = getPage(slug);
+                const open = (
+                  <Link key={slug} href={p.path} prefetch={false} className="link">
+                    Open
+                  </Link>
+                );
+                if (isHd) {
+                  const v = HD_BY_SLUG[slug];
+                  const maxOf = (k: 'conventional' | 'gooseneck' | 'trailer') =>
+                    Math.max(0, ...v.maxByEngine.map((m) => m[k]?.value ?? 0));
+                  const conv = v.kind === 'ram' ? `${fmt(maxOf('trailer'))} lb` : `${fmt(maxOf('conventional'))} lb`;
+                  const gn = v.kind === 'gm' ? `${fmt(maxOf('gooseneck'))} lb` : v.kind === 'ram' ? 'Any hitch' : 'Added in an update';
+                  return [`${v.year} ${v.make} ${v.model}`, conv, gn, open];
+                }
+                const data = VEHICLES_BY_SLUG[slug];
+                return [`${data.year} ${data.make} ${data.model}`, `${fmt(maxTrailer(data.rows))} lb`, payloadCell(slug), open];
+              })}
+            />
+          </section>
+        );
+      })}
 
       <p className="mt-8 max-w-prose text-small text-muted">
         Each figure comes from the maker’s own towing guide or spec page, linked on that vehicle’s

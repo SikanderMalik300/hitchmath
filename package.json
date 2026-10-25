@@ -27,6 +27,7 @@
     "@types/react": "19.0.7",
     "@types/react-dom": "19.0.3",
     "autoprefixer": "10.4.20",
+    "pdfjs-dist": "^4.9.155",
     "postcss": "8.5.1",
     "satori": "0.12.1",
     "sharp": "0.33.5",

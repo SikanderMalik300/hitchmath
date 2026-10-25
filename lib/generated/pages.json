@@ -210,6 +210,62 @@
     "category": "vehicle"
   },
   {
+    "slug": "ford-f250-towing-capacity",
+    "path": "/ford-f250-towing-capacity/",
+    "h1": "Ford F-250 towing capacity (2026): every engine and cab",
+    "description": "Every 2026 F-250 conventional rating by cab, engine and axle, from Ford’s 2026 guide.",
+    "category": "vehicle",
+    "verified": false
+  },
+  {
+    "slug": "ford-f350-towing-capacity",
+    "path": "/ford-f350-towing-capacity/",
+    "h1": "Ford F-350 towing capacity (2026): SRW and dually",
+    "description": "Every 2026 F-350 SRW and dually conventional rating, from Ford’s 2026 guide.",
+    "category": "vehicle",
+    "verified": false
+  },
+  {
+    "slug": "ford-f450-towing-capacity",
+    "path": "/ford-f450-towing-capacity/",
+    "h1": "Ford F-450 towing capacity (2026): pickup ratings",
+    "description": "Every 2026 F-450 pickup conventional rating, from Ford’s 2026 guide.",
+    "category": "vehicle",
+    "verified": false
+  },
+  {
+    "slug": "ram-2500-towing-capacity",
+    "path": "/ram-2500-towing-capacity/",
+    "h1": "Ram 2500 towing capacity (2026): HEMI and Cummins",
+    "description": "Every 2026 Ram 2500 cab and axle with payload, for any hitch, from Ram’s chart.",
+    "category": "vehicle",
+    "verified": false
+  },
+  {
+    "slug": "ram-3500-towing-capacity",
+    "path": "/ram-3500-towing-capacity/",
+    "h1": "Ram 3500 towing capacity (2026): SRW and dually",
+    "description": "Every 2026 Ram 3500 cab, bed and axle with payload, for any hitch, from Ram’s chart.",
+    "category": "vehicle",
+    "verified": false
+  },
+  {
+    "slug": "chevy-silverado-2500hd-towing-capacity",
+    "path": "/chevy-silverado-2500hd-towing-capacity/",
+    "h1": "Chevy Silverado 2500 HD towing capacity (2026)",
+    "description": "Every 2026 Silverado 2500 HD model with conventional and gooseneck ratings, from Chevrolet.",
+    "category": "vehicle",
+    "verified": false
+  },
+  {
+    "slug": "chevy-silverado-3500hd-towing-capacity",
+    "path": "/chevy-silverado-3500hd-towing-capacity/",
+    "h1": "Chevy Silverado 3500 HD towing capacity (2026)",
+    "description": "Every 2026 Silverado 3500 HD model with conventional and gooseneck ratings, from Chevrolet.",
+    "category": "vehicle",
+    "verified": false
+  },
+  {
     "slug": "towing-calculators",
     "path": "/towing-calculators/",
     "h1": "Towing calculators",

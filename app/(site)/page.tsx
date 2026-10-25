@@ -40,7 +40,8 @@ const TRUST = [
 ];
 
 export default function Home() {
-  const updates = PAGES.filter((p) => p.category === 'tool' || p.category === 'vehicle');
+  const updates = PAGES.filter((p) => (p.category === 'tool' || p.category === 'vehicle') && p.verified !== false);
+  const vehicleCount = PAGES.filter((p) => p.category === 'vehicle' && p.verified !== false).length;
 
   return (
     <>
@@ -110,7 +111,7 @@ export default function Home() {
           </div>
           <div className="mt-6">
             <Link href="/towing-capacity/" prefetch={false} className="link">
-              See all 24 vehicles
+              See all {vehicleCount} vehicles
             </Link>
           </div>
         </div>

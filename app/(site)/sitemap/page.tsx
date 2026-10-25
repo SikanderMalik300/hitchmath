@@ -21,7 +21,7 @@ export default function Page() {
   return (
     <SimplePage page={page}>
       {GROUPS.map((g) => {
-        const items = PAGES.filter((p) => g.cats.includes(p.category) && p.inSitemap);
+        const items = PAGES.filter((p) => g.cats.includes(p.category) && p.inSitemap && p.verified !== false);
         if (items.length === 0) return null;
         return (
           <section key={g.title} className="space-y-2">
