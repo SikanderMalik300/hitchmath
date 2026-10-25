@@ -88,6 +88,37 @@ describe('golden cells match the committed data', () => {
   });
 });
 
+describe('GM fixes: 16.000 parsed, no empty cells, full model labels', () => {
+  it('p.33 Long Bed 4x4 gas (10,950/26,000) conventional is 16,000 (printed "16.000")', () => {
+    const r = s2500.rows.find((x) => x.gvwr === 10950 && x.gcwr === 26000 && x.model === 'Long Bed 4x4' && (x.engine || '').includes('gas'));
+    expect(r?.conv).toBe(16000);
+  });
+  it('no GM row has an empty conventional or gooseneck cell', () => {
+    for (const v of [s2500, s3500])
+      for (const r of v.rows) {
+        expect(typeof r.conv, `${v.model} ${r.model}`).toBe('number');
+        expect((r.gnRaw || '').length, `${v.model} ${r.model}`).toBeGreaterThan(0);
+      }
+  });
+  it('no GM model label is truncated (ends with with / Max / High / Country)', () => {
+    for (const v of [s2500, s3500])
+      for (const r of v.rows) expect(/(?:with|Max|High|Country)$/.test((r.model || '').trim()), `${v.model}: "${r.model}"`).toBe(false);
+  });
+  it('the 7 reviewed wrapped labels are full', () => {
+    const has = (v: HdVehicle, page: number, model: string) => v.rows.some((r) => r.pageNum === page && r.model === model);
+    expect(has(s2500, 31, 'Long Bed 4x4 with Max Trailering Package')).toBe(true);
+    expect(has(s2500, 32, 'Long Bed 4x4 with Max Trailering Package')).toBe(true);
+    expect(has(s2500, 34, 'Standard Bed 4x4 with Max Trailering Package')).toBe(true);
+    expect(has(s2500, 35, 'Standard Bed High Country 4x4 with Max Trailering Package')).toBe(true);
+    expect(has(s2500, 36, 'Long Bed High Country 4x4 with Max Trailering Package')).toBe(true);
+    expect(has(s3500, 39, 'Standard Bed 4x4 SRW')).toBe(true);
+  });
+  it('GM Max-by-engine config names the full label', () => {
+    const duramax = s2500.maxByEngine.find((m) => m.engine.includes('Duramax'));
+    expect(duramax?.gooseneck?.config).toContain('Max Trailering Package');
+  });
+});
+
 describe('Max-by-engine equals the max over the data rows', () => {
   it('each max value is really present in the rows', () => {
     for (const [name, v] of ALL.map((a) => [a[0], a[1]] as [string, HdVehicle])) {

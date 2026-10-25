@@ -253,6 +253,9 @@ export function fordConventional(pageItems, colConfig, ctx, opts = {}) {
 // few that wrap across baselines; those fragments are merged inside the GN x-band.
 // =====================================================================
 const SUP = { '⁰': '0', '¹': '1', '²': '2', '³': '3', '⁴': '4', '⁵': '5', '⁶': '6', '⁷': '7', '⁸': '8', '⁹': '9' };
+// A numeric fragment in a GM value column: a whole thousands-number ("16,000",
+// "16.000", "16 000") or a bare piece of a split value ("16", "000").
+const NUMFRAG = /^(?:\d{1,3}(?:[,. ]\d{3})+|\d{1,3})$/;
 
 function gmPanels(pageItems) {
   // two panels, split at x=400; each has its own "Model" header
@@ -285,8 +288,10 @@ export function gmPage(pageItems, ctx) {
     const pit = panel.items;
     // anchors: GVWR/GCWR/conv/gn column centers from a clean data row.
     const prs = rows(pit, 1.4);
-    // numeric value items (>=1000) in this panel, excluding footnote-size text
-    const isV = (s) => /^\d{1,3}(?:,\d{3})+$/.test(s.trim());
+    // Numeric value items (>=1000). GM prints a few 5-digit values with a period or
+    // a space as the thousands separator ("16.000" on p.33, "18.300" on p.31, "16 000"),
+    // so accept comma, period or space. toNum() strips the separator to the number.
+    const isV = (s) => /^\d{1,3}(?:[,. ]\d{3})+$/.test(s.trim());
     const clean = prs.find((r) => r.items.filter((i) => isV(i.s) && i.fs >= 6).length === 4);
     if (!clean) continue;
     const anchorsRow = clean.items.filter((i) => isV(i.s) && i.fs >= 6).sort((a, b) => a.cx - b.cx);
@@ -304,24 +309,40 @@ export function gmPage(pageItems, ctx) {
       .filter((i) => i.fs >= 7.5 && i.fs < 9 && /HD .*Cab/.test(i.s))
       .map((i) => ({ y: i.y, text: i.s.replace(/\s*\(continued\)/, '').trim() }))
       .sort((a, b) => b.y - a.y);
-    // sub-labels (fs ~7-8) e.g. "Long Bed 2WD", "Long Bed 4x4 DRW"; exclude cab headers (have "HD")
-    const subs = pit
-      .filter((i) => i.fs >= 6.5 && i.fs < 9 && /Bed|Box/.test(i.s) && !/HD/.test(i.s) && i.x < panel.lo + 70)
-      .map((i) => ({ y: i.y, text: i.s.trim() }))
+    // Model sub-labels (fs ~7-8) in the model column, left of the engine column.
+    // A label wraps onto 1-3 lines; a new label block starts at a line with a bed
+    // keyword, and the continuation lines ("with Max Trailering Package", "4x4 SRW")
+    // join it. This recovers full labels like "Long Bed 4x4 with Max Trailering Package".
+    const modelLines = pit
+      .filter((i) => i.fs >= 6.5 && i.fs < 9 && !/HD/.test(i.s) && i.x < panel.lo + 70 && !isV(i.s))
       .sort((a, b) => b.y - a.y);
+    const blocks = [];
+    for (const i of modelLines) {
+      const t = i.s.trim();
+      if (/\bBed\b/.test(t)) blocks.push({ ys: [i.y], parts: [t] });
+      else if (blocks.length) {
+        blocks[blocks.length - 1].ys.push(i.y);
+        blocks[blocks.length - 1].parts.push(t);
+      }
+    }
+    for (const b of blocks) {
+      b.center = b.ys.reduce((a, c) => a + c, 0) / b.ys.length;
+      b.text = b.parts.join(' ').replace(/\s+/g, ' ').trim();
+    }
 
     // data rows: a row with a GVWR + GCWR + conv value (3 single numerics in those cols)
     const dataRows = prs.filter((r) => {
       const vs = r.items.filter((i) => isV(i.s) && i.fs >= 6);
       return vs.length >= 3 && vs.some((i) => Math.abs(i.cx - gvwrC) <= COL_TOL);
     });
-    let valueCount = 0;
+    let panelFrags = 0;
     for (const r of dataRows) {
       const anchorY = r.y;
       const cabHdr = cabHdrs.find((h) => h.y >= anchorY - 1) || cabHdrs[cabHdrs.length - 1];
-      const sub = subs.reduce((best, s) => (Math.abs(s.y - anchorY) < Math.abs((best?.y ?? 1e9) - anchorY) ? s : best), null);
       const cab = (cabHdr?.text || '').replace(/^\d+ HD /, '');
-      const model = [cab, sub?.text].filter(Boolean).join(' ');
+      // model label = the full (joined) sub-label for this row's merged model cell.
+      const block = blocks.reduce((best, b) => (Math.abs(b.center - anchorY) < Math.abs((best?.center ?? 1e9) - anchorY) ? b : best), null);
+      const model = block?.text ?? '';
       // engine: text in engine column (x right of model, left of wheel)
       const engItems = r.items.filter((i) => !isV(i.s) && i.fs >= 6 && i.x > panel.lo + 70 && i.cx < wheelC - 15 && !/"/.test(i.s));
       const engine = engItems
@@ -337,14 +358,22 @@ export function gmPage(pageItems, ctx) {
         .map((i) => i.s.trim())
         .join('')
         .replace(/\s+/g, '');
-      // single-value columns
+      // Single-value columns. Read by merging the numeric fragments in the column
+      // band on this baseline, so a split value like "16"+"000" ("16.000") rejoins.
+      const readSingle = (center) => {
+        const toks = r.items
+          .filter((i) => i.fs >= 6 && Math.abs(i.cx - center) <= 16 && Math.abs(i.y - anchorY) <= 1.8 && NUMFRAG.test(i.s.trim()))
+          .sort((a, b) => a.x - b.x);
+        if (!toks.length) return null;
+        return { n: toNum(toks.map((t) => t.s).join('')), frags: toks.length };
+      };
       const singles = {};
+      let rowFrags = 0;
       for (const key of ['gvwr', 'gcwr', 'conv']) {
-        const c = cols.find((x) => x.key === key);
-        const v = r.items.find((i) => isV(i.s) && i.fs >= 6 && Math.abs(i.cx - c.center) <= COL_TOL);
-        if (v) {
-          singles[key] = toNum(v.s);
-          valueCount++;
+        const res = readSingle(cols.find((x) => x.key === key).center);
+        if (res) {
+          singles[key] = res.n;
+          rowFrags += res.frags;
         }
       }
       // GN cell: merge all tokens in the GN x-band within the row's vertical span.
@@ -354,28 +383,44 @@ export function gmPage(pageItems, ctx) {
         (i) => i.cx >= gnC - 16 && i.cx <= gnC + 34 && i.y >= anchorY - 7 && i.y <= anchorY + 7 && i.fs >= 3,
       );
       const gn = reconstructGN(band, anchorY);
-      if (gn) valueCount += gn.items; // count the merged numeric fragments as their cell-count
       // Hard checks
       for (const t of [singles.conv, gn?.a, gn?.b]) {
         if (t != null && singles.gcwr != null && t > singles.gcwr)
           throw new Error(`[${ctx}] ${model} ${engine}: value ${t} > GCWR ${singles.gcwr}`);
       }
       if (singles.gvwr == null || singles.gcwr == null) continue;
+      // Every GM data row must have both a conventional and a gooseneck/5th value;
+      // an empty one means a value was dropped (e.g. an un-normalised "16.000").
+      if (singles.conv == null) throw new Error(`[${ctx}] empty conventional cell at "${model}" ${engine} (GVWR ${singles.gvwr}/GCWR ${singles.gcwr})`);
+      if (!gn || gn.a == null) throw new Error(`[${ctx}] empty gooseneck/5th cell at "${model}" ${engine} (GVWR ${singles.gvwr}/GCWR ${singles.gcwr})`);
       out.push({
         page: ctx,
         panel: panel.lo < 400 ? 'L' : 'R',
+        cab,
         model,
         engine,
         wheel,
         gvwr: singles.gvwr,
         gcwr: singles.gcwr,
-        conv: singles.conv ?? null,
-        gnRaw: gn?.raw ?? '',
-        gn: gn?.a ?? null,
-        gnAlt: gn?.b ?? null,
-        gnFoot: gn?.foot ?? [],
+        conv: singles.conv,
+        gnRaw: gn.raw,
+        gn: gn.a,
+        gnAlt: gn.b,
+        gnFoot: gn.foot,
         rowLabel: `${model} | ${engine} | ${wheel} | ${singles.gvwr} | ${singles.gcwr}`,
       });
+      panelFrags += rowFrags;
+    }
+    // Exact-count: every numeric fragment in the three single-value column bands is
+    // assigned to exactly one cell (handles split values like "16"+"000").
+    if (dataRows.length) {
+      const yLo = Math.min(...dataRows.map((r) => r.y)) - 3;
+      const yHi = Math.max(...dataRows.map((r) => r.y)) + 3;
+      const regionFrags = pit.filter(
+        (i) => i.fs >= 6 && NUMFRAG.test(i.s.trim()) && i.y >= yLo && i.y <= yHi && [gvwrC, gcwrC, convC].some((c) => Math.abs(i.cx - c) <= 16),
+      ).length;
+      if (regionFrags !== panelFrags)
+        throw new Error(`[${ctx}] ${panel.lo < 400 ? 'L' : 'R'} single-value fragment count mismatch: region=${regionFrags} assigned=${panelFrags}`);
     }
   }
   return out;
@@ -797,7 +842,7 @@ if (isMain) {
   const fmt = (n) => n.toLocaleString('en-US');
   const fordCfg = (r) => `${r.model ? r.model + ' ' : ''}${r.cab} ${r.drive} ${r.wheelbase}, ${axleClean(r.axle)} axle, ${fmt(r.gcwr)} GCWR`;
   const ramCfg = (r) => `${r.cab} ${r.bed} ${r.drive}, ${r.axle} axle, ${fmt(r.gcwr)} GCWR`;
-  const gmCfg = (r) => `${r.model}, ${r.engine}${r.wheel ? ', ' + r.wheel + ' wheels' : ''}, ${fmt(r.gcwr)} GCWR`;
+  const gmCfg = (r) => `${r.cab ? r.cab + ' ' : ''}${r.model}, ${r.engine}${r.wheel ? ', ' + r.wheel + ' wheels' : ''}, ${fmt(r.gcwr)} GCWR`;
 
   function maxByEngineFord(list) {
     const by = new Map();
