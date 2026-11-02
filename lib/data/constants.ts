@@ -105,7 +105,7 @@ export const CONSTANTS = {
     value: 5000,
     unit: 'lb',
     source:
-      'Ford 2026 F-150 guidance: do not exceed 5,000 lb without a weight-distribution system (standard receiver)',
+      'Ford 2026 RV & Trailer Towing Guide: a weight-distributing hitch is recommended for trailers over 5,000 lb on a standard receiver',
     sourceId: 'ford-guide-2026',
   },
   WD_ADVISORY_TONGUE_LB: {
@@ -113,7 +113,7 @@ export const CONSTANTS = {
     label: 'Weight-distribution advisory tongue weight',
     value: 500,
     unit: 'lb',
-    source: 'Ford F-150 standard receiver tongue rating without WD (Ford guide)',
+    source: 'Common standard-receiver tongue limit without weight distribution (Ford 2026 towing guide)',
     sourceId: 'ford-guide-2026',
   },
   GUIDELINE_80_PCT: {

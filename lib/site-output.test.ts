@@ -2,6 +2,7 @@ import { describe, it, expect } from 'vitest';
 import { existsSync, readFileSync, readdirSync, statSync } from 'node:fs';
 import path from 'node:path';
 import { PHOTO_LIST } from './data/photos';
+import { VEHICLES } from './data/vehicles';
 
 const OUT = path.resolve('out');
 const hasOut = existsSync(OUT);
@@ -136,6 +137,37 @@ describe.skipIf(!hasOut)('built output: schema, captions, framing, embeds', () =
     const main = readFileSync(path.resolve('out/towing-capacity-calculator/index.html'), 'utf8');
     expect(embed.includes('Within every rating you entered')).toBe(true);
     expect(main.includes('Within every rating you entered')).toBe(true);
+  });
+});
+
+describe.skipIf(!hasOut)('fix-06: page quality (advisory, worked example, pick section)', () => {
+  const files = hasOut ? htmlFiles(OUT) : [];
+  const vehicleHtml = (slug: string) => readFileSync(path.resolve(`out/${slug}/index.html`), 'utf8');
+
+  it('"F-150 standard receiver" appears only on the F-150 page (§1)', () => {
+    for (const f of files) {
+      if (readFileSync(f, 'utf8').includes('F-150 standard receiver')) {
+        expect(f.includes(`${path.sep}ford-f150-towing-capacity${path.sep}`), f).toBe(true);
+      }
+    }
+    expect(vehicleHtml('ford-f150-towing-capacity').includes('F-150 standard receiver')).toBe(true);
+  });
+
+  it('every standard vehicle page has a computed worked-example section (§2)', () => {
+    for (const v of VEHICLES) {
+      const html = vehicleHtml(v.slug);
+      expect(html.includes('Worked example:'), `${v.slug}: no worked example`).toBe(true);
+    }
+  });
+
+  it('every standard vehicle page has a "Which ... should you pick" section (§3)', () => {
+    for (const v of VEHICLES) {
+      const html = vehicleHtml(v.slug);
+      expect(
+        html.includes(`Which ${v.model} should you pick for towing?`),
+        `${v.slug}: no pick section`,
+      ).toBe(true);
+    }
   });
 });
 

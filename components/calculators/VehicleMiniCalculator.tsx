@@ -1,7 +1,7 @@
 'use client';
 
 import { useMemo, useState, useCallback } from 'react';
-import { checkTow } from '@/lib/calc/tow';
+import { checkTow, FORD_F150_WD_ADVISORY_TEXT } from '@/lib/calc/tow';
 import { fmt } from '@/lib/format';
 import type { VehicleData } from '@/lib/data/vehicles/types';
 import { miniConfigs } from '@/lib/data/vehicles/types';
@@ -25,6 +25,7 @@ export default function VehicleMiniCalculator({
   defaultPeople,
   defaultCargo,
   defaultHitch = 60,
+  fordAdvisory = false,
 }: {
   data: VehicleData;
   defaultId: string;
@@ -32,6 +33,7 @@ export default function VehicleMiniCalculator({
   defaultPeople: number;
   defaultCargo: number;
   defaultHitch?: number;
+  fordAdvisory?: boolean; // only the F-150 page keeps the Ford-specific wording
 }) {
   const [configId, setConfigId] = useState(defaultId);
   const [trailer, setTrailer] = useState(String(defaultTrailer));
@@ -56,6 +58,14 @@ export default function VehicleMiniCalculator({
 
   const payloadCapacity = cfg.payload ?? num(payloadOverride);
 
+  // Weight-distribution advisory wording: Ford text only on the F-150 page; else
+  // this vehicle's own tongue limit when the data has one; else the generic line.
+  const wdAdvisoryText = fordAdvisory
+    ? FORD_F150_WD_ADVISORY_TEXT
+    : cfg.maxTongue != null
+      ? `The ${data.model}'s hitch is rated ${fmt(cfg.maxTongue)} lb tongue without a weight-distributing hitch.`
+      : undefined;
+
   const result = useMemo(
     () =>
       checkTow({
@@ -70,9 +80,10 @@ export default function VehicleMiniCalculator({
         cargo: num(cargo),
         hitchHardware: num(hitch),
         receiverTongueRating: cfg.maxTongue ?? null,
+        wdAdvisoryText,
       }),
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [cfg, trailer, people, cargo, hitch, payloadCapacity],
+    [cfg, trailer, people, cargo, hitch, payloadCapacity, wdAdvisoryText],
   );
 
   const statusOf = (id: string): Status =>

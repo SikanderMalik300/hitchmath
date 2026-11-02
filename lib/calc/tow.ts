@@ -28,6 +28,7 @@ export interface TowInput {
   hitchHardware?: number | null;
   receiverTrailerRating?: number | null;
   receiverTongueRating?: number | null;
+  wdAdvisoryText?: string; // override for the weight-distribution advisory wording
 }
 
 export type CheckId =
@@ -79,7 +80,12 @@ const CHECK_LABELS: Record<CheckId, string> = {
 };
 
 export const WD_ADVISORY_TEXT =
-  "Many trucks need a weight-distributing hitch at this weight. Ford's F-150 standard receiver is rated 5,000 lb and 500 lb tongue without one. Check your owner's manual.";
+  "Many trucks need a weight-distributing hitch at this weight. Check your hitch label and owner's manual.";
+
+// Only the F-150 page passes this wording (via wdAdvisoryText); every other page
+// uses the generic text above or its own hitch rating.
+export const FORD_F150_WD_ADVISORY_TEXT =
+  "Ford's F-150 standard receiver is rated 5,000 lb and 500 lb tongue without a weight-distributing hitch. Check your owner's manual.";
 
 export const GUIDELINE_80_NOTE =
   "Many RV groups suggest staying under 80%. That's a rule of thumb, not a rating.";
@@ -230,7 +236,7 @@ export function checkTow(input: TowInput): TowResult {
   const advisory =
     trailerType === 'conventional' &&
     (trailerWeight > WD_ADVISORY_TRAILER_LB || tongue > WD_ADVISORY_TONGUE_LB)
-      ? WD_ADVISORY_TEXT
+      ? (input.wdAdvisoryText ?? WD_ADVISORY_TEXT)
       : null;
 
   // Step 9: verdict.

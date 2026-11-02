@@ -1,6 +1,6 @@
 import Breadcrumbs from './Breadcrumbs';
 import { ContentGraph, type Crumb, type FaqItem } from './JsonLd';
-import { QuickAnswer, SectionH2, Related } from './content';
+import { QuickAnswer, SectionH2, Related, OwnerNote } from './content';
 import Faq from './Faq';
 import Sources from './Sources';
 import AuthorBox from './AuthorBox';
@@ -10,8 +10,9 @@ import { FigurePhoto } from './Photo';
 import VehicleTable from './VehicleTable';
 import { HistoryTableView, SimpleTableView } from './Tables';
 import VehicleMiniCalculator from './calculators/VehicleMiniCalculator';
+import { WorkedExampleSection, WhichToPickSection } from './VehicleExtras';
 import { ogImagePath } from '@/lib/seo';
-import type { PageEntry } from '@/lib/registry';
+import { SITE, type PageEntry } from '@/lib/registry';
 import type { VehicleData } from '@/lib/data/vehicles/types';
 
 export interface VehicleContent {
@@ -62,6 +63,7 @@ export default function VehiclePage({
           defaultTrailer={mini.defaultTrailer}
           defaultPeople={mini.defaultPeople}
           defaultCargo={mini.defaultCargo}
+          fordAdvisory={page.slug === 'ford-f150-towing-capacity'}
         />
       </div>
 
@@ -76,6 +78,9 @@ export default function VehiclePage({
           </ul>
         )}
       </section>
+
+      <WorkedExampleSection data={data} />
+      <WhichToPickSection data={data} />
 
       {page.photoId && (
         <div className="mt-10 max-w-calc">
@@ -119,6 +124,17 @@ export default function VehiclePage({
         </section>
 
         <Faq items={content.faq} />
+
+        {page.ownerNote && page.ownerNote.trim() !== '' && (
+          <section className="space-y-3">
+            <SectionH2>From the owner</SectionH2>
+            <OwnerNote note={page.ownerNote} />
+            <p className="text-small text-muted">
+              {SITE.author} · {page.lastUpdated}
+            </p>
+          </section>
+        )}
+
         <Related slugs={page.related ?? []} />
         <Sources ids={page.sources ?? []} />
         <AuthorBox lastUpdated={page.lastUpdated} />
